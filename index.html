@@ -1,16 +1,913 @@
-<!doctype html>
+<!DOCTYPE html>
+<!-- 
+  ============================================================================
+  SOLUVENCON - Sitio Web de Cacharrería y Ferretería
+  ============================================================================
+  Descripción: Catálogo de productos para cacharrería, ferretería y bazar.
+               Incluye secciones de categorías, productos destacados y 
+               enlaces a catálogo en Google Sheets y WhatsApp.
+  Autor: [Tu nombre]
+  Versión: 1.0
+  ============================================================================
+-->
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <!-- Metadatos básicos del documento -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO: Título y descripción para motores de búsqueda -->
     <title>SOLUVENCON - Cacharrería y Ferretería | Catálogo de Productos</title>
     <meta name="description" content="Cacharrería SOLUVENCON - Cosmetiqueras, espejos, cubiertos, vajilla, herramientas, llaves, martillos y más. Precios mayoristas y al detal.">
+    
+    <!-- 
+      FUENTES EXTERNAS
+      - Google Fonts: Poppins (pesos 300, 400, 600, 700)
+      - Font Awesome 6.4.0: Iconos vectoriales
+    -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script type="module" crossorigin src="./assets/index-CLCMXvYI.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-BkwcdFuA.css">
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+    
+    <!-- ============================================================================
+         ESTILOS CSS PRINCIPALES
+         ============================================================================ -->
+    <style>
+        /* -------------------------------------------------------------------------
+           RESETEO Y CONFIGURACIÓN BASE
+           ------------------------------------------------------------------------- */
+        
+        /* Reset universal: elimina márgenes y padding por defecto de todos los elementos */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* 
+         * VARIABLES CSS (Custom Properties)
+         * Definen la paleta de colores del sitio para mantener consistencia visual
+         * y facilitar cambios globales de tema.
+         * 
+         * --primary: Naranja cálido - Color principal para CTAs y acentos
+         * --secondary: Azul oscuro - Color corporativo secundario
+         * --accent: Melocotón claro - Color de acento para gradientes
+         * --dark: Azul muy oscuro/casi negro - Para textos y fondos oscuros
+         * --light: Gris muy claro - Fondo principal del sitio
+         * --white: Blanco puro - Para contrastes
+         */
+        :root {
+            --primary: #FF6B35;
+            --secondary: #004E89;
+            --accent: #F7C59F;
+            --dark: #1A1A2E;
+            --light: #F8F9FA;
+            --white: #FFFFFF;
+        }
+
+        /* Estilos base del body: tipografía, color de texto y fondo */
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--light);
+        }
+
+        /* -------------------------------------------------------------------------
+           HEADER / NAVEGACIÓN
+           ------------------------------------------------------------------------- */
+        
+        /* 
+         * Header fijo en la parte superior
+         * - position: fixed: Mantiene el header visible al hacer scroll
+         * - z-index: 1000: Asegura que esté por encima de otros elementos
+         * - box-shadow: Sombra sutil para dar profundidad
+         */
+        header {
+            background: linear-gradient(135deg, var(--dark) 0%, var(--secondary) 100%);
+            color: var(--white);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        /* 
+         * Contenedor principal que centra el contenido
+         * max-width: 1200px: Ancho máximo para legibilidad
+         * margin: 0 auto: Centrado horizontal
+         * padding: 0 20px: Espaciado lateral en móviles
+         */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Flexbox para alinear logo y menú de navegación */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* 
+         * Logo de la empresa con icono
+         * display: flex: Alinea icono y texto horizontalmente
+         * gap: 10px: Espacio entre icono y texto
+         */
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            font-size: 2rem;
+        }
+
+        /* Menú de navegación principal (desktop) */
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        /* Enlaces del menú con efecto hover */
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        /* 
+         * Botón de menú hamburguesa (solo visible en móvil)
+         * display: none: Oculto por defecto en desktop
+         */
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* -------------------------------------------------------------------------
+           SECCIÓN HERO (BANNER PRINCIPAL)
+           ------------------------------------------------------------------------- */
+        
+        /* 
+         * Sección hero con gradiente de fondo
+         * margin-top: 80px: Compensa la altura del header fijo
+         * position: relative: Para posicionar elementos decorativos
+         * overflow: hidden: Oculta elementos que sobresalgan
+         */
+        .hero {
+            margin-top: 80px;
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--dark) 100%);
+            color: var(--white);
+            padding: 4rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 
+         * Círculo decorativo animado en el fondo del hero
+         * position: absolute: Posicionamiento libre dentro del hero
+         * border-radius: 50%: Crea un círculo perfecto
+         * rgba(): Color con transparencia para efecto sutil
+         */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: rgba(255,107,53,0.1);
+            border-radius: 50%;
+        }
+
+        /* Contenido del hero con z-index para estar sobre el círculo decorativo */
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        /* 
+         * Contenedor de botones de llamada a la acción (CTA)
+         * flex-wrap: wrap: Permite que los botones se apilen en pantallas pequeñas
+         */
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* 
+         * ESTILOS DE BOTONES
+         * Clase base .btn con estilos comunes
+         */
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 50px; /* Bordes completamente redondeados (píldora) */
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Botón primario: fondo naranja con sombra */
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+            box-shadow: 0 4px 15px rgba(255,107,53,0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px); /* Efecto de elevación */
+            box-shadow: 0 6px 20px rgba(255,107,53,0.6);
+        }
+
+        /* Botón secundario: borde blanco transparente */
+        .btn-secondary {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid var(--white);
+        }
+
+        .btn-secondary:hover {
+            background: var(--white);
+            color: var(--dark);
+        }
+
+        /* -------------------------------------------------------------------------
+           SECCIÓN DE CATEGORÍAS
+           ------------------------------------------------------------------------- */
+        
+        .categories {
+            padding: 4rem 0;
+            background: var(--white);
+        }
+
+        /* 
+         * Título de sección con línea decorativa inferior
+         * ::after crea la línea naranja debajo del título
+         */
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--dark);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--primary);
+            margin: 1rem auto;
+            border-radius: 2px;
+        }
+
+        /* 
+         * Grid de categorías: diseño responsive
+         * auto-fit: Ajusta automáticamente el número de columnas
+         * minmax(300px, 1fr): Cada tarjeta mínimo 300px, máximo 1 fracción
+         */
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        /* 
+         * Tarjeta de categoría individual
+         * overflow: hidden: Oculta contenido que sobresalga de los bordes redondeados
+         * cursor: pointer: Indica que es clickeable
+         */
+        .category-card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        /* Efecto hover: elevación y sombra más pronunciada */
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        /* Área de imagen/icono de la categoría */
+        .category-img {
+            height: 200px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: var(--white);
+        }
+
+        /* Contenedor de información textual */
+        .category-info {
+            padding: 1.5rem;
+        }
+
+        .category-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .category-info p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        /* Etiqueta de categoría (badge) */
+        .category-tag {
+            display: inline-block;
+            background: var(--primary);
+            color: var(--white);
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-top: 1rem;
+            font-weight: 600;
+        }
+
+        /* -------------------------------------------------------------------------
+           SECCIÓN DE PRODUCTOS DESTACADOS
+           ------------------------------------------------------------------------- */
+        
+        .products-preview {
+            padding: 4rem 0;
+            background: var(--light);
+        }
+
+        /* Grid de productos con columnas más pequeñas */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        /* Tarjeta de producto individual */
+        .product-card {
+            background: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        /* 
+         * Imagen/área visual del producto
+         * position: relative: Para posicionar el badge
+         */
+        .product-img {
+            height: 180px;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: var(--secondary);
+            position: relative;
+        }
+
+        /* 
+         * Badge de producto (POPULAR, NUEVO, etc.)
+         * position: absolute: Posicionado en esquina superior derecha
+         */
+        .product-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--primary);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-info h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .product-price {
+            font-size: 1.3rem;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .product-desc {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+
+        /* -------------------------------------------------------------------------
+           SECCIÓN DEL CATÁLOGO (GOOGLE SHEETS)
+           ------------------------------------------------------------------------- */
+        
+        .catalog-section {
+            padding: 4rem 0;
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--dark) 100%);
+            color: var(--white);
+            text-align: center;
+        }
+
+        .catalog-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .catalog-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        /* 
+         * Botón especial para Google Sheets
+         * Color verde característico de Google Sheets (#0F9D58)
+         */
+        .sheets-btn {
+            background: #0F9D58;
+            color: white;
+            padding: 1.2rem 3rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(15,157,88,0.4);
+        }
+
+        .sheets-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(15,157,88,0.6);
+        }
+
+        /* -------------------------------------------------------------------------
+           BOTÓN FLOTANTE DE WHATSAPP
+           ------------------------------------------------------------------------- */
+        
+        /* 
+         * Botón fijo en esquina inferior derecha
+         * position: fixed: Siempre visible al hacer scroll
+         * z-index: 999: Alto nivel de apilamiento
+         */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #25D366; /* Color oficial de WhatsApp */
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 999;
+            text-decoration: none;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 30px rgba(37,211,102,0.6);
+        }
+
+        /* -------------------------------------------------------------------------
+           FOOTER (PIE DE PÁGINA)
+           ------------------------------------------------------------------------- */
+        
+        footer {
+            background: var(--dark);
+            color: var(--white);
+            padding: 3rem 0 1rem;
+        }
+
+        /* Grid de 3 columnas para el contenido del footer */
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .footer-section p, .footer-section a {
+            color: #aaa;
+            text-decoration: none;
+            line-height: 2;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary);
+        }
+
+        /* Iconos de redes sociales */
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        /* Barra inferior del footer con copyright */
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #666;
+        }
+
+        /* -------------------------------------------------------------------------
+           MEDIA QUERIES (DISEÑO RESPONSIVE)
+           ------------------------------------------------------------------------- */
+        
+        /* 
+         * Breakpoint para tablets y móviles (max-width: 768px)
+         * Oculta el menú de navegación y muestra el menú hamburguesa
+         * Reduce tamaños de fuente para mejor legibilidad en pantallas pequeñas
+         */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none; /* Oculta menú de navegación en móvil */
+            }
+
+            .mobile-menu {
+                display: block; /* Muestra botón hamburguesa */
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .category-grid {
+                grid-template-columns: 1fr; /* Una columna en móvil */
+            }
+        }
+
+        /* -------------------------------------------------------------------------
+           ANIMACIONES
+           ------------------------------------------------------------------------- */
+        
+        /* 
+         * Animación de entrada: fadeInUp
+         * Elemento aparece desde abajo con fade
+         */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Clase para aplicar la animación */
+        .fade-in {
+            animation: fadeInUp 0.8s ease-out;
+        }
+    </style>
+</head>
+
+<!-- ============================================================================
+     CONTENIDO HTML DEL SITIO
+     ============================================================================ -->
+<body>
+
+    <!-- ========================================================================
+         HEADER / NAVEGACIÓN PRINCIPAL
+         ======================================================================== -->
+    <header>
+        <nav class="container">
+            <!-- Logo con enlace a inicio -->
+            <a href="#" class="logo">
+                <i class="fas fa-store"></i>
+                SOLUVENCON
+            </a>
+            
+            <!-- Menú de navegación (desktop) -->
+            <ul class="nav-links">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#categorias">Categorías</a></li>
+                <li><a href="#productos">Productos</a></li>
+                <li><a href="#catalogo">Catálogo</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+            
+            <!-- Botón de menú móvil (hamburguesa) -->
+            <div class="mobile-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ========================================================================
+         SECCIÓN HERO (BANNER PRINCIPAL)
+         Presentación de la empresa con llamadas a la acción
+         ======================================================================== -->
+    <section class="hero" id="inicio">
+        <div class="container hero-content fade-in">
+            <h1>Todo para tu hogar y trabajo</h1>
+            <p>Cacharrería, ferretería y artículos de bazar. Precios mayoristas y al detal. ¡Calidad garantizada!</p>
+            
+            <!-- Botones de llamada a la acción -->
+            <div class="cta-buttons">
+                <a href="#catalogo" class="btn btn-primary">
+                    <i class="fas fa-book-open"></i>
+                    Ver Catálogo Completo
+                </a>
+                <a href="https://wa.me/573005005306" class="btn btn-secondary" target="_blank">
+                    <i class="fab fa-whatsapp"></i>
+                    Escríbenos por WhatsApp
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================================================
+         SECCIÓN DE CATEGORÍAS
+         Muestra las 3 categorías principales de productos
+         ======================================================================== -->
+    <section class="categories" id="categorias">
+        <div class="container">
+            <h2 class="section-title">Nuestras Categorías</h2>
+            
+            <div class="category-grid">
+                <!-- Categoría 1: Belleza -->
+                <div class="category-card">
+                    <div class="category-img">
+                        <i class="fas fa-pump-soap"></i>
+                    </div>
+                    <div class="category-info">
+                        <h3>Cosmetiqueras y Espejos</h3>
+                        <p>Organizadores de maquillaje, espejos de mano y de pie, accesorios de belleza.</p>
+                        <span class="category-tag">Belleza</span>
+                    </div>
+                </div>
+
+                <!-- Categoría 2: Cocina -->
+                <div class="category-card">
+                    <div class="category-img">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <div class="category-info">
+                        <h3>Cubiertos y Vajilla</h3>
+                        <p>Cucharas, tenedores, cuchillos, platos, pocillos, juegos de vajilla completa.</p>
+                        <span class="category-tag">Cocina</span>
+                    </div>
+                </div>
+
+                <!-- Categoría 3: Ferretería -->
+                <div class="category-card">
+                    <div class="category-img">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <div class="category-info">
+                        <h3>Herramientas</h3>
+                        <p>Llaves de boca fija, martillos, chipotes, destornilladores, alicates y más.</p>
+                        <span class="category-tag">Ferretería</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================================================
+         SECCIÓN DE PRODUCTOS DESTACADOS
+         Muestra 6 productos populares con precios
+         ======================================================================== -->
+    <section class="products-preview" id="productos">
+        <div class="container">
+            <h2 class="section-title">Productos Destacados</h2>
+            
+            <div class="product-grid">
+                <!-- Producto 1: Llaves -->
+                <div class="product-card">
+                    <div class="product-img">
+                        <i class="fas fa-toolbox"></i>
+                        <span class="product-badge">POPULAR</span>
+                    </div>
+                    <div class="product-info">
+                        <h4>Set de Llaves Mixtas</h4>
+                        <div class="product-price">Desde $15.000</div>
+                        <p class="product-desc">Juego de llaves fijas de alta resistencia</p>
+                    </div>
+                </div>
+
+                <!-- Producto 2: Espejo -->
+                <div class="product-card">
+                    <div class="product-img">
+                        <i class="fas fa-mirror"></i>
+                        <span class="product-badge">NUEVO</span>
+                    </div>
+                    <div class="product-info">
+                        <h4>Espejo de Tocador</h4>
+                        <div class="product-price">Desde $25.000</div>
+                        <p class="product-desc">Espejo con luz LED integrada</p>
+                    </div>
+                </div>
+
+                <!-- Producto 3: Cubiertos -->
+                <div class="product-card">
+                    <div class="product-img">
+                        <i class="fas fa-utensil-spoon"></i>
+                    </div>
+                    <div class="product-info">
+                        <h4>Juego de Cubiertos x24</h4>
+                        <div class="product-price">Desde $18.000</div>
+                        <p class="product-desc">Acero inoxidable, servicio completo</p>
+                    </div>
+                </div>
+
+                <!-- Producto 4: Martillo -->
+                <div class="product-card">
+                    <div class="product-img">
+                        <i class="fas fa-hammer"></i>
+                    </div>
+                    <div class="product-info">
+                        <h4>Martillo de Uña</h4>
+                        <div class="product-price">Desde $12.000</div>
+                        <p class="product-desc">Cabeza de acero forjado, mango ergonómico</p>
+                    </div>
+                </div>
+
+                <!-- Producto 5: Cosmetiquera -->
+                <div class="product-card">
+                    <div class="product-img">
+                        <i class="fas fa-box-open"></i>
+                    </div>
+                    <div class="product-info">
+                        <h4>Cosmetiquera Grande</h4>
+                        <div class="product-price">Desde $22.000</div>
+                        <p class="product-desc">Múltiples compartimentos, material impermeable</p>
+                    </div>
+                </div>
+
+                <!-- Producto 6: Pocillos -->
+                <div class="product-card">
+                    <div class="product-img">
+                        <i class="fas fa-coffee"></i>
+                    </div>
+                    <div class="product-info">
+                        <h4>Set de Pocillos x6</h4>
+                        <div class="product-price">Desde $16.000</div>
+                        <p class="product-desc">Cerámica resistente, varios diseños</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================================================
+         SECCIÓN DEL CATÁLOGO EN GOOGLE SHEETS
+         Enlace al inventario completo
+         ======================================================================== -->
+    <section class="catalog-section" id="catalogo">
+        <div class="container">
+            <h2>¿Necesitas ver todo el inventario?</h2>
+            <p>Accede a nuestro catálogo completo en Google Sheets con precios actualizados y disponibilidad en tiempo real.</p>
+            
+            <!-- IMPORTANTE: Reemplazar "TU_ID_AQUI" con el ID real del Google Sheet -->
+            <a href="https://sites.google.com/view/soluvencon/inicio" target="_blank" class="sheets-btn">
+                <i class="fas fa-file-excel"></i>
+                Abrir Catálogo en Google Sheets
+            </a>
+        </div>
+    </section>
+
+    <!-- ========================================================================
+         FOOTER (PIE DE PÁGINA)
+         Información de contacto y redes sociales
+         ======================================================================== -->
+    <footer id="contacto">
+        <div class="container">
+            <div class="footer-content">
+                <!-- Columna 1: Sobre la empresa -->
+                <div class="footer-section">
+                    <h3>SOLUVENCON</h3>
+                    <p>Soluvencon ofrece una variedad de productos como bolsos para estudiantes, artículos de cacharrería, utensilios de cocina, herramientas y accesorios prácticos para el hogar y el trabajo.</p>
+                </div>
+                
+                <!-- Columna 2: Información de contacto -->
+                <div class="footer-section">
+                    <h3>Contacto</h3>
+                    <p><i class="fas fa-phone"></i> +57 3005005306</p>
+                    <p><i class="fas fa-envelope"></i> soluvencon@gmail.com</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Rionegro ant.</p>
+                </div>
+                
+                <!-- Columna 3: Redes sociales -->
+                <div class="footer-section">
+                    <h3>Síguenos</h3>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/share/1KBaaXVBQV/" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/soluvencon/" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.tiktok.com/@soluvencon" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Barra de copyright -->
+            <div class="footer-bottom">
+                <p>&copy; 2024 SOLUVENCON. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========================================================================
+         BOTÓN FLOTANTE DE WHATSAPP
+         Siempre visible para contacto rápido
+         ======================================================================== -->
+    <!-- IMPORTANTE: Reemplazar "573XXXXXXXXX" con el número de WhatsApp real -->
+    <a href="https://wa.me/573005005306" class="whatsapp-float" target="_blank" title="Escríbenos por WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+</body>
 </html>
