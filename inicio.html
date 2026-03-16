@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<!-- 
+  ============================================================================
+  SOLUVENCON - Sitio Web de Cacharrería y Ferretería
+  ============================================================================
+  Descripción: Catálogo de productos para cacharrería, ferretería y bazar.
+               Incluye secciones de categorías, productos destacados y 
+               enlaces a catálogo en Google Sheets y WhatsApp.
+  Autor: [Tu nombre]
+  Versión: 1.0
+  ============================================================================
+-->
+<html lang="es">
+<head>
+    <!-- Metadatos básicos del documento -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO: Título y descripción para motores de búsqueda -->
+    <title>SOLUVENCON - Cacharrería y Ferretería | Catálogo de Productos</title>
+    <meta name="description" content="Cacharrería SOLUVENCON - Cosmetiqueras, espejos, cubiertos, vajilla, herramientas, llaves, martillos y más. Precios mayoristas y al detal.">
+    
+    <!-- 
+      FUENTES EXTERNAS
+      - Google Fonts: Poppins (pesos 300, 400, 600, 700)
+      - Font Awesome 6.4.0: Iconos vectoriales
+    -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- ============================================================================
+         HOJA DE ESTILOS EXTERNA
+         ============================================================================ -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<!-- ============================================================================
+     CONTENIDO HTML DEL SITIO
+     ============================================================================ -->
+<body>
+
+    <!-- ========================================================================
+         HEADER / NAVEGACIÓN PRINCIPAL
+         ======================================================================== -->
+    <header>
+        <nav class="container">
+            <!-- Logo con enlace a inicio -->
+            <a href="#" class="logo">
+                <i class="fas fa-store"></i>
+                SOLUVENCON
+            </a>
+            
+            <!-- Menú de navegación (desktop) -->
+            <ul class="nav-links">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#categorias">Categorías</a></li>
+                <li><a href="#productos">Productos</a></li>
+                <li><a href="#catalogo">Catálogo</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+            
+             <!-- Menú de navegación (pagina dentro de mi sitio) -->
+             
+
+             
+            <!-- Botón de menú móvil (hamburguesa) -->
+            <div class="mobile-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ========================================================================
+         SECCIÓN HERO (BANNER PRINCIPAL)
+         Presentación de la empresa con llamadas a la acción
+         ======================================================================== -->
+    <section class="hero" id="inicio">
+        <div class="container hero-content fade-in">
+            <h1>Todo para tu hogar y trabajo</h1>
+            <p>Cacharrería, ferretería y artículos de bazar. Precios mayoristas y al detal. ¡Calidad garantizada!</p>
+            
+            <!-- Botones de llamada a la acción -->
+            <div class="cta-buttons">
+                <a href="#catalogo" class="btn btn-primary">
+                    <i class="fas fa-book-open"></i>
+                    Ver Catálogo Completo
+                </a>
+                <a href="https://wa.me/573005005306" class="btn btn-secondary" target="_blank">
+                    <i class="fab fa-whatsapp"></i>
+                    Escríbenos por WhatsApp
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================================================
+         SECCIÓN DE CATEGORÍAS
+         Muestra las 3 categorías principales de productos
+         ======================================================================== -->
+    <section class="categories" id="categorias">
+        <div class="container">
+            <h2 class="section-title">Nuestras Categorías</h2>
+            
+            <div class="category-grid"> 
+                <!-- Categoría 1: Belleza -->
+                <div class="category-card">
+                    <div class="category-img">
+                        <i class="fas fa-pump-soap"></i>
+                    </div>
+                    <div class="category-info">
+                        <!-- Menú de navegación (pagina dentro de mi sitio) -->
+                        <a href="./cosmetiqueras.html"><h3>Cosmetiqueras y Espejos</h3></a>
+                        <p>Organizadores de maquillaje, espejos de mano y de pie, accesorios de belleza.</p>
+                        <span class="category-tag">Belleza</span>
+                    </div>
+                </div>
+
+                <!-- Categoría 2: Cocina -->
+                <div class="category-card">
+                    <div class="category-img">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <div class="category-info">
+                        <h3>Cubiertos y Vajilla</h3>
+                        <p>Cucharas, tenedores, cuchillos, platos, pocillos, juegos de vajilla completa.</p>
+                        <span class="category-tag">Cocina</span>
+                    </div>
+                </div>
+
+                <!-- Categoría 3: Ferretería -->
+                <div class="category-card">
+                    <div class="category-img">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <div class="category-info">
+                        <h3>Herramientas</h3>
+                        <p>Llaves de boca fija, martillos, chipotes, destornilladores, alicates y más.</p>
+                        <span class="category-tag">Ferretería</span>
+                    </div>
+                </div>
+
+                <!-- Categoría 4: Morrales -->
+                <div class="category-card">
+                    <div class="category-img">
+                        <i class="fas fa-backpacks"></i>
+                    </div>
+                    <div class="category-info">
+                        <h3>Morrales</h3>
+                        <p>Bolsos de dama, bolsos de niño, bolsos de niña y más.</p>
+                        <span class="category-tag">Morrales</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================================================
+         SECCIÓN DE PRODUCTOS DESTACADOS
+         Muestra 6 productos populares con precios
+         ======================================================================== -->
+    <section class="products-preview" id="productos">
+        <div class="container">
+            <h2 class="section-title">Productos Destacados</h2>
+            
+            <div class="product-grid">
+                <!-- Producto 1: Llaves -->
+                <div class="product-card">
+                    <div class="product-img">
+                        <i class="fas fa-toolbox"></i>
+                        <span class="product-badge">POPULAR</span>
+                    </div>
+                    <div class="product-info">
+                        <h4>Set de Llaves Mixtas</h4>
+                        <div class="product-price">Desde $15.000</div>
+                        <p class="product-desc">Juego de llaves fijas de alta resistencia</p>
+                    </div>
+                </div>
+
+                <!-- Producto 2: Espejo -->
+                <div class="product-card">
+                    <div class="product-img">
+                        <i class="fas fa-mirror"></i>
+                        <span class="product-badge">NUEVO</span>
+                    </div>
+                    <div class="product-info">
+                        <h4>Espejo de Tocador</h4>
+                        <div class="product-price">Desde $25.000</div>
+                        <p class="product-desc">Espejo con luz LED integrada</p>
+                    </div>
+                </div>
+
+                <!-- Producto 3: Cubiertos -->
+                <div class="product-card">
+                    <div class="product-img">
+                        <i class="fas fa-utensil-spoon"></i>
+                    </div>
+                    <div class="product-info">
+                        <h4>Juego de Cubiertos x24</h4>
+                        <div class="product-price">Desde $18.000</div>
+                        <p class="product-desc">Acero inoxidable, servicio completo</p>
+                    </div>
+                </div>
+
+                <!-- Producto 4: Martillo -->
+                <div class="product-card">
+                    <div class="product-img">
+                        <i class="fas fa-hammer"></i>
+                    </div>
+                    <div class="product-info">
+                        <h4>Martillo de Uña</h4>
+                        <div class="product-price">Desde $12.000</div>
+                        <p class="product-desc">Cabeza de acero forjado, mango ergonómico</p>
+                    </div>
+                </div>
+
+                <!-- Producto 5: Cosmetiquera -->
+                <div class="product-card">
+                    <div class="product-img">
+                        <i class="fas fa-box-open"></i>
+                    </div>
+                    <div class="product-info">
+                        <h4>Cosmetiquera Grande</h4>
+                        <div class="product-price">Desde $22.000</div>
+                        <p class="product-desc">Múltiples compartimentos, material impermeable</p>
+                    </div>
+                </div>
+
+                <!-- Producto 6: Pocillos -->
+                <div class="product-card">
+                    <div class="product-img">
+                        <i class="fas fa-coffee"></i>
+                    </div>
+                    <div class="product-info">
+                        <h4>Set de Pocillos x6</h4>
+                        <div class="product-price">Desde $16.000</div>
+                        <p class="product-desc">Cerámica resistente, varios diseños</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================================================
+         SECCIÓN DEL CATÁLOGO EN GOOGLE SHEETS
+         Enlace al inventario completo
+         ======================================================================== -->
+    <section class="catalog-section" id="catalogo">
+        <div class="container">
+            <h2>¿Necesitas ver todo el inventario?</h2>
+            <p>Accede a nuestro catálogo completo en Google Sheets con precios actualizados y disponibilidad en tiempo real.</p>
+            
+            <!-- IMPORTANTE: Reemplazar "TU_ID_AQUI" con el ID real del Google Sheet -->
+            <a href="https://sites.google.com/view/soluvencon/inicio" target="_blank" class="sheets-btn">
+                <i class="fas fa-file-excel"></i>
+                Abrir Catálogo en Google Sheets
+            </a>
+        </div>
+    </section>
+
+    <!-- ========================================================================
+         FOOTER (PIE DE PÁGINA)
+         Información de contacto y redes sociales
+         ======================================================================== -->
+    <footer id="contacto">
+        <div class="container">
+            <div class="footer-content">
+                <!-- Columna 1: Sobre la empresa -->
+                <div class="footer-section">
+                    <h3>SOLUVENCON</h3>
+                    <p>Soluvencon ofrece una variedad de productos como bolsos para estudiantes, artículos de cacharrería, utensilios de cocina, herramientas y accesorios prácticos para el hogar y el trabajo.</p>
+                </div>
+                
+                <!-- Columna 2: Información de contacto -->
+                <div class="footer-section">
+                    <h3>Contacto</h3>
+                    <p><i class="fas fa-phone"></i> +57 3005005306</p>
+                    <p><i class="fas fa-envelope"></i> soluvencon@gmail.com</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Rionegro ant.</p>
+                </div>
+                
+                <!-- Columna 3: Redes sociales -->
+                <div class="footer-section">
+                    <h3>Síguenos</h3>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/share/1KBaaXVBQV/" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/soluvencon/" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.tiktok.com/@soluvencon" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Barra de copyright -->
+            <div class="footer-bottom">
+                <p>&copy; 2024 SOLUVENCON. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========================================================================
+         BOTÓN FLOTANTE DE WHATSAPP
+         Siempre visible para contacto rápido
+         ======================================================================== -->
+    <!-- IMPORTANTE: Reemplazar "573XXXXXXXXX" con el número de WhatsApp real -->
+    <a href="https://wa.me/573005005306" class="whatsapp-float" target="_blank" title="Escríbenos por WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+    <!-- ===========================================================
+         ESTE ES EL SCRIPT DEL MENU EN VERSIO MOVIL 
+         =========================================================-->
+    <script>
+
+        const menuBtn = document.querySelector(".mobile-menu");
+        const navLinks = document.querySelector(".nav-links");
+
+         menuBtn.addEventListener("click", () => {
+
+         if(navLinks.style.display === "flex"){
+        navLinks.style.display = "none";
+         } else {
+        navLinks.style.display = "flex";
+        navLinks.style.flexDirection = "column";
+        navLinks.style.position = "absolute";
+        navLinks.style.top = "70px";
+        navLinks.style.right = "20px";
+        navLinks.style.background = "#1A1A2E";
+        navLinks.style.padding = "20px";
+        navLinks.style.borderRadius = "10px";
+       }
+      });
+
+     </script>
+
+
+</body>
+</html>
