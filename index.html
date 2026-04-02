@@ -6,7 +6,7 @@
   Descripción: Catálogo de productos para cacharrería, ferretería y bazar.
                Incluye secciones de categorías, productos destacados y 
                enlaces a catálogo en Google Sheets y WhatsApp.
-  Autor: [Tu nombre]
+  Autor: SOLUVENCON
   Versión: 1.0
   ============================================================================
 -->
@@ -17,8 +17,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- SEO: Título y descripción para motores de búsqueda -->
-    <title>SOLUVENCON - Cacharrería y Ferretería | Catálogo de Productos</title>
-    <meta name="description" content="Cacharrería SOLUVENCON - Cosmetiqueras, espejos, cubiertos, vajilla, herramientas, llaves, martillos y más. Precios mayoristas y al detal.">
+    <title>SOLUVENCON - Cacharrería y Ferretería | Productos Herramientas Accesorios Utensilios Morrales</title>
+    <meta name="description" content="SOLUVENCON - Utensilios, Herramientas, Morrales. Precios mayoristas y al detal.">
     
     <!-- 
       FUENTES EXTERNAS
@@ -43,12 +43,13 @@
          HEADER / NAVEGACIÓN PRINCIPAL
          ======================================================================== -->
     <header>
-        <nav class="container">
-            <!-- Logo con enlace a inicio -->
-            <a href="#" class="logo">
-                <i class="fas fa-store"></i>
-                SOLUVENCON
-            </a>
+  <nav class="container">
+    
+    <a href="#" class="logo">
+    <img src="imagenes/logo-1.png" alt="SOLUVENCON Logo" class="logo-img">
+    </a>
+
+ 
             
             <!-- Menú de navegación (desktop) -->
             <ul class="nav-links">
@@ -59,8 +60,6 @@
                 <li><a href="#contacto">Contacto</a></li>
             </ul>
             
-            
-             
             <!-- Botón de menú móvil (hamburguesa) -->
             <div class="mobile-menu">
                 <i class="fas fa-bars"></i>
@@ -93,7 +92,7 @@
 
     <!-- ========================================================================
          SECCIÓN DE CATEGORÍAS
-         Muestra las 3 categorías principales de productos
+         Muestra las 4 categorías principales de productos
          ======================================================================== -->
     <section class="categories" id="categorias">
         <div class="container">
@@ -103,49 +102,56 @@
                 <!-- Categoría 1: Belleza -->
                 <div class="category-card">
                     <div class="category-img">
-                        <i class="fas fa-pump-soap"></i>
+                        <img src="imagenes/Accesorios.png">
                     </div>
                     <div class="category-info">
                         <!-- Menú de navegación (pagina dentro de mi sitio) -->
-                        <a href="./cosmetiqueras.html"><h3>Cosmetiqueras y Espejos</h3></a>
-                        <p>Organizadores de maquillaje, espejos de mano y de pie, accesorios de belleza.</p>
-                        <span class="category-tag">Belleza</span>
+                        <a href="accesorios.html"><h3>Accesorios</h3>
+                           <p>Organizadores de maquillaje, espejos de mano y de pie, accesorios de belleza.</p>
+                           <span class="category-tag">Belleza</span>
+                        </a>
                     </div>
                 </div>
 
                 <!-- Categoría 2: Cocina -->
                 <div class="category-card">
                     <div class="category-img">
-                        <i class="fas fa-utensils"></i>
+                        <img src="imagenes/Utensilios.png">
                     </div>
                     <div class="category-info">
-                        <h3>Cubiertos y Vajilla</h3>
-                        <p>Cucharas, tenedores, cuchillos, platos, pocillos, juegos de vajilla completa.</p>
-                        <span class="category-tag">Cocina</span>
+                        <!-- Menú de navegación (pagina dentro de mi sitio) -->
+                        <a href="utensilios.html"><h3>Utensilios</h3>                        
+                         <p>Cucharas, tenedores, cuchillos, platos, pocillos, juegos de vajilla completa.</p>
+                         <span class="category-tag">Cocina</span>
+                        </a>
                     </div>
                 </div>
 
                 <!-- Categoría 3: Ferretería -->
                 <div class="category-card">
                     <div class="category-img">
-                        <i class="fas fa-tools"></i>
+                        <img src="imagenes/Herramientas.png">
                     </div>
                     <div class="category-info">
-                        <h3>Herramientas</h3>
-                        <p>Llaves de boca fija, martillos, chipotes, destornilladores, alicates y más.</p>
-                        <span class="category-tag">Ferretería</span>
+                        <!-- Menú de navegación (pagina dentro de mi sitio) -->
+                        <a href="herramientas.html"><h3>Herramientas</h3>                       
+                         <p>Llaves de boca fija, martillos, chipotes, destornilladores, alicates y más.</p>
+                         <span class="category-tag">Ferretería</span>
+                        </a>
                     </div>
                 </div>
 
                 <!-- Categoría 4: Morrales -->
                 <div class="category-card">
                     <div class="category-img">
-                        <i class="fas fa-backpacks"></i>
+                        <img src="imagenes/Morrales.png">
                     </div>
                     <div class="category-info">
-                        <h3>Morrales</h3>
-                        <p>Bolsos de dama, bolsos de niño, bolsos de niña y más.</p>
-                        <span class="category-tag">Morrales</span>
+                        <!-- Menú de navegación (pagina dentro de mi sitio) -->
+                        <a href="morrales.html"><h3>Morrales</h3>
+                         <p>Bolsos de dama, bolsos de niño, bolsos de niña y más.</p>
+                         <span class="category-tag">Morrales</span>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -273,7 +279,7 @@
                     <h3>Contacto</h3>
                     <p><i class="fas fa-phone"></i> +57 3005005306</p>
                     <p><i class="fas fa-envelope"></i> soluvencon@gmail.com</p>
-                    <p><i class="fas fa-map-marker-alt"></i> Rionegro ant.</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Rionegro, Ant.</p>
                 </div>
                 
                 <!-- Columna 3: Redes sociales -->
@@ -298,36 +304,32 @@
          BOTÓN FLOTANTE DE WHATSAPP
          Siempre visible para contacto rápido
          ======================================================================== -->
-    <!-- IMPORTANTE: Reemplazar "573XXXXXXXXX" con el número de WhatsApp real -->
     <a href="https://wa.me/573005005306" class="whatsapp-float" target="_blank" title="Escríbenos por WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
+
     <!-- ===========================================================
-         ESTE ES EL SCRIPT DEL MENU EN VERSIO MOVIL 
+         ESTE ES EL SCRIPT DEL MENU EN VERSION MOVIL 
          =========================================================-->
     <script>
-
         const menuBtn = document.querySelector(".mobile-menu");
         const navLinks = document.querySelector(".nav-links");
 
-         menuBtn.addEventListener("click", () => {
-
-         if(navLinks.style.display === "flex"){
-        navLinks.style.display = "none";
-         } else {
-        navLinks.style.display = "flex";
-        navLinks.style.flexDirection = "column";
-        navLinks.style.position = "absolute";
-        navLinks.style.top = "70px";
-        navLinks.style.right = "20px";
-        navLinks.style.background = "#1A1A2E";
-        navLinks.style.padding = "20px";
-        navLinks.style.borderRadius = "10px";
-       }
-      });
-
-     </script>
-
+        menuBtn.addEventListener("click", () => {
+            if(navLinks.style.display === "flex"){
+                navLinks.style.display = "none";
+            } else {
+                navLinks.style.display = "flex";
+                navLinks.style.flexDirection = "column";
+                navLinks.style.position = "absolute";
+                navLinks.style.top = "70px";
+                navLinks.style.right = "20px";
+                navLinks.style.background = "#1A1A2E";
+                navLinks.style.padding = "20px";
+                navLinks.style.borderRadius = "10px";
+            }
+        });
+    </script>
 
 </body>
 </html>
