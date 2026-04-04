@@ -1,11 +1,34 @@
 // ============================================================================
-// SOLUVENCON - SISTEMA DE PRODUCTOS + CARRITO COMPLETO
+// SOLUVENCON - SISTEMA DE PRODUCTOS + CARRITO COMPLETO (CON PERSISTENCIA)
 // ============================================================================
 
 const API_URL = 'https://script.google.com/macros/s/AKfycbyPOK4AA1z-NtnzJF6HyyVBBiZnbjhwNoTbnqsZ-X-Oj8ggJ5bSCHSu3_2M2lnWfxbQdw/exec';
 
 // Estado del carrito
 let carrito = [];
+
+// ============================================================================
+// PERSISTENCIA - Cargar carrito al iniciar cualquier página
+// ============================================================================
+
+document.addEventListener('DOMContentLoaded', function() {
+    const guardado = localStorage.getItem('soluvencon_carrito');
+    if (guardado) {
+        try {
+            carrito = JSON.parse(guardado);
+            console.log('🛒 Carrito recuperado:', carrito.length, 'items');
+            actualizarCarritoUI(); // Muestra la bolita si hay items guardados
+        } catch (e) {
+            console.error('Error cargando carrito:', e);
+            carrito = [];
+        }
+    }
+});
+
+function guardarCarrito() {
+    localStorage.setItem('soluvencon_carrito', JSON.stringify(carrito));
+    console.log('💾 Carrito guardado');
+}
 
 // ============================================================================
 // FUNCIONES DE IMÁGENES (Drive)
@@ -37,7 +60,7 @@ function convertirURLDrive(url) {
 }
 
 // ============================================================================
-// CARGAR PRODUCTOS (CON BOTONES CLICKEABLES PARA CARRITO)
+// CARGAR PRODUCTOS
 // ============================================================================
 
 function inicializarProductos(categoria) {
@@ -149,21 +172,14 @@ function escapeString(str) {
     return str.replace(/'/g, "\\'").replace(/"/g, '\\"');
 }
 
-// 🔴 CORREGIDO: Regex mejorado para capturar el número antes de UND
 function extraerNumero(textoPrecio) {
     if (!textoPrecio) return '0';
     
-    // 🔴 CAMBIO CLAVE: El regex ahora captura 1, 6 o 12 seguido de UND opcionalmente con X
-    // Ejemplos: "6UND X 9.000", "12UND X 19.000", "1UND X 2.400", "6UND 9.000"
     let limpio = textoPrecio
-        .replace(/(?:^|\s)(1|6|12)\s*UND\s*X?\s*/gi, '')  // Quita "6UND X ", "12UND X ", "1UND X "
-        .replace(/[$\s]/g, '')  // Quita $ y espacios
+        .replace(/(?:^|\s)(1|6|12)\s*UND\s*X?\s*/gi, '')
+        .replace(/[$\s]/g, '')
         .trim();
     
-    // Debug para ver qué está pasando
-    console.log('Original:', textoPrecio, '→ Limpio:', limpio);
-    
-    // Formato colombiano: punto=miles, coma=decimal
     if (limpio.includes(',')) {
         limpio = limpio.replace(/\./g, '').replace(',', '.');
     } else {
@@ -174,24 +190,18 @@ function extraerNumero(textoPrecio) {
     return isNaN(num) ? '0' : num.toString();
 }
 
-// 🔴 CORREGIDO: Regex mejorado para mostrar
 function formatearPrecioColombiano(textoPrecio) {
     if (!textoPrecio) return '0';
     
-    // 🔴 CAMBIO CLAVE: Mismo regex mejorado
     let limpio = textoPrecio
         .replace(/(?:^|\s)(1|6|12)\s*UND\s*X?\s*/gi, '')
         .replace(/[$\s]/g, '')
         .trim();
     
-    console.log('Formatear - Original:', textoPrecio, '→ Limpio:', limpio);
-    
-    // Si ya está en formato colombiano válido, devolverlo tal cual
     if (/^\d{1,3}(\.\d{3})+(,\d{1,2})?$/.test(limpio) || /^\d{1,3}(\.\d{3})*$/.test(limpio)) {
         return limpio;
     }
     
-    // Si tiene coma decimal, convertir a formato colombiano
     if (limpio.includes(',')) {
         let partes = limpio.split(',');
         let enteros = partes[0].replace(/\./g, '');
@@ -206,7 +216,6 @@ function formatearPrecioColombiano(textoPrecio) {
     return num.toLocaleString('es-CO').replace(/,/g, '.');
 }
 
-// 🔴 CORREGIDO: Formatea número a formato colombiano para mostrar
 function formatoColombiano(numero) {
     let num = parseFloat(numero);
     if (isNaN(num)) return '0';
@@ -304,6 +313,9 @@ function actualizarCarritoUI() {
             </div>
         `;
         if (totalElement) totalElement.textContent = '$0';
+        
+        // GUARDAR carrito vacío
+        guardarCarrito();
         return;
     }
     
@@ -341,6 +353,19 @@ function actualizarCarritoUI() {
     
     itemsContainer.innerHTML = html;
     if (totalElement) totalElement.textContent = '$' + formatoColombiano(totalGeneral);
+    
+    // 💾 ESTA ES LA LÍNEA CLAVE - Guarda en el navegador cada cambio
+    guardarCarrito();
+}
+
+function vaciarCarrito() {
+    if (carrito.length === 0) return;
+    
+    if (confirm('¿Estás seguro de que deseas vaciar todo el carrito?')) {
+        carrito = [];
+        actualizarCarritoUI();
+        console.log('🗑️ Carrito vaciado');
+    }
 }
 
 function toggleCarrito() {
