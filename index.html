@@ -28,6 +28,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <!-- SweetAlert2 para anuncios emergentes -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <!-- ============================================================================
          HOJA DE ESTILOS EXTERNA
          ============================================================================ -->
@@ -94,69 +97,71 @@
          SECCIÓN DE CATEGORÍAS
          Muestra las 4 categorías principales de productos
          ======================================================================== -->
-    <section class="categories" id="categorias">
-        <div class="container">
-            <h2 class="section-title">Nuestras Categorías</h2>
+   <section class="categories" id="categorias">
+    <div class="container">
+        <h2 class="section-title">Nuestras Categorías</h2>
+        
+        <div class="category-grid">
             
-            <div class="category-grid"> 
-                <!-- Categoría 1: Belleza -->
-                <div class="category-card">
+            <!-- Categoría 1: Accesorios -->
+            <div class="category-card">
+                <a href="accesorios.html" class="category-link">
                     <div class="category-img">
-                        <img src="imagenes/Accesorios.png">
+                        <img src="imagenes/Accesorios.png" alt="Accesorios">
                     </div>
                     <div class="category-info">
-                        <!-- Menú de navegación (pagina dentro de mi sitio) -->
-                        <a href="accesorios.html"><h3>Accesorios</h3>
-                           <p>Organizadores de maquillaje, espejos de mano y de pie, accesorios de belleza.</p>
-                           <span class="category-tag">Belleza</span>
-                        </a>
+                        <h3>Accesorios</h3>
+                        <p>Organizadores de maquillaje, espejos de mano y de pie, accesorios de belleza.</p>
+                        <span class="category-tag">Belleza</span>
                     </div>
-                </div>
-
-                <!-- Categoría 2: Cocina -->
-                <div class="category-card">
-                    <div class="category-img">
-                        <img src="imagenes/Utensilios.png">
-                    </div>
-                    <div class="category-info">
-                        <!-- Menú de navegación (pagina dentro de mi sitio) -->
-                        <a href="utensilios.html"><h3>Utensilios</h3>                        
-                         <p>Cucharas, tenedores, cuchillos, platos, pocillos, juegos de vajilla completa.</p>
-                         <span class="category-tag">Cocina</span>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Categoría 3: Ferretería -->
-                <div class="category-card">
-                    <div class="category-img">
-                        <img src="imagenes/Herramientas.png">
-                    </div>
-                    <div class="category-info">
-                        <!-- Menú de navegación (pagina dentro de mi sitio) -->
-                        <a href="herramientas.html"><h3>Herramientas</h3>                       
-                         <p>Llaves de boca fija, martillos, chipotes, destornilladores, alicates y más.</p>
-                         <span class="category-tag">Ferretería</span>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Categoría 4: Morrales -->
-                <div class="category-card">
-                    <div class="category-img">
-                        <img src="imagenes/Morrales.png">
-                    </div>
-                    <div class="category-info">
-                        <!-- Menú de navegación (pagina dentro de mi sitio) -->
-                        <a href="morrales.html"><h3>Morrales</h3>
-                         <p>Bolsos de dama, bolsos de niño, bolsos de niña y más.</p>
-                         <span class="category-tag">Morrales</span>
-                        </a>
-                    </div>
-                </div>
+                </a>
             </div>
+
+            <!-- Categoría 2: Utensilios -->
+            <div class="category-card">
+                <a href="utensilios.html" class="category-link">
+                    <div class="category-img">
+                        <img src="imagenes/Utensilios.png" alt="Utensilios">
+                    </div>
+                    <div class="category-info">
+                        <h3>Utensilios</h3>
+                        <p>Cucharas, tenedores, cuchillos, platos, pocillos, juegos de vajilla completa.</p>
+                        <span class="category-tag">Cocina</span>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Categoría 3: Herramientas -->
+            <div class="category-card">
+                <a href="herramientas.html" class="category-link">
+                    <div class="category-img">
+                        <img src="imagenes/Herramientas.png" alt="Herramientas">
+                    </div>
+                    <div class="category-info">
+                        <h3>Herramientas</h3>
+                        <p>Martillos, destornilladores, llaves, equipos para construcción y reparación.</p>
+                        <span class="category-tag">Construcción</span>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Categoría 4: Morrales -->
+            <div class="category-card">
+                <a href="morrales.html" class="category-link">
+                    <div class="category-img">
+                        <img src="imagenes/Morrales.png" alt="Morrales">
+                    </div>
+                    <div class="category-info">
+                        <h3>Morrales</h3>
+                        <p>Bolsos, mochilas, maletines y accesorios de viaje para todas las edades.</p>
+                        <span class="category-tag">Viaje</span>
+                    </div>
+                </a>
+            </div>
+
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- ========================================================================
          SECCIÓN DE PRODUCTOS DESTACADOS
@@ -308,6 +313,57 @@
         <i class="fab fa-whatsapp"></i>
     </a>
 
+    <script>
+    // ANUNCIO EMERGENTE AL CARGAR LA PÁGINA - SOLUVENCON
+    window.addEventListener('load', function() {
+        // Opcional: para que aparezca solo una vez por sesión (descomenta las 2 líneas)
+         if (sessionStorage.getItem('anuncioVisto')) return;
+        
+        Swal.fire({
+            title: '<span style="color:#0a2a36;">🔨¡Bienvenido a SOLUVENCON!</span>',
+            html: `
+                <div style="text-align: left; font-family: 'Poppins', sans-serif;">
+                    <p style="color:#0a2a36;">✅ <strong style="color:#FF6B35;">Ofertas por apertura</strong> - 15% de descuento en herramientas seleccionadas.</p>
+                    <p style="color:#0a2a36;">✅ <strong style="color:#FF6B35;">Envíos gratis</strong> a Santuario y Marinilla en compras > $50.000.</p>
+                  
+                    <p style="margin-top: 12px; color:#137399;">📞 <strong>WhatsApp:</strong> +57 3005005306</p>
+                </div>
+                
+            `, 
+            //descomenta y copia esta parte para agregar un tecto mas al anuncio (recomendado)
+            //<p style="color:#0a2a36;">✅ <strong style="color:#FF6B35;">Catálogo actualizado</strong> en Google Sheets.</p>
+            // === OPCIÓN 1: Usar una imagen real de tu carpeta (recomendado) ===
+            imageUrl: 'imagenes/GORRA-VERDE.jpg',  // <-- CAMBIA por tu imagen real
+            imageWidth: 300,
+            imageHeight: 200,
+            imageAlt: 'Ofertas en herramientas SOLUVENCON',
+            
+            // === OPCIÓN 2: Si NO tienes imagen, usa un icono (descomenta esto y comenta imageUrl) ===
+            // iconHtml: '<i class="fas fa-tools" style="font-size: 64px; color: #FF6B35;"></i>',
+            
+            confirmButtonText: '¡Ver ofertas!',
+            confirmButtonColor: '#FF6B35',      // Tu naranja
+            background: '#F8F9FA',              // Fondo claro
+            icon: 'success',
+            showClass: {
+                popup: 'animate__animated animate__fadeInDown'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOutUp'
+            },
+            allowOutsideClick: false,
+            backdrop: `rgba(10,42,54,0.8)`
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Al hacer clic, va a la sección de productos destacados
+                document.getElementById('productos').scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+        //*se puede comentar
+         sessionStorage.setItem('anuncioVisto', 'true');
+    });
+
+    </script>
     <!-- ===========================================================
          ESTE ES EL SCRIPT DEL MENU EN VERSION MOVIL 
          =========================================================-->

@@ -2,7 +2,7 @@
 // SOLUVENCON - SISTEMA DE PRODUCTOS + CARRITO COMPLETO (CON PERSISTENCIA)
 // ============================================================================
 
-const API_URL = 'https://script.google.com/macros/s/AKfycbyPOK4AA1z-NtnzJF6HyyVBBiZnbjhwNoTbnqsZ-X-Oj8ggJ5bSCHSu3_2M2lnWfxbQdw/exec';
+const API_URL = 'https://script.google.com/macros/s/AKfycbyY97LNWodV9SZM_hBMvF1vgI7oQtJkJY-HP2aJSwaS-_6Cy0dHvsk1TnOBgZ54zxvhzQ/exec';
 
 // Estado del carrito
 let carrito = [];
@@ -109,7 +109,7 @@ function inicializarProductos(categoria) {
                         const precio1Formateado = formatearPrecioColombiano(p.precio_unitario);
                         const precio1Numero = extraerNumero(p.precio_unitario);
                         cuadrosPrecio += `
-                            <div class="caja-precio" onclick="agregarAlCarrito('${productoId}', '${escapeString(p.nombre)}', '${imagenUrl}', 1, '${precio1Numero}', '${p.precio_unitario}')" style="cursor: pointer;">
+                            <div class="caja-precio" onclick="agregarAlCarrito('${productoId}', '${escapeString(p.nombre)}', '${imagenUrl}', 1, '${precio1Numero}', '${p.precio_unitario}', '${p.codigo || ''}')" style="cursor: pointer;">
                                 <span class="cantidad">1 UND</span>
                                 <span class="valor">$${precio1Formateado}</span>
                             </div>
@@ -120,7 +120,7 @@ function inicializarProductos(categoria) {
                         const precio6Formateado = formatearPrecioColombiano(p.precio_6);
                         const precio6Numero = extraerNumero(p.precio_6);
                         cuadrosPrecio += `
-                            <div class="caja-precio" onclick="agregarAlCarrito('${productoId}', '${escapeString(p.nombre)}', '${imagenUrl}', 6, '${precio6Numero}', '${p.precio_unitario}')" style="cursor: pointer;">
+                            <div class="caja-precio" onclick="agregarAlCarrito('${productoId}', '${escapeString(p.nombre)}', '${imagenUrl}', 6, '${precio6Numero}', '${p.precio_unitario}', '${p.codigo || ''}')" style="cursor: pointer;">
                                 <span class="cantidad">6 UND</span>
                                 <span class="valor">$${precio6Formateado}</span>
                             </div>
@@ -131,7 +131,7 @@ function inicializarProductos(categoria) {
                         const precio12Formateado = formatearPrecioColombiano(p.precio_12);
                         const precio12Numero = extraerNumero(p.precio_12);
                         cuadrosPrecio += `
-                            <div class="caja-precio" onclick="agregarAlCarrito('${productoId}', '${escapeString(p.nombre)}', '${imagenUrl}', 12, '${precio12Numero}', '${p.precio_unitario}')" style="cursor: pointer;">
+                            <div class="caja-precio" onclick="agregarAlCarrito('${productoId}', '${escapeString(p.nombre)}', '${imagenUrl}', 12, '${precio12Numero}', '${p.precio_unitario}', '${p.codigo || ''}')" style="cursor: pointer;">
                                 <span class="cantidad">12 UND</span>
                                 <span class="valor">$${precio12Formateado}</span>
                             </div>
@@ -236,8 +236,8 @@ function formatoColombiano(numero) {
 // FUNCIONES DEL CARRITO
 // ============================================================================
 
-function agregarAlCarrito(productoId, nombre, imagen, cantidadPack, precioNumero, precioUnitario) {
-    console.log(`🛒 Agregando: ${nombre} - ${cantidadPack}UND - $${precioNumero}`);
+function agregarAlCarrito(productoId, nombre, imagen, cantidadPack, precioNumero, precioUnitario, codigo) {
+    console.log(`🛒 Agregando: ${nombre} - ${cantidadPack}UND - $${precioNumero} - Código: ${codigo}`);
     
     const existente = carrito.find(item => 
         item.nombre === nombre && item.cantidadPack === cantidadPack
@@ -253,7 +253,8 @@ function agregarAlCarrito(productoId, nombre, imagen, cantidadPack, precioNumero
             cantidadPack: cantidadPack,
             cantidadPacks: 1,
             precioPack: precioNumero,
-            precioUnitario: precioUnitario
+            precioUnitario: precioUnitario,
+            codigo: codigo || 'N/A'
         });
     }
     
@@ -336,6 +337,7 @@ function actualizarCarritoUI() {
                 <div class="carrito-item-info">
                     <div class="carrito-item-nombre">${item.nombre}</div>
                     <div class="carrito-item-detalle">
+                        🔢 ${item.codigo || 'N/A'}<br>
                         ${item.cantidadPacks} pack × ${item.cantidadPack} UND
                         <br>
                         <small>$${precioFormateado} c/u</small>
@@ -401,6 +403,7 @@ function enviarCotizacion() {
         const subtotalFormateado = formatoColombiano(subtotalNum);
         
         mensaje += `*${index + 1}.* ${item.nombre}%0A`;
+        mensaje += `   🔢 Código: ${item.codigo || 'N/A'}%0A`;
         mensaje += `   ${item.cantidadPacks} × ${item.cantidadPack} UND = $${subtotalFormateado}%0A%0A`;
     });
     

@@ -208,7 +208,22 @@ nav {
 /* -------------------------------------------------------------------------
    6. SECCIÓN DE CATEGORÍAS
    ------------------------------------------------------------------------- */
-.categories {
+.category-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;  /* Hace que todo el área sea clickeable */
+}
+
+.category-card {
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.category-card:hover {
+    transform: scale(1.02);
+}
+
+   .categories {
     padding: 4rem 0;
     background: var(--white);
 }
