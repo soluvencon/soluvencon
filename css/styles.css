@@ -1195,3 +1195,59 @@ footer {
         padding: 8px 12px;
     }
 }
+/* ============================================
+   FIX PARA MÓVIL - CONTENIDO CORTADO ABAJO
+   ============================================ */
+
+/* Asegura que el body tenga scroll suave */
+html, body {
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Espacio extra al final de cada página para que el 
+   contenido no quede tapado por el botón de WhatsApp */
+body {
+    padding-bottom: 120px; /* Espacio para WhatsApp flotante */
+}
+
+/* En las páginas de categorías, más espacio aún */
+.products-preview {
+    min-height: 100vh;
+    padding-bottom: 150px !important; /* Fuerza espacio inferior */
+}
+
+/* El grid de productos debe dejar espacio al final */
+.product-grid {
+    margin-bottom: 50px;
+    padding-bottom: 20px;
+}
+
+/* Fix específico para Chrome móvil */
+@media screen and (max-width: 768px) {
+    /* Asegura que el último producto sea visible */
+    .product-grid::after {
+        content: '';
+        display: block;
+        height: 100px; /* Espacio invisible al final */
+    }
+    
+    /* Si hay footer, que no quede pegado al borde */
+    footer {
+        margin-top: 50px;
+        padding-bottom: 100px;
+    }
+}
+
+/* Fix para el botón de WhatsApp que no tape contenido */
+.whatsapp-float {
+    bottom: 20px;
+    right: 20px;
+    z-index: 999;
+}
+
+/* El carrito flotante también necesita espacio */
+.carrito-flotante {
+    bottom: 90px !important; /* Arriba del WhatsApp */
+    z-index: 998;
+}

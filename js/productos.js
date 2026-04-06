@@ -456,3 +456,18 @@ document.addEventListener('keydown', function(event) {
         }
     }
 });
+// Después de cargar todos los productos, agregar espacio al final
+function ajustarAlturaFinal() {
+    const grid = document.getElementById('productos-grid');
+    if (grid) {
+        // Crear un div invisible al final para espacio
+        const espaciador = document.createElement('div');
+        espaciador.style.height = '120px';
+        espaciador.style.width = '100%';
+        espaciador.style.clear = 'both';
+        grid.appendChild(espaciador);
+    }
+}
+
+// Llamar después de cargar productos
+setTimeout(ajustarAlturaFinal, 500);
