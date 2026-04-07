@@ -167,88 +167,256 @@
          SECCIÓN DE PRODUCTOS DESTACADOS
          Muestra 6 productos populares con precios
          ======================================================================== -->
-    <section class="products-preview" id="productos">
-        <div class="container">
-            <h2 class="section-title">Productos Destacados</h2>
-            
-            <div class="product-grid">
-                <!-- Producto 1: Llaves -->
-                <div class="product-card">
-                    <div class="product-img">
-                        <i class="fas fa-toolbox"></i>
-                        <span class="product-badge">POPULAR</span>
-                    </div>
-                    <div class="product-info">
-                        <h4>Set de Llaves Mixtas</h4>
-                        <div class="product-price">Desde $15.000</div>
-                        <p class="product-desc">Juego de llaves fijas de alta resistencia</p>
-                    </div>
+   <!-- ========================================================================
+     SECCIÓN DE PRODUCTOS DESTACADOS CON LIGHTBOX
+     ======================================================================== -->
+<section class="products-preview" id="productos">
+    <div class="container">
+        <h2 class="section-title">Productos Destacados</h2>
+        
+        <div class="product-grid">
+            <!-- Producto 1: Llaves -->
+            <div class="product-card">
+                <div class="product-img" onclick="openLightbox('imagenes/promo_herramienta.png', 'Set de Llaves Mixtas')">
+                    <img src="imagenes/promo_herramienta.png" alt="Llaves">
+                    <span class="product-badge">nuevo</span>
+                    <div class="zoom-icon">🔍</div>
                 </div>
-
-                <!-- Producto 2: Espejo -->
-                <div class="product-card">
-                    <div class="product-img">
-                        <i class="fas fa-mirror"></i>
-                        <span class="product-badge">NUEVO</span>
-                    </div>
-                    <div class="product-info">
-                        <h4>Espejo de Tocador</h4>
-                        <div class="product-price">Desde $25.000</div>
-                        <p class="product-desc">Espejo con luz LED integrada</p>
-                    </div>
+                <div class="product-info">
+                    <h4>Set de Llaves Mixtas</h4>
+                    <div class="product-price">Desde $15.000</div>
+                    <p class="product-desc">Juego de llaves fijas de alta resistencia</p>
                 </div>
+            </div>
 
-                <!-- Producto 3: Cubiertos -->
-                <div class="product-card">
-                    <div class="product-img">
-                        <i class="fas fa-utensil-spoon"></i>
-                    </div>
-                    <div class="product-info">
-                        <h4>Juego de Cubiertos x24</h4>
-                        <div class="product-price">Desde $18.000</div>
-                        <p class="product-desc">Acero inoxidable, servicio completo</p>
-                    </div>
+            <!-- Producto 2: Espejo -->
+            <div class="product-card">
+                <div class="product-img" onclick="openLightbox('imagenes/promo_Espejos.jpg', 'Espejo de Tocador')">
+                    <img src="imagenes/promo_Espejos.jpg" alt="Espejos">
+                    <span class="product-badge">POPULAR</span>
+                    <div class="zoom-icon">🔍</div>
                 </div>
-
-                <!-- Producto 4: Martillo -->
-                <div class="product-card">
-                    <div class="product-img">
-                        <i class="fas fa-hammer"></i>
-                    </div>
-                    <div class="product-info">
-                        <h4>Martillo de Uña</h4>
-                        <div class="product-price">Desde $12.000</div>
-                        <p class="product-desc">Cabeza de acero forjado, mango ergonómico</p>
-                    </div>
-                </div>
-
-                <!-- Producto 5: Cosmetiquera -->
-                <div class="product-card">
-                    <div class="product-img">
-                        <i class="fas fa-box-open"></i>
-                    </div>
-                    <div class="product-info">
-                        <h4>Cosmetiquera Grande</h4>
-                        <div class="product-price">Desde $22.000</div>
-                        <p class="product-desc">Múltiples compartimentos, material impermeable</p>
-                    </div>
-                </div>
-
-                <!-- Producto 6: Pocillos -->
-                <div class="product-card">
-                    <div class="product-img">
-                        <i class="fas fa-coffee"></i>
-                    </div>
-                    <div class="product-info">
-                        <h4>Set de Pocillos x6</h4>
-                        <div class="product-price">Desde $16.000</div>
-                        <p class="product-desc">Cerámica resistente, varios diseños</p>
-                    </div>
+                <div class="product-info">
+                    <h4>Espejo de Tocador</h4>
+                    <div class="product-price">Desde $10.000</div>
+                    <p class="product-desc">Espejo De tocador no touch</p>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
+<!-- LIGHTBOX MODAL -->
+<div id="lightbox" class="lightbox" onclick="closeLightbox()">
+    <span class="lightbox-close">&times;</span>
+    <img id="lightbox-img" class="lightbox-content" src="" alt="">
+    <div id="lightbox-caption" class="lightbox-caption"></div>
+</div>
+
+<style>
+    /* ========================================================================
+   ESTILOS DE PRODUCTOS
+   ======================================================================== */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    padding: 2rem 0;
+}
+
+.product-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+}
+
+.product-img {
+    position: relative;
+    height: 250px;
+    overflow: hidden;
+    cursor: pointer;
+    background: #f8f9fa;
+}
+
+.product-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.product-img:hover img {
+    transform: scale(1.05);
+}
+
+/* Icono de zoom */
+.zoom-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255,255,255,0.9);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.product-img:hover .zoom-icon {
+    opacity: 1;
+}
+
+.product-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #ff6b6b;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.product-info {
+    padding: 1.5rem;
+}
+
+.product-info h4 {
+    margin: 0 0 0.5rem 0;
+    color: #333;
+    font-size: 1.25rem;
+}
+
+.product-price {
+    color: #28a745;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.product-desc {
+    color: #666;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+/* ========================================================================
+   ESTILOS DEL LIGHTBOX
+   ======================================================================== */
+.lightbox {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.9);
+    animation: fadeIn 0.3s ease;
+}
+
+.lightbox.active {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.lightbox-content {
+    max-width: 90%;
+    max-height: 80%;
+    object-fit: contain;
+    border-radius: 8px;
+    animation: zoomIn 0.3s ease;
+}
+
+.lightbox-caption {
+    color: white;
+    margin-top: 1rem;
+    font-size: 1.25rem;
+    text-align: center;
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 40px;
+    color: white;
+    font-size: 3rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.lightbox-close:hover {
+    color: #ff6b6b;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes zoomIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* Cerrar con tecla ESC */
+.lightbox.active {
+    cursor: pointer;
+}
+</style>
+
+<script>
+// Función para abrir el lightbox
+function openLightbox(imgSrc, caption) {
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxCaption = document.getElementById('lightbox-caption');
+    
+    lightboxImg.src = imgSrc;
+    lightboxCaption.textContent = caption;
+    lightbox.classList.add('active');
+    
+    // Prevenir scroll del body
+    document.body.style.overflow = 'hidden';
+}
+
+// Función para cerrar el lightbox
+function closeLightbox() {
+    const lightbox = document.getElementById('lightbox');
+    lightbox.classList.remove('active');
+    
+    // Restaurar scroll del body
+    document.body.style.overflow = 'auto';
+}
+
+// Cerrar con tecla ESC
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        closeLightbox();
+    }
+});
+</script>
+                
+    
     <!-- ========================================================================
          SECCIÓN DEL CATÁLOGO EN GOOGLE SHEETS
          Enlace al inventario completo
