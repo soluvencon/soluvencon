@@ -1,9 +1,19 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <!-- Preconectar a jsDelivr (carga DNS y TCP antes) -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    
+    <!-- Precargar la primera imagen crítica (LCP) -->
+    <!-- Cambia ESTA_URL por la URL real de tu primera imagen de la categoría -->
+    <link rel="preload" as="image" href="https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Accesorios/PRIMER-IMAGEN.png" fetchpriority="high">
+    
+    <!-- Resto de tus head... -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Accesorios - SOLUVENCON</title>
+   
     <meta name="description" content="Utensilios de cocina de SOLUVENCON - Cucharas, tenedores, cuchillos, platos, pocillos y más.">
     
     <!-- Fuentes e iconos -->
@@ -11,6 +21,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Estilos -->
     <link rel="stylesheet" href="css/styles.css">
+
+    
+    
+</head>
 </head>
 <body>
 

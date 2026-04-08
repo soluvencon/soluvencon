@@ -1,45 +1,64 @@
-// ============================================================================
-// SOLUVENCON - SISTEMA OPTIMIZADO CON CACHÉ (Carga instantánea)
-// ============================================================================
+/**
+ * ============================================================================
+ * SOLUVENCON - Sistema de Productos con Caché y Optimización LCP
+ * ============================================================================
+ * 
+ * Mejoras implementadas:
+ * - Caché local (10 min): Segunda visita carga en 0ms
+ * - Skeleton loading: Feedback visual inmediato
+ * - Optimización LCP: Usa <img> tags en lugar de background-image
+ * - Preconnect a jsDelivr: Conexión anticipada al CDN
+ */
 
+// URL de la API de Google Apps Script (tu backend en Sheets)
 const API_URL = 'https://script.google.com/macros/s/AKfycbyY97LNWodV9SZM_hBMvF1vgI7oQtJkJY-HP2aJSwaS-_6Cy0dHvsk1TnOBgZ54zxvhzQ/exec';
 
+// ============================================================================
 // CONFIGURACIÓN DE CACHÉ
-const CACHE_KEY = 'soluvencon_cache';
-const CACHE_DURATION = 10 * 60 * 1000; // 10 minutos = carga instantánea por 10 min
-
-// Estado del carrito
-let carrito = [];
+// ============================================================================
+const CACHE_KEY = 'soluvencon_cache';           // Prefijo para localStorage
+const CACHE_DURATION = 10 * 60 * 1000;          // 10 minutos en milisegundos
 
 // ============================================================================
-// PERSISTENCIA DEL CARRITO
+// ESTADO GLOBAL
 // ============================================================================
+let carrito = [];                               // Array de items seleccionados
 
+// ============================================================================
+// INICIALIZACIÓN - Se ejecuta cuando carga cualquier página
+// ============================================================================
 document.addEventListener('DOMContentLoaded', function() {
+    // Recuperar carrito guardado de visitas anteriores
     const guardado = localStorage.getItem('soluvencon_carrito');
     if (guardado) {
         try {
             carrito = JSON.parse(guardado);
-            actualizarCarritoUI();
+            actualizarCarritoUI();              // Mostrar contador si hay items
         } catch (e) {
+            console.error('Error cargando carrito:', e);
             carrito = [];
         }
     }
 });
 
+/** Guarda el carrito actual en el navegador del cliente */
 function guardarCarrito() {
     localStorage.setItem('soluvencon_carrito', JSON.stringify(carrito));
 }
 
 // ============================================================================
-// SKELETON LOADING - Placeholders animados (feedback inmediato)
+// SKELETON LOADING - Placeholders animados mientras carga
 // ============================================================================
 
+/**
+ * Muestra tarjetas grises animadas inmediatamente (0ms)
+ * Esto mejora el INP y da feedback visual al usuario
+ */
 function mostrarSkeleton() {
     const grid = document.getElementById('productos-grid');
     if (!grid) return;
     
-    // 8 tarjetas placeholder grises animadas
+    // Crea 8 tarjetas placeholder con animación "shimmer"
     grid.innerHTML = Array(8).fill(`
         <div class="product-card skeleton">
             <div class="skeleton-img"></div>
@@ -50,24 +69,35 @@ function mostrarSkeleton() {
 }
 
 // ============================================================================
-// CACHÉ - Guardar y recuperar productos del navegador
+// SISTEMA DE CACHÉ - Para carga instantánea en visitas repetidas
 // ============================================================================
 
+/**
+ * Verifica si hay datos guardados recientes (menos de 10 min)
+ * @param {string} categoria - Nombre de la categoría (ej: 'Accesorios')
+ * @returns {array|null} - Productos guardados o null si expiró
+ */
 function obtenerCache(categoria) {
     const guardado = localStorage.getItem(`${CACHE_KEY}_${categoria}`);
     if (!guardado) return null;
     
     const { productos, timestamp } = JSON.parse(guardado);
-    const expirado = (Date.now() - timestamp) > CACHE_DURATION;
+    const ahora = Date.now();
     
-    if (expirado) {
+    // Verificar si pasaron más de 10 minutos
+    if ((ahora - timestamp) > CACHE_DURATION) {
         localStorage.removeItem(`${CACHE_KEY}_${categoria}`);
-        return null;
+        return null; // Cache expirada
     }
     
-    return productos; // Datos válidos, menos de 10 minutos
+    return productos; // Cache válida
 }
 
+/**
+ * Guarda productos en el navegador del cliente
+ * @param {string} categoria - Nombre de la categoría
+ * @param {array} productos - Array de objetos producto
+ */
 function guardarCache(categoria, productos) {
     const paquete = {
         productos: productos,
@@ -77,43 +107,56 @@ function guardarCache(categoria, productos) {
 }
 
 // ============================================================================
-// FUNCIÓN PRINCIPAL - Inicializar productos (OPTIMIZADA)
+// FUNCIÓN PRINCIPAL - Punto de entrada
 // ============================================================================
 
+/**
+ * Inicializa la carga de productos para una categoría
+ * Estrategia: Skeleton → Cache? → API (si es necesario)
+ * 
+ * @param {string} categoria - Ej: 'Accesorios', 'Herramientas', etc.
+ */
 function inicializarProductos(categoria) {
     const grid = document.getElementById('productos-grid');
     if (!grid) return;
     
-    // Evitar doble carga
+    // Evitar cargar dos veces si ya hay datos
     if (grid.getAttribute('data-loaded') === 'true') return;
     
-    // PASO 1: Mostrar skeleton inmediatamente (0ms)
+    // PASO 1: Mostrar skeleton inmediatamente (mejora percepción de velocidad)
     mostrarSkeleton();
     
-    // PASO 2: ¿Hay caché guardada?
+    // PASO 2: Verificar caché
     const cache = obtenerCache(categoria);
     
     if (cache) {
-        // ✅ INSTANTÁNEO: Mostrar datos de caché inmediatamente
+        // ✅ CACHE HIT: Mostrar inmediatamente (0ms de espera)
         renderizarProductos(cache, categoria);
         
-        // Actualizar en segundo plano (silencioso, el usuario no lo nota)
+        // Actualizar en segundo plano (silencioso, usuario no lo nota)
         actualizarSilenciosamente(categoria);
         return;
     }
     
-    // PASO 3: No hay caché, cargar de API (solo primera vez)
+    // PASO 3: No hay caché, toca llamar a la API (solo primera vez)
     cargarDesdeAPI(categoria);
 }
 
 // ============================================================================
-// CARGAR DESDE API (solo si no hay caché o expiró)
+// CARGA DE DATOS - Desde Google Sheets
 // ============================================================================
 
+/**
+ * Llama a la API de Google Apps Script
+ * Solo se ejecuta en primera visita o si expiró la caché (10 min)
+ */
 async function cargarDesdeAPI(categoria) {
     try {
-        const response = await fetch(`${API_URL}?categoria=${encodeURIComponent(categoria)}`);
-        if (!response.ok) throw new Error('Error en API');
+        const response = await fetch(
+            `${API_URL}?categoria=${encodeURIComponent(categoria)}`
+        );
+        
+        if (!response.ok) throw new Error('Error en respuesta API');
         
         const productos = await response.json();
         
@@ -122,65 +165,95 @@ async function cargarDesdeAPI(categoria) {
             return;
         }
         
-        // Guardar en caché para la próxima vez (instantánea)
+        // Guardar para próximas visitas (carga instantánea después)
         guardarCache(categoria, productos);
+        
+        // Mostrar en pantalla
         renderizarProductos(productos, categoria);
         
     } catch (error) {
-        mostrarError('Error al cargar productos. Intenta recargar.');
+        console.error('Error cargando productos:', error);
+        mostrarError('Error al cargar productos. Intenta recargar la página.');
     }
 }
 
-// ============================================================================
-// ACTUALIZACIÓN SILENCIOSA - Segundo plano (no bloquea)
-// ============================================================================
-
+/**
+ * Actualiza datos en segundo plano sin bloquear la UI
+ * Si hay cambios nuevos en la hoja, actualiza silenciosamente
+ */
 async function actualizarSilenciosamente(categoria) {
     try {
-        const response = await fetch(`${API_URL}?categoria=${encodeURIComponent(categoria)}`);
+        const response = await fetch(
+            `${API_URL}?categoria=${encodeURIComponent(categoria)}`
+        );
         const productosNuevos = await response.json();
         
         const cacheActual = obtenerCache(categoria);
-        const sonIguales = JSON.stringify(cacheActual) === JSON.stringify(productosNuevos);
         
-        // Solo actualizar si hay cambios reales
-        if (!sonIguales) {
+        // Comparar si cambió algo
+        const cambios = JSON.stringify(cacheActual) !== JSON.stringify(productosNuevos);
+        
+        if (cambios) {
             guardarCache(categoria, productosNuevos);
-            renderizarProductos(productosNuevos, categoria);
+            renderizarProductos(productosNuevos, categoria); // Actualizar vista
         }
     } catch (error) {
-        console.log('Actualización silenciosa falló, usando caché');
+        console.log('Actualización silenciosa falló (se usa caché)');
     }
 }
 
 // ============================================================================
-// RENDERIZAR PRODUCTOS - Generar HTML (tu código adaptado)
+// RENDERIZADO - Generar HTML (OPTIMIZADO PARA LCP)
 // ============================================================================
 
+/**
+ * Genera las tarjetas de productos
+ * 
+ * ⚠️ IMPORTANTE PARA LCP: Usamos <img> tags en lugar de background-image
+ * porque los navegadores pueden precargar img tags pero no background-image
+ * 
+ * @param {array} productos - Array de productos desde la API
+ * @param {string} categoria - Nombre de categoría para IDs únicos
+ */
 function renderizarProductos(productos, categoria) {
     const grid = document.getElementById('productos-grid');
     if (!grid) return;
     
     if (productos.length === 0) {
-        grid.innerHTML = '<p style="text-align: center; grid-column: 1/-1;">No hay productos.</p>';
+        grid.innerHTML = '<p style="text-align: center; grid-column: 1/-1;">No hay productos disponibles.</p>';
         return;
     }
     
     let html = '';
+    
     productos.forEach((p, index) => {
-        // Tus URLs ya están completas en la hoja
-        const imagenUrl = p.imagen_url || 'https://via.placeholder.com/300x200?text=Sin+Imagen';
+        // La URL viene completa desde Google Sheets (jsDelivr)
+        const imagenUrl = p.imagen_url || 'https://via.placeholder.com/400x300?text=Sin+Imagen';
         const productoId = `prod-${categoria}-${index}`;
         
-        // Generar cuadros de precio
-        let cuadrosPrecio = generarCuadrosPrecio(p, productoId, imagenUrl);
+        // Generar botones de precios (1, 6, 12 unidades)
+        const cuadrosPrecio = generarCuadrosPrecio(p, productoId, imagenUrl);
+        
+        // ============================================================
+        // OPTIMIZACIÓN LCP CRÍTICA:
+        // Usamos <img> tag con loading="eager" para la primera imagen
+        // y loading="lazy" para el resto
+        // ============================================================
+        const loadingPriority = index === 0 ? 'eager' : 'lazy';
+        const fetchPriority = index === 0 ? 'high' : 'auto';
         
         html += `
             <div class="product-card" id="${productoId}">
-                <div class="product-img" 
-                     style="background-image: url('${imagenUrl}'); background-size: cover; background-position: center;"
-                     onclick="abrirModal('${imagenUrl}')"
-                     title="Ver imagen completa">
+                <div class="product-img" onclick="abrirModal('${imagenUrl}')" title="Ver imagen completa">
+                    <img src="${imagenUrl}" 
+                         alt="${p.nombre}"
+                         width="400" 
+                         height="300"
+                         loading="${loadingPriority}"
+                         fetchpriority="${fetchPriority}"
+                         decoding="async"
+                         onerror="this.src='https://via.placeholder.com/400x300?text=Error+Carga'"
+                         style="width:100%; height:100%; object-fit:cover; display:block;">
                     ${p.badge ? `<span class="product-badge">${p.badge}</span>` : ''}
                 </div>
                 <div class="product-info">
@@ -195,16 +268,19 @@ function renderizarProductos(productos, categoria) {
     grid.innerHTML = html;
     grid.setAttribute('data-loaded', 'true');
     
-    // Espaciador al final
+    // Agregar espacio al final para que no tape el WhatsApp
     setTimeout(ajustarAlturaFinal, 100);
 }
 
+/**
+ * Genera los botones de precios mayoristas (1, 6, 12 unidades)
+ */
 function generarCuadrosPrecio(p, productoId, imagenUrl) {
     if (!p.precio_unitario && !p.precio_6 && !p.precio_12) return '';
     
     let html = '<div class="precios-mayoristas">';
     
-    // 1 UND
+    // Botón 1 Unidad
     if (p.precio_unitario && !p.precio_unitario.toUpperCase().includes('NO')) {
         const precioFormateado = formatearPrecioColombiano(p.precio_unitario);
         const precioNumero = extraerNumero(p.precio_unitario);
@@ -216,7 +292,7 @@ function generarCuadrosPrecio(p, productoId, imagenUrl) {
         `;
     }
     
-    // 6 UND
+    // Botón 6 Unidades
     if (p.precio_6 && !p.precio_6.toUpperCase().includes('NO')) {
         const precioFormateado = formatearPrecioColombiano(p.precio_6);
         const precioNumero = extraerNumero(p.precio_6);
@@ -228,7 +304,7 @@ function generarCuadrosPrecio(p, productoId, imagenUrl) {
         `;
     }
     
-    // 12 UND
+    // Botón 12 Unidades
     if (p.precio_12 && !p.precio_12.toUpperCase().includes('NO')) {
         const precioFormateado = formatearPrecioColombiano(p.precio_12);
         const precioNumero = extraerNumero(p.precio_12);
@@ -243,22 +319,30 @@ function generarCuadrosPrecio(p, productoId, imagenUrl) {
     return html + '</div>';
 }
 
+/** Muestra mensaje de error amigable */
 function mostrarError(mensaje) {
     const grid = document.getElementById('productos-grid');
     if (grid) {
-        grid.innerHTML = `<p style="text-align: center; grid-column: 1/-1; color: #dc3545; padding: 2rem;"><i class="fas fa-exclamation-circle"></i> ${mensaje}</p>`;
+        grid.innerHTML = `
+            <div style="text-align: center; grid-column: 1/-1; padding: 3rem; color: #dc3545;">
+                <i class="fas fa-exclamation-circle" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                <p>${mensaje}</p>
+            </div>
+        `;
     }
 }
 
 // ============================================================================
-// TUS FUNCIONES AUXILIARES (sin cambios)
+// FUNCIONES AUXILIARES - Formateo de precios
 // ============================================================================
 
+/** Escapa comillas para evitar errores en onclick */
 function escapeString(str) {
     if (!str) return '';
     return str.replace(/'/g, "\\'").replace(/"/g, '\\"');
 }
 
+/** Extrae número de string de precio colombiano */
 function extraerNumero(textoPrecio) {
     if (!textoPrecio) return '0';
     
@@ -273,10 +357,11 @@ function extraerNumero(textoPrecio) {
         limpio = limpio.replace(/\./g, '');
     }
     
-    let num = parseFloat(limpio);
+    const num = parseFloat(limpio);
     return isNaN(num) ? '0' : num.toString();
 }
 
+/** Formatea precio al estilo colombiano ($ 12.500) */
 function formatearPrecioColombiano(textoPrecio) {
     if (!textoPrecio) return '0';
     
@@ -284,10 +369,6 @@ function formatearPrecioColombiano(textoPrecio) {
         .replace(/(?:^|\s)(1|6|12)\s*UND\s*X?\s*/gi, '')
         .replace(/[$\s]/g, '')
         .trim();
-    
-    if (/^\d{1,3}(\.\d{3})+(,\d{1,2})?$/.test(limpio) || /^\d{1,3}(\.\d{3})*$/.test(limpio)) {
-        return limpio;
-    }
     
     if (limpio.includes(',')) {
         let partes = limpio.split(',');
@@ -297,40 +378,53 @@ function formatearPrecioColombiano(textoPrecio) {
         return enteros + ',' + decimales;
     }
     
-    let num = parseInt(limpio.replace(/\./g, ''));
+    const num = parseInt(limpio.replace(/\./g, ''));
     if (isNaN(num)) return '0';
     
     return num.toLocaleString('es-CO').replace(/,/g, '.');
 }
 
+/** Formatea número float a pesos colombianos */
 function formatoColombiano(numero) {
-    let num = parseFloat(numero);
+    const num = parseFloat(numero);
     if (isNaN(num)) return '0';
     
-    let enteros = Math.floor(num);
-    let decimales = Math.round((num - enteros) * 100);
+    const enteros = Math.floor(num);
+    const decimales = Math.round((num - enteros) * 100);
     
-    let enterosFormateados = enteros.toLocaleString('es-CO').replace(/,/g, '.');
+    let formateado = enteros.toLocaleString('es-CO').replace(/,/g, '.');
     
     if (decimales > 0) {
-        return enterosFormateados + ',' + decimales.toString().padStart(2, '0');
+        formateado += ',' + decimales.toString().padStart(2, '0');
     }
     
-    return enterosFormateados;
+    return formateado;
 }
 
 // ============================================================================
-// FUNCIONES DEL CARRITO (sin cambios)
+// CARRITO DE COMPRAS - Sistema de cotización
 // ============================================================================
 
+/**
+ * Agrega producto al carrito
+ * @param {string} productoId - ID único del producto
+ * @param {string} nombre - Nombre del producto
+ * @param {string} imagen - URL de imagen
+ * @param {number} cantidadPack - Cantidad por pack (1, 6 o 12)
+ * @param {string} precioNumero - Precio como número limpio
+ * @param {string} precioUnitario - Texto original del precio
+ * @param {string} codigo - Código del producto
+ */
 function agregarAlCarrito(productoId, nombre, imagen, cantidadPack, precioNumero, precioUnitario, codigo) {
+    // Buscar si ya existe mismo producto con mismo pack
     const existente = carrito.find(item => 
         item.nombre === nombre && item.cantidadPack === cantidadPack
     );
     
     if (existente) {
-        existente.cantidadPacks++;
+        existente.cantidadPacks++; // Aumentar cantidad
     } else {
+        // Nuevo item
         carrito.push({
             id: Date.now() + Math.random(),
             nombre: nombre,
@@ -343,7 +437,7 @@ function agregarAlCarrito(productoId, nombre, imagen, cantidadPack, precioNumero
         });
     }
     
-    // Feedback visual
+    // Feedback visual (efecto click en el botón)
     const card = document.getElementById(productoId);
     if (card) {
         const botones = card.querySelectorAll('.caja-precio');
@@ -362,11 +456,13 @@ function agregarAlCarrito(productoId, nombre, imagen, cantidadPack, precioNumero
     actualizarCarritoUI();
 }
 
+/** Elimina item del carrito */
 function eliminarDelCarrito(id) {
     carrito = carrito.filter(item => item.id !== id);
     actualizarCarritoUI();
 }
 
+/** Actualiza la UI del carrito (contador, lista, total) */
 function actualizarCarritoUI() {
     const botonCarrito = document.getElementById('carrito-boton');
     const contador = document.getElementById('carrito-contador');
@@ -377,6 +473,7 @@ function actualizarCarritoUI() {
     
     const totalPacks = carrito.reduce((sum, item) => sum + item.cantidadPacks, 0);
     
+    // Mostrar/ocultar botón flotante
     if (carrito.length > 0) {
         botonCarrito.classList.add('visible');
         if (contador) {
@@ -390,6 +487,7 @@ function actualizarCarritoUI() {
     
     if (!itemsContainer) return;
     
+    // Carrito vacío
     if (carrito.length === 0) {
         itemsContainer.innerHTML = `
             <div class="carrito-vacio">
@@ -402,6 +500,7 @@ function actualizarCarritoUI() {
         return;
     }
     
+    // Listar items
     let html = '';
     let totalGeneral = 0;
     
@@ -440,6 +539,7 @@ function actualizarCarritoUI() {
     guardarCarrito();
 }
 
+/** Abre/cierra el panel lateral del carrito */
 function toggleCarrito() {
     const panel = document.getElementById('carrito-panel');
     const overlay = document.getElementById('carrito-overlay');
@@ -459,6 +559,7 @@ function toggleCarrito() {
     }
 }
 
+/** Genera mensaje de WhatsApp y abre chat */
 function enviarCotizacion() {
     if (carrito.length === 0) return;
     
@@ -480,14 +581,14 @@ function enviarCotizacion() {
     mensaje += `%0A*💰 Total: $${formatoColombiano(total)}*%0A%0A`;
     mensaje += 'Por favor confirmar disponibilidad. ¡Gracias!';
     
-    const url = `https://wa.me/573005005306?text=${mensaje}`;
-    window.open(url, '_blank');
+    window.open(`https://wa.me/573005005306?text=${mensaje}`, '_blank');
 }
 
 // ============================================================================
-// MODAL
+// MODAL DE IMÁGENES (Lightbox)
 // ============================================================================
 
+/** Abre imagen ampliada */
 function abrirModal(urlImagen) {
     if (!urlImagen || urlImagen.includes('placeholder')) return;
     
@@ -498,9 +599,10 @@ function abrirModal(urlImagen) {
     
     img.src = urlImagen;
     modal.classList.add('activo');
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden'; // Bloquear scroll
 }
 
+/** Cierra modal */
 function cerrarModal() {
     const modal = document.getElementById('modalImagen');
     if (!modal) return;
@@ -514,6 +616,7 @@ function cerrarModal() {
     }, 300);
 }
 
+// Cerrar modal con tecla ESC
 document.addEventListener('keydown', function(event) {
     if (event.key === 'Escape') {
         cerrarModal();
@@ -524,6 +627,7 @@ document.addEventListener('keydown', function(event) {
     }
 });
 
+/** Agrega espacio al final del grid para no tapar contenido con WhatsApp */
 function ajustarAlturaFinal() {
     const grid = document.getElementById('productos-grid');
     if (grid) {
