@@ -7,7 +7,7 @@
  * - Caché local (10 min): Segunda visita carga en 0ms
  * - Skeleton loading: Feedback visual inmediato
  * - Optimización LCP: Usa <img> tags en lugar de background-image
- * - Preconnect a jsDelivr: Conexión anticipada al CDN
+ * - Preconnect a jsDelivr: Conexión anticipada al CDN actualizado
  */
 
 // URL de la API de Google Apps Script (tu backend en Sheets)

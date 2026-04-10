@@ -27,19 +27,23 @@
 </head>
 <body>
 
-    <!-- HEADER -->
+    <!-- HEADER actualizados-->
     <header>
         <nav class="container">
-        <a href="#" class="logo">
+        <a href="/index.html" class="logo">
            <img src="imagenes/logo-1.png" alt="SOLUVENCON Logo" class="logo-img">
         </a>
             
             <ul class="nav-links">
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="index.html#categorias">Categorías</a></li>
-                <li><a href="#productos">Productos</a></li>
-                <li><a href="index.html#catalogo">Catálogo</a></li>
-                <li><a href="#contacto">Contacto</a></li>
+         <!-- <li><a href="index.html">Inicio</a></li> -->
+    
+               <!-- Menú de navegación entre páginas de accesorios -->
+         <li><a href="accesorios.html" >Accesorios</a></li>
+         <li><a href="herramientas.html">Herramientas</a></li>
+         <li><a href="utensilios.html"class="active">Utensilios</a></li>
+         <li><a href="morrales.html">Morrales</a></li>
+         <li><a href="index.html#ofertas">Ofertas</a></li>
+         <li><a href="index.html#contacto">Contacto</a></li>
             </ul>
             
             <div class="mobile-menu">
@@ -123,26 +127,46 @@
     <img class="modal-contenido" id="imgModal" onclick="event.stopPropagation();">
 </div>
 
-    <!-- MENÚ MÓVIL -->
+    <!-- ===========================================================
+         ESTE ES EL SCRIPT DEL MENU EN VERSION MOVIL 
+         =========================================================-->
+    <!-- ===========================================================
+     SCRIPT DEL MENÚ MÓVIL - CORREGIDO
+     =========================================================-->
     <script>
         const menuBtn = document.querySelector(".mobile-menu");
         const navLinks = document.querySelector(".nav-links");
+    const menuLinks = document.querySelectorAll(".nav-links a");
 
+    // Solo ejecutar en móvil (≤768px)
+    function esMovil() {
+        return window.innerWidth <= 768;
+    }
+
+    // Abrir/cerrar con la hamburguesa
         menuBtn.addEventListener("click", () => {
-            if(navLinks.style.display === "flex"){
-                navLinks.style.display = "none";
-            } else {
-                navLinks.style.display = "flex";
-                navLinks.style.flexDirection = "column";
-                navLinks.style.position = "absolute";
-                navLinks.style.top = "70px";
-                navLinks.style.right = "20px";
-                navLinks.style.background = "#1A1A2E";
-                navLinks.style.padding = "20px";
-                navLinks.style.borderRadius = "10px";
+        if (!esMovil()) return; // Ignorar en escritorio
+        
+        navLinks.classList.toggle('active');
+    });
+
+    // Cerrar al hacer clic en cualquier link (solo en móvil)
+    menuLinks.forEach(link => {
+        link.addEventListener("click", () => {
+            if (esMovil()) {
+                navLinks.classList.remove('active');
+            }
+        });
+    });
+
+    // Al redimensionar, limpiar estado si pasamos a escritorio
+    window.addEventListener('resize', () => {
+        if (!esMovil()) {
+            navLinks.classList.remove('active');
             }
         });
     </script>
+
 
     <!-- SCRIPT DE PRODUCTOS -->
     <script src="js/productos.js"></script>

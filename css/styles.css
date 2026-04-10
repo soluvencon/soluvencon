@@ -3,7 +3,7 @@
    ============================================================================ */
 
 /* -------------------------------------------------------------------------
-   1. VARIABLES Y CONFIGURACIÓN BASE
+   1. VARIABLES Y CONFIGURACIÓN BASE actualizado
    ------------------------------------------------------------------------- */
 :root {
     --primary: #FF6B35;      /* Naranja cálido */
@@ -123,6 +123,7 @@ nav {
     font-size: 1.5rem;
     cursor: pointer;
 }
+
 
 /* -------------------------------------------------------------------------
    4. SECCIÓN HERO
@@ -545,19 +546,39 @@ footer {
 /* -------------------------------------------------------------------------
    11. RESPONSIVE
    ------------------------------------------------------------------------- */
+   /* -------------------------------------------------------------------------
+   11. RESPONSIVE - NAVEGACIÓN
+   ------------------------------------------------------------------------- */
+
+/* ESCRITORIO (>768px) */
+.nav-links {
+    display: flex !important;
+}
+
+.mobile-menu {
+    display: none !important;
+}
+
+/* MÓVIL (≤768px) */
 @media (max-width: 768px) {
-    .nav-links { display: none; }
-    .mobile-menu { display: block; }
-    .hero h1 { font-size: 2rem; }
-    .hero p { font-size: 1rem; }
-    .section-title { font-size: 1.8rem; }
-    .category-grid { grid-template-columns: 1fr; }
-    .whatsapp-float {
-        width: 50px;
-        height: 50px;
-        font-size: 1.5rem;
-        bottom: 20px;
-        right: 20px;
+    .nav-links { 
+        display: none !important;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: var(--dark);
+        flex-direction: column;
+        padding: 1rem;
+        gap: 1rem;
+    }
+    
+    .nav-links.active {
+        display: flex !important;
+    }
+    
+    .mobile-menu { 
+        display: block !important;
     }
 }
 
@@ -1208,19 +1229,19 @@ html, body {
 /* Espacio extra al final de cada página para que el 
    contenido no quede tapado por el botón de WhatsApp */
 body {
-    padding-bottom: 120px; /* Espacio para WhatsApp flotante */
+    padding-bottom: 0px; /* Espacio para WhatsApp flotante */
 }
 
 /* En las páginas de categorías, más espacio aún */
 .products-preview {
-    min-height: 100vh;
-    padding-bottom: 150px !important; /* Fuerza espacio inferior */
+    min-height: auto;
+    padding-bottom: 80px !important; /* Fuerza espacio inferior */
 }
 
 /* El grid de productos debe dejar espacio al final */
 .product-grid {
-    margin-bottom: 50px;
-    padding-bottom: 20px;
+    margin-bottom: 30px;
+    padding-bottom: 0px;
 }
 
 /* Fix específico para Chrome móvil */
@@ -1229,13 +1250,13 @@ body {
     .product-grid::after {
         content: '';
         display: block;
-        height: 100px; /* Espacio invisible al final */
+        height: 40px; /* Espacio invisible al final */
     }
     
     /* Si hay footer, que no quede pegado al borde */
     footer {
-        margin-top: 50px;
-        padding-bottom: 100px;
+        margin-top: 20px;
+        padding-bottom: 40px;
     }
 }
 

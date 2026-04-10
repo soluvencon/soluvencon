@@ -7,7 +7,8 @@
                Incluye secciones de categorías, productos destacados y 
                enlaces a catálogo en Google Sheets y WhatsApp.
   Autor: SOLUVENCON
-  Versión: 1.0
+  Versión: 4.1.2 actualizacion
+
   ============================================================================
 -->
 <html lang="es">
@@ -48,23 +49,20 @@
     <header>
   <nav class="container">
     
-    <a href="#" class="logo">
+    <a href="/index.html" class="logo">
     <img src="imagenes/logo-1.png" alt="SOLUVENCON Logo" class="logo-img">
     </a>
-
- 
-            
             <!-- Menú de navegación (desktop) -->
             <ul class="nav-links">
-                <li><a href="#inicio">Inicio</a></li>
+               <!-- <li><a href="#inicio">Inicio</a></li> -->
                 <li><a href="#categorias">Categorías</a></li>
-                <li><a href="#productos">Productos</a></li>
+                <li><a href="#ofertas">Ofertas</a></li>
                 <li><a href="#catalogo">Catálogo</a></li>
                 <li><a href="#contacto">Contacto</a></li>
             </ul>
             
             <!-- Botón de menú móvil (hamburguesa) -->
-            <div class="mobile-menu">
+            <div class="mobile-menu" id="menu-btn">
                 <i class="fas fa-bars"></i>
             </div>
         </nav>
@@ -170,7 +168,7 @@
    <!-- ========================================================================
      SECCIÓN DE PRODUCTOS DESTACADOS CON LIGHTBOX
      ======================================================================== -->
-<section class="products-preview" id="productos">
+<section class="products-preview" id="ofertas">
     <div class="container">
         <h2 class="section-title">Ofertas</h2>
         
@@ -535,22 +533,39 @@ document.addEventListener('keydown', function(event) {
     <!-- ===========================================================
          ESTE ES EL SCRIPT DEL MENU EN VERSION MOVIL 
          =========================================================-->
+    <!-- ===========================================================
+     SCRIPT DEL MENÚ MÓVIL - CORREGIDO
+     =========================================================-->
     <script>
         const menuBtn = document.querySelector(".mobile-menu");
         const navLinks = document.querySelector(".nav-links");
+    const menuLinks = document.querySelectorAll(".nav-links a");
 
+    // Solo ejecutar en móvil (≤768px)
+    function esMovil() {
+        return window.innerWidth <= 768;
+    }
+
+    // Abrir/cerrar con la hamburguesa
         menuBtn.addEventListener("click", () => {
-            if(navLinks.style.display === "flex"){
-                navLinks.style.display = "none";
-            } else {
-                navLinks.style.display = "flex";
-                navLinks.style.flexDirection = "column";
-                navLinks.style.position = "absolute";
-                navLinks.style.top = "70px";
-                navLinks.style.right = "20px";
-                navLinks.style.background = "#1A1A2E";
-                navLinks.style.padding = "20px";
-                navLinks.style.borderRadius = "10px";
+        if (!esMovil()) return; // Ignorar en escritorio
+        
+        navLinks.classList.toggle('active');
+    });
+
+    // Cerrar al hacer clic en cualquier link (solo en móvil)
+    menuLinks.forEach(link => {
+        link.addEventListener("click", () => {
+            if (esMovil()) {
+                navLinks.classList.remove('active');
+            }
+        });
+    });
+
+    // Al redimensionar, limpiar estado si pasamos a escritorio
+    window.addEventListener('resize', () => {
+        if (!esMovil()) {
+            navLinks.classList.remove('active');
             }
         });
     </script>
