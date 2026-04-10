@@ -480,55 +480,186 @@ document.addEventListener('keydown', function(event) {
     </a>
 
     <script>
-    // ANUNCIO EMERGENTE AL CARGAR LA PÁGINA - SOLUVENCON
+    // ============================================================
+    // ANUNCIO EMERGENTE SOLUVENCON - VERSIÓN NO INVASIVA
+    // ============================================================
+    // Este anuncio solo se muestra UNA VEZ por sesión de navegación.
+    // Usamos sessionStorage (se borra al cerrar la pestaña) para no 
+    // molestar al usuario con popups repetidos mientras navega.
+    // ============================================================
+    
     window.addEventListener('load', function() {
-        // Opcional: para que aparezca solo una vez por sesión (descomenta las 2 líneas)
-         if (sessionStorage.getItem('anuncioVisto')) return;
         
+        // --------------------------------------------------------
+        // VERIFICACIÓN: ¿Ya vio el anuncio en esta sesión?
+        // --------------------------------------------------------
+        // Si existe la clave 'anuncioVisto' en sessionStorage, 
+        // no mostramos nada y salimos de la función.
+        // --------------------------------------------------------
+        if (sessionStorage.getItem('anuncioVisto')) {
+            return; // Usuario ya lo vio, no molestar
+        }
+        
+        // --------------------------------------------------------
+        // MOSTRAR ANUNCIO (primera visita de la sesión)
+        // --------------------------------------------------------
         Swal.fire({
-            title: '<span style="color:#0a2a36;">🔨¡Bienvenido a SOLUVENCON!</span>',
+            title: '',
             html: `
-                <div style="text-align: left; font-family: 'Poppins', sans-serif;">
-                    <p style="color:#0a2a36;">✅ <strong style="color:#FF6B35;">Ofertas por apertura</strong> - 15% de descuento en herramientas seleccionadas.</p>
-                    <p style="color:#0a2a36;">✅ <strong style="color:#FF6B35;">Envíos gratis</strong> a Santuario y Marinilla en compras > $50.000.</p>
-                  
-                    <p style="margin-top: 12px; color:#137399;">📞 <strong>WhatsApp:</strong> +57 3005005306</p>
+                <div style="text-align: center; font-family: 'Poppins', sans-serif; padding: 10px;">
+                    <!-- Icono de bienvenida -->
+                    <div style="font-size: 48px; margin-bottom: 15px;">🔨</div>
+                    
+                    <!-- Título -->
+                    <h2 style="color: #0a2a36; margin: 0 0 20px 0; font-size: 24px; font-weight: 700;">
+                        ¡Bienvenido a <span style="color: #FF6B35;">SOLUVENCON</span>!
+                    </h2>
+                    
+                    <!-- Oferta 1 -->
+                    <div style="background: #fff; border-radius: 12px; padding: 15px; margin-bottom: 15px; border-left: 4px solid #FF6B35; text-align: left; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                        <p style="color: #0a2a36; margin: 0 0 10px 0; font-size: 14px;">
+                            🏷️ <strong style="color: #FF6B35;">Ofertas por apertura</strong><br>
+                            <span style="color: #666; font-size: 13px;">15% de descuento en herramientas seleccionadas</span>
+                        </p>
+                    </div>
+                    
+                    <!-- Oferta 2 -->
+                    <div style="background: #fff; border-radius: 12px; padding: 15px; margin-bottom: 15px; border-left: 4px solid #137399; text-align: left; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                        <p style="color: #0a2a36; margin: 0 0 10px 0; font-size: 14px;">
+                            🚚 <strong style="color: #137399;">Envíos gratis</strong><br>
+                            <span style="color: #666; font-size: 13px;">Santuario y Marinilla en compras > $50.000</span>
+                        </p>
+                    </div>
+                    
+                    <!-- WhatsApp -->
+                    <div style="background: #0a2a36; color: #fff; border-radius: 25px; padding: 12px 20px; display: inline-block; margin-top: 10px;">
+                        <p style="margin: 0; font-size: 14px;">
+                            📞 <strong>WhatsApp:</strong> +57 3005005306
+                        </p>
+                    </div>
                 </div>
-                
             `, 
-            //descomenta y copia esta parte para agregar un tecto mas al anuncio (recomendado)
-            //<p style="color:#0a2a36;">✅ <strong style="color:#FF6B35;">Catálogo actualizado</strong> en Google Sheets.</p>
-            // === OPCIÓN 1: Usar una imagen real de tu carpeta (recomendado) ===
-            imageUrl: 'imagenes/GORRA-VERDE.png',  // <-- CAMBIA por tu imagen real 
-            imageWidth: 300,
-            imageHeight: 200,
-            imageAlt: 'Ofertas en herramientas SOLUVENCON',
             
-            // === OPCIÓN 2: Si NO tienes imagen, usa un icono (descomenta esto y comenta imageUrl) ===
-            // iconHtml: '<i class="fas fa-tools" style="font-size: 64px; color: #FF6B35;"></i>',
+            // Imagen del producto (opcional)
+            imageUrl: 'imagenes/GORRA-VERDE.png',
+            imageWidth: 200,
+            imageHeight: 130,
+            imageAlt: 'Ofertas SOLUVENCON',
             
-            confirmButtonText: '¡Ver ofertas!',
-            confirmButtonColor: '#FF6B35',      // Tu naranja
-            background: '#F8F9FA',              // Fondo claro
-            icon: 'success',
+            // Sin icono de SweetAlert (diseño limpio)
+            icon: null,
+            
+            // Botones
+            confirmButtonText: '¡Ver ofertas ahora!',
+            confirmButtonColor: '#FF6B35',
+            showCancelButton: true,
+            cancelButtonText: 'Cerrar',
+            cancelButtonColor: '#6c757d',
+            
+            // Estilos
+            background: '#F8F9FA',
+            width: '400px',
+            padding: '20px',
+            heightAuto: false,
+            allowOutsideClick: false,
+            backdrop: `rgba(10,42,54,0.85)`,
+            
+            customClass: {
+                popup: 'swal2-soluvencon-popup',
+                confirmButton: 'swal2-soluvencon-btn',
+                cancelButton: 'swal2-soluvencon-cancel'
+            },
+            
             showClass: {
-                popup: 'animate__animated animate__fadeInDown'
+                popup: 'animate__animated animate__fadeInDown animate__faster'
             },
             hideClass: {
-                popup: 'animate__animated animate__fadeOutUp'
-            },
-            allowOutsideClick: false,
-            backdrop: `rgba(10,42,54,0.8)`
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Al hacer clic, va a la sección de Ofertas
-                document.getElementById('productos').scrollIntoView({ behavior: 'smooth' });
+                popup: 'animate__animated animate__fadeOutUp animate__faster'
             }
+            
+        }).then((result) => {
+            
+            // --------------------------------------------------------
+            // ACCIÓN AL HACER CLIC: Navegación a ofertas
+            // --------------------------------------------------------
+            if (result.isConfirmed) {
+                // Redirige a la sección #ofertas del index
+                // Usamos window.location para forzar la navegación completa
+                window.location.href = 'index.html#ofertas';
+            }
+            // Si presiona "Cerrar", simplemente cierra el modal sin hacer nada
+            
         });
-        //*se puede comentar
-         sessionStorage.setItem('anuncioVisto', 'true');
+        
+        // --------------------------------------------------------
+        // MARCAR COMO VISTO: Evitar que vuelva a aparecer
+        // --------------------------------------------------------
+        // Guardamos en sessionStorage al cerrar el anuncio (sea por 
+        // "Ver ofertas" o por "Cerrar"). La próxima vez que cargue
+        // cualquier página, el if inicial lo detectará y no mostrará nada.
+        // --------------------------------------------------------
+        sessionStorage.setItem('anuncioVisto', 'true');
+        
     });
+</script>
 
+<style>
+    .swal2-soluvencon-popup {
+        max-height: 85vh !important;
+        border-radius: 20px !important;
+        box-shadow: 0 10px 40px rgba(10,42,54,0.3) !important;
+    }
+    .swal2-soluvencon-btn {
+        border-radius: 25px !important;
+        padding: 12px 30px !important;
+        font-weight: 600 !important;
+        font-size: 15px !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.5px !important;
+        transition: all 0.3s ease !important;
+    }
+    .swal2-soluvencon-btn:hover {
+        background: #e55a2b !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 5px 15px rgba(255,107,53,0.4) !important;
+    }
+    .swal2-soluvencon-cancel {
+        border-radius: 25px !important;
+        padding: 12px 25px !important;
+        font-weight: 500 !important;
+    }
+    .swal2-image {
+        border-radius: 12px !important;
+        margin: 15px auto !important;
+        max-height: 130px !important;
+        object-fit: contain !important;
+    }
+    .swal2-title { display: none !important; }
+    .swal2-html-container {
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow-y: auto !important;
+        max-height: 50vh !important;
+    }
+</style>
+
+<!-- Agrega este CSS en tu <head> o archivo de estilos -->
+<style>
+    .swal2-popup-custom {
+        max-height: 90vh !important;    /* Máximo 90% de la altura de la pantalla */
+        overflow: hidden !important;
+    }
+    .swal2-html-custom {
+        max-height: 300px !important;   /* Scroll interno si el contenido es largo */
+        overflow-y: auto !important;
+    }
+    /* Ajustar imagen para que no se desborde */
+    .swal2-image {
+        max-height: 150px !important;
+        object-fit: contain !important;
+        margin: 10px auto !important;
+    }
+</style>
     </script>
     <!-- ===========================================================
          ESTE ES EL SCRIPT DEL MENU EN VERSION MOVIL 
