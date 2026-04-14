@@ -479,7 +479,7 @@ document.addEventListener('keydown', function(event) {
         <i class="fab fa-whatsapp"></i>
     </a>
 
-    <script>
+<script>
     // ============================================================
     // ANUNCIO EMERGENTE SOLUVENCON - VERSIÓN NO INVASIVA
     // ============================================================
@@ -549,6 +549,15 @@ document.addEventListener('keydown', function(event) {
             // Sin icono de SweetAlert (diseño limpio)
             icon: null,
             
+            // --------------------------------------------------------
+            // BOTÓN X DE CIERRE: Esquina superior derecha, color rojo
+            // --------------------------------------------------------
+            // showCloseButton activa la X nativa de SweetAlert2.
+            // La personalización de color y posición se hace vía CSS
+            // en la clase 'swal2-soluvencon-close' definida abajo.
+            // --------------------------------------------------------
+            showCloseButton: true,
+            
             // Botones
             confirmButtonText: '¡Ver ofertas ahora!',
             confirmButtonColor: '#FF6B35',
@@ -567,7 +576,11 @@ document.addEventListener('keydown', function(event) {
             customClass: {
                 popup: 'swal2-soluvencon-popup',
                 confirmButton: 'swal2-soluvencon-btn',
-                cancelButton: 'swal2-soluvencon-cancel'
+                cancelButton: 'swal2-soluvencon-cancel',
+                // --------------------------------------------------------
+                // CLASE PERSONALIZADA: Para estilizar la X de cierre
+                // --------------------------------------------------------
+                closeButton: 'swal2-soluvencon-close'
             },
             
             showClass: {
@@ -587,7 +600,8 @@ document.addEventListener('keydown', function(event) {
                 // Usamos window.location para forzar la navegación completa
                 window.location.href = 'index.html#ofertas';
             }
-            // Si presiona "Cerrar", simplemente cierra el modal sin hacer nada
+            // Si presiona "Cerrar" o la X, simplemente cierra el modal 
+            // sin hacer nada (comportamiento por defecto)
             
         });
         
@@ -595,13 +609,51 @@ document.addEventListener('keydown', function(event) {
         // MARCAR COMO VISTO: Evitar que vuelva a aparecer
         // --------------------------------------------------------
         // Guardamos en sessionStorage al cerrar el anuncio (sea por 
-        // "Ver ofertas" o por "Cerrar"). La próxima vez que cargue
+        // "Ver ofertas", "Cerrar" o la X). La próxima vez que cargue
         // cualquier página, el if inicial lo detectará y no mostrará nada.
         // --------------------------------------------------------
         sessionStorage.setItem('anuncioVisto', 'true');
         
     });
 </script>
+
+<!-- ============================================================
+     ESTILOS CSS PERSONALIZADOS PARA EL BOTÓN X DE CIERRE
+     ============================================================
+     Estos estilos posicionan la X en la esquina superior derecha
+     y la hacen de color rojo. Se aplican a través de la clase
+     'swal2-soluvencon-close' definida en customClass arriba.
+     ============================================================ -->
+<style>
+    /* Botón X rojo en la esquina superior derecha */
+    .swal2-soluvencon-close {
+        color: #dc3545 !important; /* Rojo Bootstrap */
+        font-size: 28px !important;
+        font-weight: bold !important;
+        position: absolute !important;
+        top: 10px !important;
+        right: 10px !important;
+        width: 35px !important;
+        height: 35px !important;
+        line-height: 35px !important;
+        border-radius: 50% !important;
+        transition: all 0.3s ease !important;
+        z-index: 9999 !important; /* Asegura que esté por encima de todo */
+    }
+    
+    /* Efecto hover: fondo rojo y rotación suave */
+    .swal2-soluvencon-close:hover {
+        color: #fff !important;
+        background-color: #dc3545 !important;
+        transform: rotate(90deg) !important;
+    }
+    
+    /* Ajuste del popup para que la X no se coma el contenido superior */
+    .swal2-soluvencon-popup {
+        position: relative !important;
+        padding-top: 40px !important;
+    }
+</style>
 
 <style>
     .swal2-soluvencon-popup {
