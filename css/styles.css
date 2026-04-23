@@ -87,7 +87,7 @@ header {
 
 nav {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
 }
 
@@ -96,7 +96,7 @@ nav {
     font-weight: 700;
     color: var(--primary);
     text-decoration: none;
-    display: flex;
+    
     align-items: center;
     gap: 10px;
 }
@@ -1349,4 +1349,65 @@ body {
 
 .precios-mayoristas {
     margin-top: auto; /* Empuja los precios al fondo */
+}
+
+
+/* ========================================================================
+   ESTILOS DE LAS PESTAÑAS FIJAS (Para clientes de 40 años)
+   ======================================================================== */
+.category-tabs-container {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: #ffffff; /* Fondo blanco para que no se transparente */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: 10px 0;
+    /* Esto hace que si hay muchas, se puedan deslizar con el dedo */
+    overflow-x: auto; 
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Ocultar la barra de desplazamiento para que se vea más limpio */
+.category-tabs-container::-webkit-scrollbar {
+    display: none;
+}
+
+.category-tabs {
+    display: flex;
+    gap: 10px;
+    padding: 0 15px;
+    min-width: max-content; /* Evita que los botones se encojan */
+}
+
+.tab-btn {
+    background-color: #f1f1f1;
+    color: #333;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 30px; /* Forma de pastilla */
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+/* Cuando pasan el dedo por encima */
+.tab-btn:hover {
+    background-color: #e0e0e0;
+}
+
+/* La pestaña que está seleccionada (Tu color naranja/verde principal) */
+.tab-btn.active {
+    background-color: #FF6B35; /* Cámbialo si usas otro color principal */
+    color: white;
+    box-shadow: 0 4px 6px rgba(255, 107, 53, 0.3);
+}
+
+/* En PC, centrar las pestañas si hay espacio */
+@media (min-width: 768px) {
+    .category-tabs {
+        justify-content: center;
+    }
 }

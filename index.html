@@ -1,757 +1,174 @@
 <!DOCTYPE html>
-<!-- 
-  ============================================================================
-  SOLUVENCON - Sitio Web de Cacharrería y Ferretería
-  ============================================================================
-  Descripción: Catálogo de productos para cacharrería, ferretería y bazar.
-               Incluye secciones de categorías, productos destacados y 
-               enlaces a catálogo en Google Sheets y WhatsApp.
-  Autor: SOLUVENCON
-  Versión: 4.1.2 actualizacion
-
-  ============================================================================
--->
 <html lang="es">
 <head>
-    <!-- Metadatos básicos del documento -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- SEO: Título y descripción para motores de búsqueda -->
-    <title>SOLUVENCON - Cacharrería y Ferretería | Productos Herramientas Accesorios Utensilios Morrales</title>
+    <title>SOLUVENCON - Cacharrería y Ferretería</title>
     <meta name="description" content="SOLUVENCON - Utensilios, Herramientas, Morrales. Precios mayoristas y al detal.">
     
-    <!-- 
-      FUENTES EXTERNAS
-      - Google Fonts: Poppins (pesos 300, 400, 600, 700)
-      - Font Awesome 6.4.0: Iconos vectoriales
-    -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- SweetAlert2 para anuncios emergentes -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <!-- ============================================================================
-         HOJA DE ESTILOS EXTERNA
-         ============================================================================ -->
     <link rel="stylesheet" href="css/styles.css">
 </head>
-
-<!-- ============================================================================
-     CONTENIDO HTML DEL SITIO
-     ============================================================================ -->
 <body>
 
-    <!-- ========================================================================
-         HEADER / NAVEGACIÓN PRINCIPAL
-         ======================================================================== -->
+    <!-- HEADER LIMPIO -->
     <header>
-  <nav class="container">
-    
-    <a href="index.html" class="logo">
-    <img src="imagenes/logo-1.png" alt="SOLUVENCON Logo" class="logo-img">
-    </a>
-            <!-- Menú de navegación (desktop) -->
-            <ul class="nav-links">
-               <!-- <li><a href="#inicio">Inicio</a></li> -->
-                <li><a href="#categorias">Categorías</a></li>
-                <li><a href="#ofertas">Ofertas</a></li>
-                <li><a href="#catalogo">Catálogo</a></li>
-                <li><a href="#contacto">Contacto</a></li>
-            </ul>
-            
-            <!-- Botón de menú móvil (hamburguesa) -->
-            <div class="mobile-menu" id="menu-btn">
-                <i class="fas fa-bars"></i>
-            </div>
+        <nav class="container">
+            <a href="index.html" class="logo">
+                <img src="imagenes/logo-1.png" alt="SOLUVENCON Logo" class="logo-img">
+            </a>
         </nav>
     </header>
 
     <!-- ========================================================================
-         SECCIÓN HERO (BANNER PRINCIPAL)
-         Presentación de la empresa con llamadas a la acción
+         LAS NUEVAS PESTAÑAS FIJAS (El secreto para tus clientes)
          ======================================================================== -->
-    <section class="hero" id="inicio">
-        <div class="container hero-content fade-in">
-            <h1>Todo para tu hogar y trabajo</h1>
-            <p>Cacharrería, ferretería y artículos de bazar. Precios mayoristas y al detal. ¡Calidad garantizada!</p>
-            
-            <!-- Botones de llamada a la acción -->
-            <div class="cta-buttons">
-                <a href="#catalogo" class="btn btn-primary">
-                    <i class="fas fa-book-open"></i>
-                    Ver Catálogo Completo
-                </a>
-                <a href="https://wa.me/573005005306" class="btn btn-secondary" target="_blank">
-                    <i class="fab fa-whatsapp"></i>
-                    Escríbenos por WhatsApp
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- ========================================================================
-         SECCIÓN DE CATEGORÍAS
-         Muestra las 4 categorías principales de productos
-         ======================================================================== -->
-   <section class="categories" id="categorias">
-    <div class="container">
-        <h2 class="section-title">Nuestras Categorías</h2>
-        
-        <div class="category-grid">
-            
-            <!-- Categoría 1: Accesorios -->
-            <div class="category-card">
-                <a href="accesorios.html" class="category-link">
-                    <div class="category-img">
-                        <img src="imagenes/Accesorios.png" alt="Accesorios">
-                    </div>
-                    <div class="category-info">
-                        <h3>Accesorios</h3>
-                        <p>Organizadores de maquillaje, espejos de mano y de pie, accesorios de belleza.</p>
-                        <span class="category-tag">Belleza</span>
-                    </div>
-                </a>
-            </div>
-
-            <!-- Categoría 2: Utensilios -->
-            <div class="category-card">
-                <a href="utensilios.html" class="category-link">
-                    <div class="category-img">
-                        <img src="imagenes/Utensilios.png" alt="Utensilios">
-                    </div>
-                    <div class="category-info">
-                        <h3>Utensilios</h3>
-                        <p>Cucharas, tenedores, cuchillos, platos, pocillos, juegos de vajilla completa.</p>
-                        <span class="category-tag">Cocina</span>
-                    </div>
-                </a>
-            </div>
-
-            <!-- Categoría 3: Herramientas -->
-            <div class="category-card">
-                <a href="herramientas.html" class="category-link">
-                    <div class="category-img">
-                        <img src="imagenes/Herramientas.png" alt="Herramientas">
-                    </div>
-                    <div class="category-info">
-                        <h3>Herramientas</h3>
-                        <p>Martillos, destornilladores, llaves, equipos para construcción y reparación.</p>
-                        <span class="category-tag">Construcción</span>
-                    </div>
-                </a>
-            </div>
-
-            <!-- Categoría 4: Morrales -->
-            <div class="category-card">
-                <a href="morrales.html" class="category-link">
-                    <div class="category-img">
-                        <img src="imagenes/Morrales.png" alt="Morrales">
-                    </div>
-                    <div class="category-info">
-                        <h3>Morrales</h3>
-                        <p>Bolsos, mochilas, maletines y accesorios de viaje para todas las edades.</p>
-                        <span class="category-tag">Viaje</span>
-                    </div>
-                </a>
-            </div>
-
+    <div class="category-tabs-container">
+        <div class="category-tabs">
+            <button class="tab-btn active" onclick="cambiarPestana('ofertas', this)">🔥 Ofertas</button>
+            <button class="tab-btn" onclick="cambiarPestana('Accesorios', this)">Accesorios</button>
+            <button class="tab-btn" onclick="cambiarPestana('Herramientas', this)">Herramientas</button>
+            <button class="tab-btn" onclick="cambiarPestana('Utensilios', this)">Utensilios</button>
+            <button class="tab-btn" onclick="cambiarPestana('Morrales', this)">Morrales</button>
         </div>
     </div>
-</section>
 
     <!-- ========================================================================
-         SECCIÓN DE PRODUCTOS DESTACADOS
-         Muestra 6 productos populares con precios
+         CONTENEDOR PRINCIPAL (Aquí cambian las cosas sin recargar página)
          ======================================================================== -->
-   <!-- ========================================================================
-     SECCIÓN DE PRODUCTOS DESTACADOS CON LIGHTBOX
-     ======================================================================== -->
-<section class="products-preview" id="ofertas">
-    <div class="container">
-        <h2 class="section-title">Ofertas</h2>
+    <main class="container" style="margin-top: 20px; padding-bottom: 100px;">
         
-        <div class="product-grid">
-            <!-- Producto 1: Llaves -->
-            <div class="product-card">
-                <div class="product-img" onclick="openLightbox('imagenes/promo_herramienta.png', 'Set de Llaves Mixtas')">
-                    <img src="imagenes/promo_herramienta.png" alt="Llaves">
-                    <span class="product-badge">nuevo</span>
-                    <div class="zoom-icon">🔍</div>
+        <!-- SECCIÓN DE OFERTAS (Se muestra por defecto) -->
+        <section id="seccion-ofertas" class="seccion-contenido">
+            <h2 class="section-title">Ofertas de la Semana</h2>
+            <div class="product-grid">
+                <!-- Producto 1 -->
+                <div class="product-card">
+                    <div class="product-img" onclick="abrirModal('imagenes/promo_herramienta.png')">
+                        <img src="imagenes/promo_herramienta.png" alt="Llaves">
+                        <span class="product-badge">nuevo</span>
+                    </div>
+                    <div class="product-info">
+                        <h4>JUEGO DE RACHE</h4>
+                        <div class="product-price">Desde $14.800</div>
+                        <p class="product-desc">Juego de rache para el uso domestico</p>
+                    </div>
                 </div>
-                <div class="product-info">
-                    <h4>JUEGO DE RACHE</h4>
-                    <div class="product-price">Desde $ $14.800</div>
-                    <p class="product-desc">Juego de rache para el uso domestico </p>
+                <!-- Producto 2 -->
+                <div class="product-card">
+                    <div class="product-img" onclick="abrirModal('imagenes/promo_Espejos.jpg')">
+                        <img src="imagenes/promo_Espejos.jpg" alt="Espejos">
+                        <span class="product-badge">POPULAR</span>
+                    </div>
+                    <div class="product-info">
+                        <h4>Espejo de Tocador</h4>
+                        <div class="product-price">Desde $10.000</div>
+                        <p class="product-desc">Espejo de tocador no touch</p>
+                    </div>
                 </div>
             </div>
+        </section>
 
-            <!-- Producto 2: Espejo -->
-            <div class="product-card">
-                <div class="product-img" onclick="openLightbox('imagenes/promo_Espejos.jpg', 'Espejo de Tocador')">
-                    <img src="imagenes/promo_Espejos.jpg" alt="Espejos">
-                    <span class="product-badge">POPULAR</span>
-                    <div class="zoom-icon">🔍</div>
-                </div>
-                <div class="product-info">
-                    <h4>Espejo de Tocador</h4>
-                    <div class="product-price">Desde $10.000</div>
-                    <p class="product-desc">Espejo De tocador no touch</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+        <!-- SECCIÓN DE PRODUCTOS DINÁMICOS (Oculta al inicio, tu JS la llena) -->
+        <section id="seccion-productos" class="seccion-contenido" style="display: none;">
+            <h2 id="titulo-categoria" class="section-title">Categoría</h2>
+            <div id="productos-grid" class="product-grid"></div>
+        </section>
 
-<!-- LIGHTBOX MODAL -->
-<div id="lightbox" class="lightbox" onclick="closeLightbox()">
-    <span class="lightbox-close">&times;</span>
-    <img id="lightbox-img" class="lightbox-content" src="" alt="">
-    <div id="lightbox-caption" class="lightbox-caption"></div>
-</div>
+    </main>
 
-<style>
-    /* ========================================================================
-   ESTILOS DE PRODUCTOS
-   ======================================================================== */
-.product-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
-    padding: 2rem 0;
-}
-
-.product-card {
-    background: white;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.product-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 24px rgba(0,0,0,0.15);
-}
-
-.product-img {
-    position: relative;
-    height: 250px;
-    overflow: hidden;
-    cursor: pointer;
-    background: #f8f9fa;
-}
-
-.product-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-}
-
-.product-img:hover img {
-    transform: scale(1.05);
-}
-
-/* Icono de zoom */
-.zoom-icon {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(255,255,255,0.9);
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-}
-
-.product-img:hover .zoom-icon {
-    opacity: 1;
-}
-
-.product-badge {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: #ff6b6b;
-    color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: bold;
-    text-transform: uppercase;
-}
-
-.product-info {
-    padding: 1.5rem;
-}
-
-.product-info h4 {
-    margin: 0 0 0.5rem 0;
-    color: #333;
-    font-size: 1.25rem;
-}
-
-.product-price {
-    color: #28a745;
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-}
-
-.product-desc {
-    color: #666;
-    font-size: 0.9rem;
-    margin: 0;
-}
-
-/* ========================================================================
-   ESTILOS DEL LIGHTBOX
-   ======================================================================== */
-.lightbox {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.9);
-    animation: fadeIn 0.3s ease;
-}
-
-.lightbox.active {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.lightbox-content {
-    max-width: 90%;
-    max-height: 80%;
-    object-fit: contain;
-    border-radius: 8px;
-    animation: zoomIn 0.3s ease;
-}
-
-.lightbox-caption {
-    color: white;
-    margin-top: 1rem;
-    font-size: 1.25rem;
-    text-align: center;
-}
-
-.lightbox-close {
-    position: absolute;
-    top: 20px;
-    right: 40px;
-    color: white;
-    font-size: 3rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: color 0.3s ease;
-}
-
-.lightbox-close:hover {
-    color: #ff6b6b;
-}
-
-/* Animaciones */
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@keyframes zoomIn {
-    from { transform: scale(0.8); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-}
-
-/* Cerrar con tecla ESC */
-.lightbox.active {
-    cursor: pointer;
-}
-</style>
-
-<script>
-// Función para abrir el lightbox
-function openLightbox(imgSrc, caption) {
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightbox-img');
-    const lightboxCaption = document.getElementById('lightbox-caption');
-    
-    lightboxImg.src = imgSrc;
-    lightboxCaption.textContent = caption;
-    lightbox.classList.add('active');
-    
-    // Prevenir scroll del body
-    document.body.style.overflow = 'hidden';
-}
-
-// Función para cerrar el lightbox
-function closeLightbox() {
-    const lightbox = document.getElementById('lightbox');
-    lightbox.classList.remove('active');
-    
-    // Restaurar scroll del body
-    document.body.style.overflow = 'auto';
-}
-
-// Cerrar con tecla ESC
-document.addEventListener('keydown', function(event) {
-    if (event.key === 'Escape') {
-        closeLightbox();
-    }
-});
-</script>
-                
-    
-    <!-- ========================================================================
-         SECCIÓN DEL CATÁLOGO EN GOOGLE SHEETS
-         Enlace al inventario completo
-         ======================================================================== -->
-    <section class="catalog-section" id="catalogo">
-        <div class="container">
-            <h2>¿Necesitas ver todo el inventario?</h2>
-            <p>Accede a nuestro catálogo completo en Google Sheets con precios actualizados y disponibilidad en tiempo real.</p>
-            
-            <!-- IMPORTANTE: Reemplazar "TU_ID_AQUI" con el ID real del Google Sheet -->
-            <a href="https://sites.google.com/view/soluvencon/inicio" target="_blank" class="sheets-btn">
-                <i class="fas fa-file-excel"></i>
-                Abrir Catálogo en Google Sheets
-            </a>
-        </div>
-    </section>
-
-    <!-- ========================================================================
-         FOOTER (PIE DE PÁGINA)
-         Información de contacto y redes sociales
-         ======================================================================== -->
+    <!-- FOOTER -->
     <footer id="contacto">
         <div class="container">
             <div class="footer-content">
-                <!-- Columna 1: Sobre la empresa -->
                 <div class="footer-section">
                     <h3>SOLUVENCON</h3>
-                    <p>Soluvencon ofrece una variedad de productos como bolsos para estudiantes, artículos de cacharrería, utensilios de cocina, herramientas y accesorios prácticos para el hogar y el trabajo.</p>
+                    <p>Soluvencon ofrece una variedad de productos como bolsos, artículos de cacharrería, utensilios de cocina, herramientas y accesorios prácticos.</p>
                 </div>
-                
-                <!-- Columna 2: Información de contacto -->
                 <div class="footer-section">
                     <h3>Contacto</h3>
                     <p><i class="fas fa-phone"></i> +57 3005005306</p>
                     <p><i class="fas fa-envelope"></i> soluvencon@gmail.com</p>
                     <p><i class="fas fa-map-marker-alt"></i> Rionegro, Ant.</p>
                 </div>
-                
-                <!-- Columna 3: Redes sociales -->
                 <div class="footer-section">
                     <h3>Síguenos</h3>
                     <div class="social-links">
-                        <a href="https://www.facebook.com/share/1KBaaXVBQV/" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-                        <a href="https://www.instagram.com/soluvencon/" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="https://www.tiktok.com/@soluvencon" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
+                        <a href="https://www.facebook.com/share/1KBaaXVBQV/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/soluvencon/" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.tiktok.com/@soluvencon" target="_blank"><i class="fab fa-tiktok"></i></a>
                     </div>
                 </div>
             </div>
-            
-            <!-- Barra de copyright -->
             <div class="footer-bottom">
                 <p>&copy; 2024 SOLUVENCON. Todos los derechos reservados.</p>
             </div>
         </div>
     </footer>
 
-    <!-- ========================================================================
-         BOTÓN FLOTANTE DE WHATSAPP
-         Siempre visible para contacto rápido
-         ======================================================================== -->
-    <a href="https://wa.me/573005005306" class="whatsapp-float" target="_blank" title="Escríbenos por WhatsApp">
+    <!-- WHATSAPP FLOTANTE -->
+    <a href="https://wa.me/5733005005306" class="whatsapp-float" target="_blank" title="Escríbenos por WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
 
-<script>
-    // ============================================================
-    // ANUNCIO EMERGENTE SOLUVENCON - VERSIÓN NO INVASIVA
-    // ============================================================
-    // Este anuncio solo se muestra UNA VEZ por sesión de navegación.
-    // Usamos sessionStorage (se borra al cerrar la pestaña) para no 
-    // molestar al usuario con popups repetidos mientras navega.
-    // ============================================================
+    <!-- CARRITO FLOTANTE (Sin cambios, funciona igual) -->
+    <div id="carrito-boton" class="carrito-flotante" onclick="toggleCarrito()">
+        <i class="fas fa-shopping-bag"></i>
+        <span id="carrito-contador" class="carrito-contador">0</span>
+    </div>
+    <div id="carrito-overlay" class="carrito-overlay" onclick="toggleCarrito()"></div>
+    <div id="carrito-panel" class="carrito-panel">
+        <div class="carrito-header">
+            <h3><i class="fas fa-shopping-bag"></i> Tu Cotización</h3>
+            <button class="carrito-cerrar" onclick="toggleCarrito()"><i class="fas fa-times"></i></button>
+        </div>
+        <div id="carrito-items" class="carrito-items">
+            <div class="carrito-vacio"><i class="fas fa-shopping-basket"></i><p>Selecciona productos para cotizar</p></div>
+        </div>
+        <div class="carrito-footer">
+            <div class="carrito-total"><span>Total:</span><span id="carrito-total">$0.00</span></div>
+            <button class="btn-whatsapp-carrito" onclick="enviarCotizacion()"><i class="fab fa-whatsapp"></i> Enviar Cotización</button>
+        </div>
+    </div>
     
-    window.addEventListener('load', function() {
-        
-        // --------------------------------------------------------
-        // VERIFICACIÓN: ¿Ya vio el anuncio en esta sesión?
-        // --------------------------------------------------------
-        // Si existe la clave 'anuncioVisto' en sessionStorage, 
-        // no mostramos nada y salimos de la función.
-        // --------------------------------------------------------
-        if (sessionStorage.getItem('anuncioVisto')) {
-            return; // Usuario ya lo vio, no molestar
-        }
-        
-        // --------------------------------------------------------
-        // MOSTRAR ANUNCIO (primera visita de la sesión)
-        // --------------------------------------------------------
-        Swal.fire({
-            title: '',
-            html: `
-                <div style="text-align: center; font-family: 'Poppins', sans-serif; padding: 10px;">
-                    <!-- Icono de bienvenida -->
-                    <div style="font-size: 48px; margin-bottom: 15px;">🔨</div>
-                    
-                    <!-- Título -->
-                    <h2 style="color: #0a2a36; margin: 0 0 20px 0; font-size: 24px; font-weight: 700;">
-                        ¡Bienvenido a <span style="color: #FF6B35;">SOLUVENCON</span>!
-                    </h2>
-                    
-                    <!-- Oferta 1 -->
-                    <div style="background: #fff; border-radius: 12px; padding: 15px; margin-bottom: 15px; border-left: 4px solid #FF6B35; text-align: left; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-                        <p style="color: #0a2a36; margin: 0 0 10px 0; font-size: 14px;">
-                            🏷️ <strong style="color: #FF6B35;">Ofertas por apertura</strong><br>
-                            <span style="color: #666; font-size: 13px;">15% de descuento en herramientas seleccionadas</span>
-                        </p>
-                    </div>
-                    
-                    <!-- Oferta 2 -->
-                    <div style="background: #fff; border-radius: 12px; padding: 15px; margin-bottom: 15px; border-left: 4px solid #137399; text-align: left; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-                        <p style="color: #0a2a36; margin: 0 0 10px 0; font-size: 14px;">
-                            🚚 <strong style="color: #137399;">Envíos gratis</strong><br>
-                            <span style="color: #666; font-size: 13px;">Santuario y Marinilla en compras > $50.000</span>
-                        </p>
-                    </div>
-                    
-                    <!-- WhatsApp -->
-                    <div style="background: #0a2a36; color: #fff; border-radius: 25px; padding: 12px 20px; display: inline-block; margin-top: 10px;">
-                        <p style="margin: 0; font-size: 14px;">
-                            📞 <strong>WhatsApp:</strong> +57 3005005306
-                        </p>
-                    </div>
-                </div>
-            `, 
-            
-            // Imagen del producto (opcional)
-            imageUrl: 'imagenes/GORRA-VERDE.png',
-            imageWidth: 200,
-            imageHeight: 130,
-            imageAlt: 'Ofertas SOLUVENCON',
-            
-            // Sin icono de SweetAlert (diseño limpio)
-            icon: null,
-            
-            // --------------------------------------------------------
-            // BOTÓN X DE CIERRE: Esquina superior derecha, color rojo
-            // --------------------------------------------------------
-            // showCloseButton activa la X nativa de SweetAlert2.
-            // La personalización de color y posición se hace vía CSS
-            // en la clase 'swal2-soluvencon-close' definida abajo.
-            // --------------------------------------------------------
-            showCloseButton: true,
-            
-            // Botones
-            confirmButtonText: '¡Ver ofertas ahora!',
-            confirmButtonColor: '#FF6B35',
-            showCancelButton: true,
-            cancelButtonText: 'Cerrar',
-            cancelButtonColor: '#6c757d',
-            
-            // Estilos
-            background: '#F8F9FA',
-            width: '400px',
-            padding: '20px',
-            heightAuto: false,
-            allowOutsideClick: false,
-            backdrop: `rgba(10,42,54,0.85)`,
-            
-            customClass: {
-                popup: 'swal2-soluvencon-popup',
-                confirmButton: 'swal2-soluvencon-btn',
-                cancelButton: 'swal2-soluvencon-cancel',
-                // --------------------------------------------------------
-                // CLASE PERSONALIZADA: Para estilizar la X de cierre
-                // --------------------------------------------------------
-                closeButton: 'swal2-soluvencon-close'
-            },
-            
-            showClass: {
-                popup: 'animate__animated animate__fadeInDown animate__faster'
-            },
-            hideClass: {
-                popup: 'animate__animated animate__fadeOutUp animate__faster'
-            }
-            
-        }).then((result) => {
-            
-            // --------------------------------------------------------
-            // ACCIÓN AL HACER CLIC: Navegación a ofertas
-            // --------------------------------------------------------
-            if (result.isConfirmed) {
-                // Redirige a la sección #ofertas del index
-                // Usamos window.location para forzar la navegación completa
-                window.location.href = 'index.html#ofertas';
-            }
-            // Si presiona "Cerrar" o la X, simplemente cierra el modal 
-            // sin hacer nada (comportamiento por defecto)
-            
-        });
-        
-        // --------------------------------------------------------
-        // MARCAR COMO VISTO: Evitar que vuelva a aparecer
-        // --------------------------------------------------------
-        // Guardamos en sessionStorage al cerrar el anuncio (sea por 
-        // "Ver ofertas", "Cerrar" o la X). La próxima vez que cargue
-        // cualquier página, el if inicial lo detectará y no mostrará nada.
-        // --------------------------------------------------------
-        sessionStorage.setItem('anuncioVisto', 'true');
-        
-    });
-</script>
+    <!-- Modal para ver imágenes -->
+    <div id="modalImagen" class="modal-imagen" onclick="cerrarModal()">
+        <span class="cerrar-modal" onclick="event.stopPropagation(); cerrarModal();">&times;</span>
+        <img class="modal-contenido" id="imgModal" onclick="event.stopPropagation();">
+    </div>
 
-<!-- ============================================================
-     ESTILOS CSS PERSONALIZADOS PARA EL BOTÓN X DE CIERRE
-     ============================================================
-     Estos estilos posicionan la X en la esquina superior derecha
-     y la hacen de color rojo. Se aplican a través de la clase
-     'swal2-soluvencon-close' definida en customClass arriba.
-     ============================================================ -->
-<style>
-    /* Botón X rojo en la esquina superior derecha */
-    .swal2-soluvencon-close {
-        color: #dc3545 !important; /* Rojo Bootstrap */
-        font-size: 28px !important;
-        font-weight: bold !important;
-        position: absolute !important;
-        top: 10px !important;
-        right: 10px !important;
-        width: 35px !important;
-        height: 35px !important;
-        line-height: 35px !important;
-        border-radius: 50% !important;
-        transition: all 0.3s ease !important;
-        z-index: 9999 !important; /* Asegura que esté por encima de todo */
-    }
+    <!-- SCRIPT DE PRODUCTOS -->
+    <script src="js/productos.js"></script>
     
-    /* Efecto hover: fondo rojo y rotación suave */
-    .swal2-soluvencon-close:hover {
-        color: #fff !important;
-        background-color: #dc3545 !important;
-        transform: rotate(90deg) !important;
-    }
-    
-    /* Ajuste del popup para que la X no se coma el contenido superior */
-    .swal2-soluvencon-popup {
-        position: relative !important;
-        padding-top: 40px !important;
-    }
-</style>
-
-<style>
-    .swal2-soluvencon-popup {
-        max-height: 85vh !important;
-        border-radius: 20px !important;
-        box-shadow: 0 10px 40px rgba(10,42,54,0.3) !important;
-    }
-    .swal2-soluvencon-btn {
-        border-radius: 25px !important;
-        padding: 12px 30px !important;
-        font-weight: 600 !important;
-        font-size: 15px !important;
-        text-transform: uppercase !important;
-        letter-spacing: 0.5px !important;
-        transition: all 0.3s ease !important;
-    }
-    .swal2-soluvencon-btn:hover {
-        background: #e55a2b !important;
-        transform: translateY(-2px) !important;
-        box-shadow: 0 5px 15px rgba(255,107,53,0.4) !important;
-    }
-    .swal2-soluvencon-cancel {
-        border-radius: 25px !important;
-        padding: 12px 25px !important;
-        font-weight: 500 !important;
-    }
-    .swal2-image {
-        border-radius: 12px !important;
-        margin: 15px auto !important;
-        max-height: 130px !important;
-        object-fit: contain !important;
-    }
-    .swal2-title { display: none !important; }
-    .swal2-html-container {
-        margin: 0 !important;
-        padding: 0 !important;
-        overflow-y: auto !important;
-        max-height: 50vh !important;
-    }
-</style>
-
-<!-- Agrega este CSS en tu <head> o archivo de estilos -->
-<style>
-    .swal2-popup-custom {
-        max-height: 90vh !important;    /* Máximo 90% de la altura de la pantalla */
-        overflow: hidden !important;
-    }
-    .swal2-html-custom {
-        max-height: 300px !important;   /* Scroll interno si el contenido es largo */
-        overflow-y: auto !important;
-    }
-    /* Ajustar imagen para que no se desborde */
-    .swal2-image {
-        max-height: 150px !important;
-        object-fit: contain !important;
-        margin: 10px auto !important;
-    }
-</style>
-    </script>
-    <!-- ===========================================================
-         ESTE ES EL SCRIPT DEL MENU EN VERSION MOVIL 
-         =========================================================-->
-    <!-- ===========================================================
-     SCRIPT DEL MENÚ MÓVIL - CORREGIDO
-     =========================================================-->
+    <!-- Script que controla las pestañas sin recargar -->
     <script>
-        const menuBtn = document.querySelector(".mobile-menu");
-        const navLinks = document.querySelector(".nav-links");
-    const menuLinks = document.querySelectorAll(".nav-links a");
+        function cambiarPestana(tipo, botonClickeado) {
+            // 1. Cambiar color al botón seleccionado
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            botonClickeado.classList.add('active');
 
-    // Solo ejecutar en móvil (≤768px)
-    function esMovil() {
-        return window.innerWidth <= 768;
-    }
+            const secOfertas = document.getElementById('seccion-ofertas');
+            const secProductos = document.getElementById('seccion-productos');
+            const tituloCategoria = document.getElementById('titulo-categoria');
 
-    // Abrir/cerrar con la hamburguesa
-        menuBtn.addEventListener("click", () => {
-        if (!esMovil()) return; // Ignorar en escritorio
-        
-        navLinks.classList.toggle('active');
-    });
-
-    // Cerrar al hacer clic en cualquier link (solo en móvil)
-    menuLinks.forEach(link => {
-        link.addEventListener("click", () => {
-            if (esMovil()) {
-                navLinks.classList.remove('active');
+            if (tipo === 'ofertas') {
+                // Mostrar ofertas, ocultar productos
+                secOfertas.style.display = 'block';
+                secProductos.style.display = 'none';
+            } else {
+                // Ocultar ofertas, mostrar productos
+                secOfertas.style.display = 'none';
+                secProductos.style.display = 'block';
+                tituloCategoria.textContent = tipo; // Cambia el título
+                
+                // Llamar a tu función mágica de la API
+                inicializarProductos(tipo);
+                
+                // Hacer scroll suave hacia arriba para que vean los productos
+                window.scrollTo({ top: 150, behavior: 'smooth' });
             }
-        });
-    });
-
-    // Al redimensionar, limpiar estado si pasamos a escritorio
-    window.addEventListener('resize', () => {
-        if (!esMovil()) {
-            navLinks.classList.remove('active');
-            }
-        });
+        }
     </script>
-
 </body>
 </html>
