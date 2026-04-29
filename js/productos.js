@@ -5,7 +5,7 @@
  * ============================================================================
  */
 
-const API_URL = 'https://script.google.com/macros/s/AKfycbyY97LNWodV9SZM_hBMvF1vgI7oQtJkJY-HP2aJSwaS-_6Cy0dHvsk1TnOBgZ54zxvhzQ/exec';
+const API_URL = 'https://script.google.com/macros/s/AKfycbwXSVAq67X1VYTq1AjUa6iJAN4xeq0iVEWFK7LHhDF7zU3h6GlvEKEGBLEMgxLNW4s3FA/exec';
 
 // ============================================================================
 // CONFIGURACIÓN DE CACHÉ
