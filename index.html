@@ -245,6 +245,9 @@
         visibility: hidden;
         transform: scale(0.9);
         transition: all 0.35s ease;
+        /* --- NUEVAS LÍNEAS MÁGICAS --- */
+        display: flex;
+        flex-direction: column;
     }
     .popup-anuncio.mostrar {
         opacity: 1;
@@ -322,6 +325,11 @@
     .popup-contenido {
         padding: 20px 24px 28px; /* <- Reducido de 28px 30px 32px */
         text-align: center;
+         /* --- NUEVAS LÍNEAS MÁGICAS --- */
+        flex: 1; /* Esto hace que ocupe todo el espacio sobrante */
+        display: flex;
+        flex-direction: column;
+        justify-content: center; /* Esto centra el texto y el botón en ese espacio sobrante */
     }
     .popup-contenido h2 {
         font-family: 'Poppins', sans-serif;
