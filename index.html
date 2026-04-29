@@ -209,6 +209,7 @@
 
 <!-- Estilos del Popup -->
 <!-- Estilos del Popup CORREGIDOS para que no se salga de la pantalla -->
+<!-- Estilos del Popup 100% Responsivo (Android, iOS, Chrome, Safari) -->
 <style>
     /* Overlay de fondo */
     .popup-overlay {
@@ -226,83 +227,91 @@
         visibility: visible;
     }
 
-    /* Contenedor del popup - NUEVA FORMA DE CENTRADO A PRUEBA DE FALLOS */
+    /* Contenedor del popup - A PRUEBA DE FALLOS */
     .popup-anuncio {
         position: fixed;
-        top: 2%;       /* <- Antes era 50%. Ahora empieza muy arriba */
-        bottom: 2%;     /* <- Y termina muy abajo. Esto asegura que SIEMPRE quepa */
-        left: 5%;       /* <- Márgenes a los lados */
-        right: 5%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.9);
         z-index: 9999;
-        max-width: 420px; /* <- Reducido de 520px a 420px */
-        margin: 0 auto;   /* <- Lo centra perfectamente sin importar el navegador */
+        width: 90%;
+        max-width: 400px;
+        
+        /* LA MAGIA PARA TODOS LOS CELULARES: 
+           85vh es para Chrome/Android viejos. 
+           85dvh es para Safari/iOS y Chrome nuevos (calcula la pantalla real sin barras). */
+        max-height: 85vh; 
+        max-height: 85dvh; 
+        
         background: #ffffff;
         border-radius: 20px;
         box-shadow: 0 25px 80px rgba(0,0,0,0.35);
         overflow: hidden;
-        overflow-y: auto; /* <- SI es muy alto, ahora se puede hacer scroll DENTRO del anuncio */
         opacity: 0;
         visibility: hidden;
-        transform: scale(0.9);
         transition: all 0.35s ease;
-        /* --- NUEVAS LÍNEAS MÁGICAS --- */
+        
         display: flex;
         flex-direction: column;
     }
     .popup-anuncio.mostrar {
         opacity: 1;
         visibility: visible;
-        transform: scale(1);
+        transform: translate(-50%, -50%) scale(1);
     }
 
     /* Barra superior decorativa */
     .popup-header-bar {
         height: 6px;
         background: linear-gradient(90deg, #FF6B35, #F7931E, #FFD23F);
+        flex-shrink: 0; /* Evita que la barra se encoja */
     }
 
-    /* Botón cerrar - MEJORADO PARA CELULARES */
+    /* Botón cerrar */
     .popup-cerrar {
         position: absolute;
         top: 14px;
         right: 14px;
-        width: 40px;       /* <- Un poco más grande para que sea fácil de tocar */
+        width: 40px;
         height: 40px;
         border: none;
-        background: rgba(255, 255, 255, 0.9); /* <- Fondo blanco semi-opaco para que nunca se pierda con la imagen de fondo */
+        background: rgba(255, 255, 255, 0.9);
         border-radius: 50%;
         cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
         font-size: 22px;
-        color: #333;       /* <- Color oscuro para que se vea siempre */
+        color: #333;
         transition: all 0.2s ease;
         z-index: 10;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.2); /* <- Sombra para destacar */
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
     }
     .popup-cerrar:hover {
-        background: #dc3545; /* <- Se pone rojo al pasar el dedo para que sepan que cierra */
+        background: #dc3545;
         color: white;
         transform: rotate(90deg);
     }
 
-    /* Imagen del producto - REDUCIDA */
+    /* Imagen del producto - ADAPTATIVA */
     .popup-imagen-wrap {
         width: 100%;
-        height: 180px;  /* <- Antes era 280px. Mucho más compacta ahora */
+        /* Ocupa el 35% del anuncio, pero nunca menos de 130px ni más de 200px */
+        height: 35%;
+        min-height: 130px;
+        max-height: 200px;
         overflow: hidden;
         background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
         display: flex;
         align-items: center;
         justify-content: center;
         position: relative;
+        flex-shrink: 0; /* Evita que la imagen se encoja */
     }
     .popup-imagen-wrap img {
         max-width: 80%;
         max-height: 80%;
         object-fit: contain;
-        transition: transform 0.5s ease;
     }
 
     /* Badge de oferta */
@@ -321,51 +330,61 @@
         box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
     }
 
-    /* Contenido de texto - AJUSTADO */
+    /* Contenido de texto - SOLUCIÓN AL ESPACIO VACÍO */
     .popup-contenido {
-        padding: 20px 24px 28px; /* <- Reducido de 28px 30px 32px */
+        padding: 16px 20px 22px;
         text-align: center;
-         /* --- NUEVAS LÍNEAS MÁGICAS --- */
-        flex: 1; /* Esto hace que ocupe todo el espacio sobrante */
+        flex: 1;
         display: flex;
         flex-direction: column;
-        justify-content: center; /* Esto centra el texto y el botón en ese espacio sobrante */
+        /* CAMBIO CLAVE: En lugar de 'center' (que causa el hueco), 
+           usamos 'space-between' para pegar el título arriba y el botón abajo */
+        justify-content: space-between; 
+        overflow-y: auto; /* Solo hará scroll si en un celular diminuto no cabe */
     }
+
+    /* Agrupamos la parte de arriba (títulos) */
+    .popup-contenido .popup-subtitulo,
+    .popup-contenido h2,
+    .popup-contenido p {
+        margin-bottom: 8px;
+    }
+
     .popup-contenido h2 {
         font-family: 'Poppins', sans-serif;
-        font-size: 22px; /* <- Reducido de 26px */
+        font-size: 20px;
         font-weight: 700;
         color: #1a1a2e;
-        margin: 0 0 6px;
+        margin: 0;
         line-height: 1.2;
     }
     .popup-contenido .popup-subtitulo {
         font-family: 'Poppins', sans-serif;
-        font-size: 12px; /* <- Reducido de 14px */
+        font-size: 11px;
         color: #FF6B35;
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 1px;
-        margin-bottom: 10px;
     }
     .popup-contenido p {
         font-family: 'Poppins', sans-serif;
-        font-size: 13px; /* <- Reducido de 15px */
+        font-size: 13px;
         color: #555;
-        line-height: 1.5;
-        margin: 0 0 16px; /* <- Reducido de 24px */
+        line-height: 1.4;
+        margin: 4px 0 0 0;
     }
 
-    /* Precio */
+    /* Agrupamos la parte de abajo (botón y precio) */
     .popup-precio {
         font-family: 'Poppins', sans-serif;
-        font-size: 26px; /* <- Reducido de 32px */
+        font-size: 24px;
         font-weight: 700;
         color: #27ae60;
-        margin-bottom: 16px;
+        margin-top: 12px;
+        margin-bottom: 10px;
     }
     .popup-precio span {
-        font-size: 14px;
+        font-size: 13px;
         color: #999;
         text-decoration: line-through;
         margin-left: 8px;
@@ -376,19 +395,21 @@
     .popup-btn {
         display: inline-flex;
         align-items: center;
+        justify-content: center;
         gap: 8px;
         background: linear-gradient(135deg, #25D366, #128C7E);
         color: #fff;
         font-family: 'Poppins', sans-serif;
-        font-size: 15px;
+        font-size: 14px;
         font-weight: 600;
-        padding: 12px 30px; /* <- Reducido un poco */
+        padding: 12px 20px;
         border-radius: 50px;
         text-decoration: none;
         border: none;
         cursor: pointer;
         box-shadow: 0 8px 25px rgba(37, 211, 102, 0.35);
         transition: all 0.3s ease;
+        width: 100%; /* Ocupa todo el ancho para que sea fácil darle click en el celular */
     }
     .popup-btn:hover {
         transform: translateY(-2px);
@@ -400,32 +421,17 @@
 
     /* Texto secundario */
     .popup-nota {
-        margin-top: 12px;
-        font-size: 11px;
+        margin-top: 8px;
+        font-size: 10px;
         color: #aaa;
         font-family: 'Poppins', sans-serif;
     }
 
-    /* Responsive para móviles pequeños */
-    @media (max-width: 480px) {
-        .popup-anuncio {
-            left: 3%;      /* <- Márgenes aún más pegados a los bordes en móviles chiquitos */
-            right: 3%;
-            top: 3%;
-            bottom: 3%;
-        }
-        .popup-imagen-wrap {
-            height: 150px; /* <- La imagen se hace aún más pequeña en celulares de 480 o menos */
-        }
-        .popup-contenido {
-            padding: 16px 18px 22px;
-        }
-        .popup-contenido h2 {
-            font-size: 20px;
-        }
-        .popup-precio {
-            font-size: 22px;
-        }
+    /* Ajustes ultra finos para celulares pequeñitos (Ej: iPhone SE, Moto G antiguos) */
+    @media (max-width: 380px) {
+        .popup-contenido h2 { font-size: 18px; }
+        .popup-precio { font-size: 20px; }
+        .popup-btn { font-size: 13px; padding: 10px 15px; }
     }
 </style>
 <!-- Estructura HTML del Popup -->
