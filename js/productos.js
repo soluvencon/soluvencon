@@ -278,3 +278,274 @@ function cerrarModal() { const modal = document.getElementById('modalImagen'); i
 document.addEventListener('keydown', function(event) { if (event.key === 'Escape') { cerrarModal(); const panel = document.getElementById('carrito-panel'); if (panel && panel.classList.contains('activo')) toggleCarrito(); } });
 
 function ajustarAlturaFinal() { const grid = document.getElementById('productos-grid'); if (grid) { const espaciador = document.createElement('div'); espaciador.style.height = '120px'; espaciador.style.width = '100%'; espaciador.style.clear = 'both'; grid.appendChild(espaciador); } }
+
+
+// ============================================
+// BOTÓN VOLVER ARRIBA - Aparece después de 15 productos
+// ============================================
+
+(function() {
+    const btnVolverArriba = document.getElementById('btnVolverArriba');
+    const PRODUCTOS_UMBRAL = 10; // ← Número de productos para mostrar el botón
+
+    // Función para contar productos visibles en pantalla
+    function contarProductosVisibles() {
+        const cards = document.querySelectorAll('.product-card');
+        let contador = 0;
+        
+        cards.forEach(card => {
+            const rect = card.getBoundingClientRect();
+            // Cuenta si el producto está visible o ya pasó por la pantalla
+            if (rect.top < window.innerHeight) {
+                contador++;
+            }
+        });
+        
+        return contador;
+    }
+
+    function controlarBoton() {
+        const productosVistos = contarProductosVisibles();
+        
+        // Mostrar solo si hay más de 10 productos visibles/pasados
+        if (productosVistos >= PRODUCTOS_UMBRAL) {
+            btnVolverArriba.classList.add('visible');
+        } else {
+            btnVolverArriba.classList.remove('visible');
+        }
+    }
+
+    // Función para volver arriba suavemente
+    window.volverArriba = function() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    };
+
+    // Escuchar scroll con throttle para mejor rendimiento
+    let timeout;
+    window.addEventListener('scroll', function() {
+        if (timeout) return;
+        timeout = setTimeout(function() {
+            controlarBoton();
+            timeout = null;
+        }, 150);
+    });
+
+    // También verificar cuando cambian las pestañas (carga de productos)
+    const observer = new MutationObserver(function() {
+        controlarBoton();
+    });
+    
+    const grid = document.getElementById('productos-grid');
+    if (grid) {
+        observer.observe(grid, { childList: true, subtree: true });
+    }
+
+    // Verificar al cargar
+    controlarBoton();
+})();
+
+// ============================================================================
+// BUSCADOR DE PRODUCTOS EN EL HEADER
+// ============================================================================
+
+(function() {
+    const input = document.getElementById('buscadorInput');
+    const resultados = document.getElementById('buscadorResultados');
+    const btnLimpiar = document.getElementById('buscadorLimpiar');
+    
+    if (!input || !resultados) return; // Protección si no existe
+
+    let todasLasCategorias = ['Accesorios', 'Herramientas', 'Utensilios', 'Morrales'];
+    let cacheBusqueda = {}; // Cache local para búsquedas
+
+    // Escuchar escritura con debounce
+    let timeoutBusqueda;
+    input.addEventListener('input', function() {
+        const texto = this.value.trim();
+        
+        // Mostrar/ocultar botón limpiar
+        if (texto.length > 0) {
+            btnLimpiar.classList.add('visible');
+        } else {
+            btnLimpiar.classList.remove('visible');
+            cerrarResultados();
+            return;
+        }
+
+        clearTimeout(timeoutBusqueda);
+        timeoutBusqueda = setTimeout(() => buscarProductos(texto), 300);
+    });
+
+    // Cerrar al hacer click fuera
+    document.addEventListener('click', function(e) {
+        if (!input.contains(e.target) && !resultados.contains(e.target)) {
+            cerrarResultados();
+        }
+    });
+
+    // Buscar con Enter
+    input.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            const texto = this.value.trim();
+            if (texto) {
+                buscarYMostrarTodos(texto);
+            }
+        }
+    });
+
+    window.limpiarBusqueda = function() {
+        input.value = '';
+        btnLimpiar.classList.remove('visible');
+        cerrarResultados();
+        input.focus();
+    };
+
+    function cerrarResultados() {
+        resultados.classList.remove('activo');
+    }
+
+    async function buscarProductos(texto) {
+        if (texto.length < 2) return; // Mínimo 2 caracteres
+
+        const textoLower = texto.toLowerCase();
+        let encontrados = [];
+
+        // Buscar en todas las categorías
+        for (const categoria of todasLasCategorias) {
+            let productos = obtenerCache(categoria);
+            
+            // Si no hay caché, cargar silenciosamente
+            if (!productos) {
+                try {
+                    const response = await fetch(`${API_URL}?categoria=${encodeURIComponent(categoria)}`);
+                    productos = await response.json();
+                    if (!productos.error) {
+                        guardarCache(categoria, productos);
+                    }
+                } catch (e) {
+                    continue;
+                }
+            }
+
+            if (productos && productos.length) {
+                const filtrados = productos.filter(p => 
+                    p.nombre && p.nombre.toLowerCase().includes(textoLower)
+                ).map(p => ({ ...p, categoria }));
+
+                encontrados = encontrados.concat(filtrados);
+            }
+        }
+
+        mostrarResultados(encontrados, texto);
+    }
+
+    function mostrarResultados(productos, textoBusqueda) {
+        if (productos.length === 0) {
+            resultados.innerHTML = `
+                <div class="buscador-sin-resultados">
+                    <i class="fas fa-search"></i>
+                    No encontramos "${textoBusqueda}"
+                </div>
+            `;
+            resultados.classList.add('activo');
+            return;
+        }
+
+        // Mostrar máximo 5 resultados en el dropdown
+        const mostrar = productos.slice(0, 5);
+        let html = '';
+
+        mostrar.forEach(p => {
+            const imagen = p.imagen_url || 'https://via.placeholder.com/50x50?text=Sin+Img';
+            const precio = p.precio_unitario || 'Consultar';
+            
+            html += `
+                <div class="buscador-item" onclick="irAProducto('${p.categoria}', '${escapeString(p.nombre)}')">
+                    <img src="${imagen}" alt="${p.nombre}" onerror="this.src='https://via.placeholder.com/50x50?text=Sin+Img'">
+                    <div class="buscador-item-info">
+                        <div class="buscador-item-nombre">${resaltarTexto(p.nombre, textoBusqueda)}</div>
+                        <div class="buscador-item-categoria">${p.categoria}</div>
+                    </div>
+                    <div class="buscador-item-precio">${precio}</div>
+                </div>
+            `;
+        });
+
+        // Si hay más resultados, mostrar "Ver todos"
+        if (productos.length > 5) {
+            html += `
+                <button class="buscador-ver-todos" onclick="buscarYMostrarTodos('${escapeString(textoBusqueda)}')">
+                    Ver todos los ${productos.length} resultados
+                </button>
+            `;
+        }
+
+        resultados.innerHTML = html;
+        resultados.classList.add('activo');
+    }
+
+    function resaltarTexto(texto, busqueda) {
+        const regex = new RegExp(`(${busqueda})`, 'gi');
+        return texto.replace(regex, '<mark style="background: var(--accent); color: var(--dark); padding: 0 2px; border-radius: 3px;">$1</mark>');
+    }
+
+    // Navegar al producto
+    window.irAProducto = function(categoria, nombreProducto) {
+        cerrarResultados();
+        
+        // Cambiar a la pestaña de la categoría
+        const botones = document.querySelectorAll('.tab-btn');
+        botones.forEach(btn => {
+            if (btn.textContent.trim().includes(categoria)) {
+                btn.click();
+            }
+        });
+
+        // Esperar a que carguen los productos y hacer scroll
+        setTimeout(() => {
+            const cards = document.querySelectorAll('.product-card');
+            cards.forEach(card => {
+                const titulo = card.querySelector('h4');
+                if (titulo && titulo.textContent.toLowerCase().includes(nombreProducto.toLowerCase())) {
+                    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    card.style.animation = 'pulse 1s ease';
+                    setTimeout(() => card.style.animation = '', 1000);
+                }
+            });
+        }, 600);
+    };
+
+    // Mostrar todos los resultados en la página
+    window.buscarYMostrarTodos = function(texto) {
+        cerrarResultados();
+        input.value = texto;
+        btnLimpiar.classList.add('visible');
+        
+        // Ocultar secciones normales
+        document.getElementById('seccion-ofertas').style.display = 'none';
+        document.getElementById('seccion-productos').style.display = 'block';
+        
+        const titulo = document.getElementById('titulo-categoria');
+        if (titulo) titulo.textContent = `Resultados: "${texto}"`;
+
+        // Cargar y filtrar todos los productos
+        buscarProductos(texto).then(() => {
+            // Renderizar todos los encontrados en el grid
+            // (Aquí puedes implementar una vista completa de resultados)
+        });
+    };
+
+})();
+
+// Animación pulse para destacar producto encontrado
+const stylePulse = document.createElement('style');
+stylePulse.textContent = `
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
+        50% { transform: scale(1.03); box-shadow: 0 10px 30px rgba(255,107,53,0.3); }
+    }
+`;
+document.head.appendChild(stylePulse);

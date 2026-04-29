@@ -13,13 +13,35 @@
 <body>
 
     <!-- HEADER LIMPIO -->
-    <header>
-        <nav class="container">
-            <a href="index.html" class="logo">
-                <img src="imagenes/logo-1.png" alt="SOLUVENCON Logo" class="logo-img">
-            </a>
-        </nav>
-    </header>
+    <!-- HEADER CON BUSCADOR INTEGRADO -->
+<header>
+    <nav class="container header-nav">
+        <!-- Logo a la izquierda -->
+        <a href="index.html" class="logo">
+            <img src="imagenes/logo-1.png" alt="SOLUVENCON Logo" class="logo-img">
+        </a>
+
+        <!-- Buscador en el centro -->
+        <div class="buscador-container">
+            <div class="buscador-wrapper">
+                <i class="fas fa-search buscador-icono"></i>
+                <input 
+                    type="text" 
+                    id="buscadorInput" 
+                    class="buscador-input" 
+                    placeholder="Buscar productos..." 
+                    autocomplete="off"
+                >
+                <button id="buscadorLimpiar" class="buscador-limpiar" onclick="limpiarBusqueda()" title="Limpiar">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <!-- Resultados en dropdown -->
+            <div id="buscadorResultados" class="buscador-resultados"></div>
+        </div>
+        </div>
+    </nav>
+</header>
 
     <!-- ========================================================================
          LAS NUEVAS PESTAÑAS FIJAS (El secreto para tus clientes)
@@ -137,6 +159,13 @@
         <span class="cerrar-modal" onclick="event.stopPropagation(); cerrarModal();">&times;</span>
         <img class="modal-contenido" id="imgModal" onclick="event.stopPropagation();">
     </div>
+    
+      <!-- ============================================
+     BOTÓN VOLVER ARRIBA - Aparece después de 6 productos
+     ============================================ -->
+<button id="btnVolverArriba" class="btn-volver-arriba" onclick="volverArriba()" aria-label="Volver arriba">
+    <i class="fas fa-arrow-up"></i>
+</button>
 
     <!-- SCRIPT DE PRODUCTOS -->
     <script src="js/productos.js"></script>
