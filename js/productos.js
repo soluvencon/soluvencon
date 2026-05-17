@@ -358,7 +358,7 @@ function ajustarAlturaFinal() { const grid = document.getElementById('productos-
     
     if (!input || !resultados) return; // Protección si no existe
 
-    let todasLasCategorias = ['Accesorios', 'Herramientas', 'Utensilios', 'Morrales'];
+    let todasLasCategorias = ['Accesorios','Juguetería', 'Herramientas', 'Utensilios', 'Morrales'];
     let cacheBusqueda = {}; // Cache local para búsquedas
 
     // Escuchar escritura con debounce
