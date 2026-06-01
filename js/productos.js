@@ -21,7 +21,7 @@ const CACHE_KEY = 'soluvencon_cache';
 const CACHE_DURATION = 10 * 60 * 1000; // 10 minutos de caché local
 
 // ============================================================================
-// ESTADO GLOBAL
+// ESTADO GLOBAL    global del carrito de compras (cotización) - se sincroniza con localStorage
 // ============================================================================
 let carrito = [];
 
