@@ -2,31 +2,24 @@
  * ============================================================================
  * SOLUVENCON - Sistema de Productos con Caché y Optimización LCP
  * Adaptado para SPA (Single Page Application) con pestañas fijas
- * 
- * [ACTUALIZADO] Migrado de Google Apps Script a JSON Estáticos en GitHub.
- * La velocidad de carga ahora es instantánea gracias a la CDN de GitHub.
  * ============================================================================
  */
 
-// ============================================================================
-// CONFIGURACIÓN - URL DE ARCHIVOS JSON ESTÁTICOS EN GITHUB
-// ============================================================================
-// ¡IMPORTANTE! Asegúrate de que esta URL apunte a la carpeta "data" de tu repositorio
-const JSON_BASE_URL = 'https://raw.githubusercontent.com/soluvencon/soluvencon/main/data/';
+const API_URL = 'https://script.google.com/macros/s/AKfycbwXSVAq67X1VYTq1AjUa6iJAN4xeq0iVEWFK7LHhDF7zU3h6GlvEKEGBLEMgxLNW4s3FA/exec';
 
 // ============================================================================
-// CONFIGURACIÓN DE CACHÉ DEL NAVEGADOR
+// CONFIGURACIÓN DE CACHÉ
 // ============================================================================
 const CACHE_KEY = 'soluvencon_cache';
-const CACHE_DURATION = 10 * 60 * 1000; // 10 minutos de caché local
+const CACHE_DURATION = 10 * 60 * 1000;
 
 // ============================================================================
-// ESTADO GLOBAL    global del carrito de compras (cotización) - se sincroniza con localStorage
+// ESTADO GLOBAL
 // ============================================================================
 let carrito = [];
 
 // ============================================================================
-// INICIALIZACIÓN DEL CARRITO DESDE LOCALSTORAGE
+// INICIALIZACIÓN
 // ============================================================================
 document.addEventListener('DOMContentLoaded', function() {
     const guardado = localStorage.getItem('soluvencon_carrito');
@@ -46,7 +39,7 @@ function guardarCarrito() {
 }
 
 // ============================================================================
-// SKELETON LOADING (Animación de carga mientras vienen los datos)
+// SKELETON LOADING
 // ============================================================================
 function mostrarSkeleton() {
     const grid = document.getElementById('productos-grid');
@@ -61,13 +54,12 @@ function mostrarSkeleton() {
 }
 
 // ============================================================================
-// SISTEMA DE CACHÉ LOCAL (LocalStorage)
+// SISTEMA DE CACHÉ
 // ============================================================================
 function obtenerCache(categoria) {
     const guardado = localStorage.getItem(`${CACHE_KEY}_${categoria}`);
     if (!guardado) return null;
     const { productos, timestamp } = JSON.parse(guardado);
-    // Si expiró el tiempo de caché, la eliminamos
     if ((Date.now() - timestamp) > CACHE_DURATION) {
         localStorage.removeItem(`${CACHE_KEY}_${categoria}`);
         return null;
@@ -80,44 +72,38 @@ function guardarCache(categoria, productos) {
 }
 
 // ============================================================================
-// FUNCIÓN PRINCIPAL - Disparada al hacer clic en una pestaña
+// FUNCIÓN PRINCIPAL
 // ============================================================================
 function inicializarProductos(categoria) {
     const grid = document.getElementById('productos-grid');
     if (!grid) return;
     
-    // Si el usuario hace clic en la pestaña que ya está cargada, no hacemos nada
+    // CAMBIO CLAVE: Ahora verificamos si la categoría que ya está cargada es la misma que piden
+    // Si el señor toca "Herramientas" y ya está en herramientas, no hacemos nada
     if (grid.getAttribute('data-loaded') === categoria) return;
     
-    // Reiniciamos el estado y mostramos skeleton
+    // Si toca otra categoría, reiniciamos el grid
     grid.setAttribute('data-loaded', 'false');
     mostrarSkeleton();
     
-    // 1. Intentamos cargar desde la caché local ( ultra rápido )
     const cache = obtenerCache(categoria);
     if (cache) {
         renderizarProductos(cache, categoria);
-        return; // Ya no necesitamos "actualizar silenciosamente" porque los JSON son estáticos
+        actualizarSilenciosamente(categoria);
+        return;
     }
-    
-    // 2. Si no hay caché, descargamos el JSON desde GitHub
     cargarDesdeAPI(categoria);
 }
 
 // ============================================================================
-// CARGA DE DATOS DESDE GITHUB (Reemplazo de Apps Script)
+// CARGA DE DATOS
 // ============================================================================
 async function cargarDesdeAPI(categoria) {
     try {
-        // Construimos la URL directa al archivo JSON (ej: .../data/Herramientas.json)
-        const url = `${JSON_BASE_URL}${categoria}.json`;
-        
-        const response = await fetch(url);
-        if (!response.ok) throw new Error('Archivo JSON no encontrado en GitHub');
-        
+        const response = await fetch(`${API_URL}?categoria=${encodeURIComponent(categoria)}`);
+        if (!response.ok) throw new Error('Error en respuesta API');
         const productos = await response.json();
-        
-        // Guardamos en caché local para la próxima visita
+        if (productos.error) { mostrarError(productos.error); return; }
         guardarCache(categoria, productos);
         renderizarProductos(productos, categoria);
     } catch (error) {
@@ -126,15 +112,27 @@ async function cargarDesdeAPI(categoria) {
     }
 }
 
+async function actualizarSilenciosamente(categoria) {
+    try {
+        const response = await fetch(`${API_URL}?categoria=${encodeURIComponent(categoria)}`);
+        const productosNuevos = await response.json();
+        const cacheActual = obtenerCache(categoria);
+        if (JSON.stringify(cacheActual) !== JSON.stringify(productosNuevos)) {
+            guardarCache(categoria, productosNuevos);
+            renderizarProductos(productosNuevos, categoria);
+        }
+    } catch (error) { console.log('Actualización silenciosa falló (se usa caché)'); }
+}
+
 // ============================================================================
-// RENDERIZADO DE PRODUCTOS EN EL DOM
+// RENDERIZADO
 // ============================================================================
 function renderizarProductos(productos, categoria) {
     const grid = document.getElementById('productos-grid');
     if (!grid) return;
     
     if (productos.length === 0) {
-        grid.innerHTML = '<p style="text-align: center; grid-column: 1/-1;">No hay productos disponibles en esta categoría.</p>';
+        grid.innerHTML = '<p style="text-align: center; grid-column: 1/-1;">No hay productos disponibles.</p>';
         return;
     }
     
@@ -143,8 +141,6 @@ function renderizarProductos(productos, categoria) {
         const imagenUrl = p.imagen_url || 'https://via.placeholder.com/400x300?text=Sin+Imagen';
         const productoId = `prod-${categoria}-${index}`;
         const cuadrosPrecio = generarCuadrosPrecio(p, productoId, imagenUrl);
-        
-        // Optimización LCP: La primera imagen se carga con prioridad alta
         const loadingPriority = index === 0 ? 'eager' : 'lazy';
         const fetchPriority = index === 0 ? 'high' : 'auto';
         
@@ -167,12 +163,11 @@ function renderizarProductos(productos, categoria) {
     });
     
     grid.innerHTML = html;
-    // Guardamos el nombre de la categoría cargada para evitar recargas innecesarias
+    // CAMBIO CLAVE: Guardamos el NOMBRE de la categoría cargada, no un "true"
     grid.setAttribute('data-loaded', categoria);
     setTimeout(ajustarAlturaFinal, 100);
 }
 
-// Genera los botones de precios por cantidad (1 UND, 6 UND, 12 UND)
 function generarCuadrosPrecio(p, productoId, imagenUrl) {
     if (!p.precio_unitario && !p.precio_6 && !p.precio_12) return '';
     let html = '<div class="precios-mayoristas">';
@@ -198,24 +193,21 @@ function mostrarError(mensaje) {
 }
 
 // ============================================================================
-// FUNCIONES AUXILIARES DE FORMATO Y PARSEO
+// FUNCIONES AUXILIARES
 // ============================================================================
 function escapeString(str) { if (!str) return ''; return str.replace(/'/g, "\\'").replace(/"/g, '\\"'); }
-
 function extraerNumero(textoPrecio) {
     if (!textoPrecio) return '0';
     let limpio = textoPrecio.replace(/(?:^|\s)(1|6|12)\s*UND\s*X?\s*/gi, '').replace(/[$\s]/g, '').trim();
     limpio = limpio.includes(',') ? limpio.replace(/\./g, '').replace(',', '.') : limpio.replace(/\./g, '');
     const num = parseFloat(limpio); return isNaN(num) ? '0' : num.toString();
 }
-
 function formatearPrecioColombiano(textoPrecio) {
     if (!textoPrecio) return '0';
     let limpio = textoPrecio.replace(/(?:^|\s)(1|6|12)\s*UND\s*X?\s*/gi, '').replace(/[$\s]/g, '').trim();
     if (limpio.includes(',')) { let p = limpio.split(','); let e = p[0].replace(/\./g, ''); return parseInt(e).toLocaleString('es-CO').replace(/,/g, '.') + ',' + p[1]; }
     const num = parseInt(limpio.replace(/\./g, '')); return isNaN(num) ? '0' : num.toLocaleString('es-CO').replace(/,/g, '.');
 }
-
 function formatoColombiano(numero) {
     const num = parseFloat(numero); if (isNaN(num)) return '0';
     const enteros = Math.floor(num); const decimales = Math.round((num - enteros) * 100);
@@ -225,14 +217,13 @@ function formatoColombiano(numero) {
 }
 
 // ============================================================================
-// CARRITO DE COMPRAS / COTIZACIÓN
+// CARRITO DE COMPRAS
 // ============================================================================
 function agregarAlCarrito(productoId, nombre, imagen, cantidadPack, precioNumero, precioUnitario, codigo) {
     const existente = carrito.find(item => item.nombre === nombre && item.cantidadPack === cantidadPack);
     if (existente) { existente.cantidadPacks++; } 
     else { carrito.push({ id: Date.now() + Math.random(), nombre, imagen, cantidadPack, cantidadPacks: 1, precioPack: precioNumero, precioUnitario, codigo: codigo || 'N/A' }); }
     
-    // Efecto visual al agregar
     const card = document.getElementById(productoId);
     if (card) { card.querySelectorAll('.caja-precio').forEach(btn => { if (btn.textContent.includes(cantidadPack + ' UND')) { btn.style.background = 'var(--secondary)'; btn.style.color = 'white'; setTimeout(() => { btn.style.background = ''; btn.style.color = ''; }, 200); } }); }
     actualizarCarritoUI();
@@ -290,25 +281,33 @@ function ajustarAlturaFinal() { const grid = document.getElementById('productos-
 
 
 // ============================================
-// BOTÓN VOLVER ARRIBA - Aparece después de varios productos
+// BOTÓN VOLVER ARRIBA - Aparece después de 15 productos
 // ============================================
+
 (function() {
     const btnVolverArriba = document.getElementById('btnVolverArriba');
-    const PRODUCTOS_UMBRAL = 10;
+    const PRODUCTOS_UMBRAL = 10; // ← Número de productos para mostrar el botón
 
+    // Función para contar productos visibles en pantalla
     function contarProductosVisibles() {
         const cards = document.querySelectorAll('.product-card');
         let contador = 0;
+        
         cards.forEach(card => {
             const rect = card.getBoundingClientRect();
-            if (rect.top < window.innerHeight) contador++;
+            // Cuenta si el producto está visible o ya pasó por la pantalla
+            if (rect.top < window.innerHeight) {
+                contador++;
+            }
         });
+        
         return contador;
     }
 
     function controlarBoton() {
-        if (!btnVolverArriba) return;
         const productosVistos = contarProductosVisibles();
+        
+        // Mostrar solo si hay más de 10 productos visibles/pasados
         if (productosVistos >= PRODUCTOS_UMBRAL) {
             btnVolverArriba.classList.add('visible');
         } else {
@@ -316,10 +315,15 @@ function ajustarAlturaFinal() { const grid = document.getElementById('productos-
         }
     }
 
+    // Función para volver arriba suavemente
     window.volverArriba = function() {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
     };
 
+    // Escuchar scroll con throttle para mejor rendimiento
     let timeout;
     window.addEventListener('scroll', function() {
         if (timeout) return;
@@ -329,28 +333,40 @@ function ajustarAlturaFinal() { const grid = document.getElementById('productos-
         }, 150);
     });
 
-    const observer = new MutationObserver(controlarBoton);
+    // También verificar cuando cambian las pestañas (carga de productos)
+    const observer = new MutationObserver(function() {
+        controlarBoton();
+    });
+    
     const grid = document.getElementById('productos-grid');
-    if (grid) observer.observe(grid, { childList: true, subtree: true });
+    if (grid) {
+        observer.observe(grid, { childList: true, subtree: true });
+    }
 
+    // Verificar al cargar
     controlarBoton();
 })();
 
 // ============================================================================
 // BUSCADOR DE PRODUCTOS EN EL HEADER
 // ============================================================================
+
 (function() {
     const input = document.getElementById('buscadorInput');
     const resultados = document.getElementById('buscadorResultados');
     const btnLimpiar = document.getElementById('buscadorLimpiar');
     
-    if (!input || !resultados) return;
+    if (!input || !resultados) return; // Protección si no existe
 
     let todasLasCategorias = ['Accesorios','Juguetería', 'Herramientas', 'Utensilios', 'Morrales'];
-    let timeoutBusqueda;
+    let cacheBusqueda = {}; // Cache local para búsquedas
 
+    // Escuchar escritura con debounce
+    let timeoutBusqueda;
     input.addEventListener('input', function() {
         const texto = this.value.trim();
+        
+        // Mostrar/ocultar botón limpiar
         if (texto.length > 0) {
             btnLimpiar.classList.add('visible');
         } else {
@@ -358,18 +374,25 @@ function ajustarAlturaFinal() { const grid = document.getElementById('productos-
             cerrarResultados();
             return;
         }
+
         clearTimeout(timeoutBusqueda);
         timeoutBusqueda = setTimeout(() => buscarProductos(texto), 300);
     });
 
+    // Cerrar al hacer click fuera
     document.addEventListener('click', function(e) {
-        if (!input.contains(e.target) && !resultados.contains(e.target)) cerrarResultados();
+        if (!input.contains(e.target) && !resultados.contains(e.target)) {
+            cerrarResultados();
+        }
     });
 
+    // Buscar con Enter
     input.addEventListener('keydown', function(e) {
         if (e.key === 'Enter') {
             const texto = this.value.trim();
-            if (texto) buscarYMostrarTodos(texto);
+            if (texto) {
+                buscarYMostrarTodos(texto);
+            }
         }
     });
 
@@ -385,21 +408,25 @@ function ajustarAlturaFinal() { const grid = document.getElementById('productos-
     }
 
     async function buscarProductos(texto) {
-        if (texto.length < 2) return;
+        if (texto.length < 2) return; // Mínimo 2 caracteres
+
         const textoLower = texto.toLowerCase();
         let encontrados = [];
 
+        // Buscar en todas las categorías
         for (const categoria of todasLasCategorias) {
             let productos = obtenerCache(categoria);
             
-            // Si no hay caché local, descargamos el JSON de GitHub para poder buscar
+            // Si no hay caché, cargar silenciosamente
             if (!productos) {
                 try {
-                    const response = await fetch(`${JSON_BASE_URL}${categoria}.json`);
+                    const response = await fetch(`${API_URL}?categoria=${encodeURIComponent(categoria)}`);
                     productos = await response.json();
-                    guardarCache(categoria, productos);
+                    if (!productos.error) {
+                        guardarCache(categoria, productos);
+                    }
                 } catch (e) {
-                    continue; // Si falla, saltamos a la siguiente categoría
+                    continue;
                 }
             }
 
@@ -411,22 +438,30 @@ function ajustarAlturaFinal() { const grid = document.getElementById('productos-
                 encontrados = encontrados.concat(filtrados);
             }
         }
+
         mostrarResultados(encontrados, texto);
     }
 
     function mostrarResultados(productos, textoBusqueda) {
         if (productos.length === 0) {
-            resultados.innerHTML = `<div class="buscador-sin-resultados"><i class="fas fa-search"></i>No encontramos "${textoBusqueda}"</div>`;
+            resultados.innerHTML = `
+                <div class="buscador-sin-resultados">
+                    <i class="fas fa-search"></i>
+                    No encontramos "${textoBusqueda}"
+                </div>
+            `;
             resultados.classList.add('activo');
             return;
         }
 
+        // Mostrar máximo 5 resultados en el dropdown
         const mostrar = productos.slice(0, 5);
         let html = '';
 
         mostrar.forEach(p => {
             const imagen = p.imagen_url || 'https://via.placeholder.com/50x50?text=Sin+Img';
             const precio = p.precio_unitario || 'Consultar';
+            
             html += `
                 <div class="buscador-item" onclick="irAProducto('${p.categoria}', '${escapeString(p.nombre)}')">
                     <img src="${imagen}" alt="${p.nombre}" onerror="this.src='https://via.placeholder.com/50x50?text=Sin+Img'">
@@ -439,8 +474,13 @@ function ajustarAlturaFinal() { const grid = document.getElementById('productos-
             `;
         });
 
+        // Si hay más resultados, mostrar "Ver todos"
         if (productos.length > 5) {
-            html += `<button class="buscador-ver-todos" onclick="buscarYMostrarTodos('${escapeString(textoBusqueda)}')">Ver todos los ${productos.length} resultados</button>`;
+            html += `
+                <button class="buscador-ver-todos" onclick="buscarYMostrarTodos('${escapeString(textoBusqueda)}')">
+                    Ver todos los ${productos.length} resultados
+                </button>
+            `;
         }
 
         resultados.innerHTML = html;
@@ -452,12 +492,19 @@ function ajustarAlturaFinal() { const grid = document.getElementById('productos-
         return texto.replace(regex, '<mark style="background: var(--accent); color: var(--dark); padding: 0 2px; border-radius: 3px;">$1</mark>');
     }
 
+    // Navegar al producto
     window.irAProducto = function(categoria, nombreProducto) {
         cerrarResultados();
+        
+        // Cambiar a la pestaña de la categoría
         const botones = document.querySelectorAll('.tab-btn');
         botones.forEach(btn => {
-            if (btn.textContent.trim().includes(categoria)) btn.click();
+            if (btn.textContent.trim().includes(categoria)) {
+                btn.click();
+            }
         });
+
+        // Esperar a que carguen los productos y hacer scroll
         setTimeout(() => {
             const cards = document.querySelectorAll('.product-card');
             cards.forEach(card => {
@@ -471,18 +518,26 @@ function ajustarAlturaFinal() { const grid = document.getElementById('productos-
         }, 600);
     };
 
+    // Mostrar todos los resultados en la página
     window.buscarYMostrarTodos = function(texto) {
         cerrarResultados();
         input.value = texto;
         btnLimpiar.classList.add('visible');
+        
+        // Ocultar secciones normales
         document.getElementById('seccion-ofertas').style.display = 'none';
         document.getElementById('seccion-productos').style.display = 'block';
+        
         const titulo = document.getElementById('titulo-categoria');
         if (titulo) titulo.textContent = `Resultados: "${texto}"`;
+
+        // Cargar y filtrar todos los productos
         buscarProductos(texto).then(() => {
-            // Lógica futura para vista completa de resultados si se desea
+            // Renderizar todos los encontrados en el grid
+            // (Aquí puedes implementar una vista completa de resultados)
         });
     };
+
 })();
 
 // Animación pulse para destacar producto encontrado
