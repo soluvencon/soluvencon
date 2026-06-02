@@ -1,1 +1,146 @@
-[{"imagen_url":"https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Accesorios/BILLETERA%20NP-3990.png","nombre":"BILLETERA NP-3990","precio_unitario":"$12.480","precio_6":"$50700","precio_12":"$93600","badge":"NUEVO","codigo":"NP-3990"},{"imagen_url":"https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Accesorios/BILLETERA%20NP-3997.png","nombre":"BILLETERA NP-3997","precio_unitario":"$12.480","precio_6":"$50700","precio_12":"$93600","badge":"NUEVO","codigo":"NP-3997"},{"imagen_url":"https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Accesorios/BILLETERA%20NP-3986.png","nombre":"BILLETERA NP-3986","precio_unitario":"$12.480","precio_6":"$50700","precio_12":"$93600","badge":"NUEVO ","codigo":"NP-3986"},{"imagen_url":"https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Accesorios/DEPILADOR%202.png","nombre":"DEPILADOR X 12 NP-4903","precio_unitario":"$11.520","precio_6":"6UND X 46.800","precio_12":"12UND X 86.400","badge":"","codigo":"NP-4903"},{"imagen_url":"https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Accesorios/DEPILADOR.png","nombre":"DEPILADOR X 12 NP-5003","precio_unitario":"$9.600","precio_6":"6UND X 39.000","precio_12":"12UND X 72.000","badge":"NUEVO ","codigo":"NP-5003"},{"imagen_url":"https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Accesorios/ENCRESPADOR%20DE%20PESTA%C3%91A.png","nombre":"ENCRESPADOR DE PESTAÑA NP-4909","precio_unitario":"$4.416","precio_6":"6UND X 17.940","precio_12":"12UND X 33.120","badge":"","codigo":"NP-4909"},{"imagen_url":"https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Accesorios/ENCRESPADOR%20DE%20PESTA%C3%91A%202.png","nombre":"ENCRESPADOR DE PESTAÑA NP-4910","precio_unitario":"$5.760","precio_6":"6UND X 23.400","precio_12":"12UND X 43.200","badge":"","codigo":"NP-4910"},{"imagen_url":"https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Accesorios/CORTACUT%C3%8DCULA.png","nombre":"CORTACUTÍCULA NP-4924","precio_unitario":"$1.920","precio_6":"6UND X 7.800","precio_12":"12UND X 14.400","badge":"","codigo":"NP-4924"},{"imagen_url":"https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Accesorios/CORTACUT%C3%8DCULA%202.png","nombre":"CORTACUTÍCULA NP-4925","precio_unitario":"$2.880","precio_6":"6UND X 7.800","precio_12":"12UND X 21.600","badge":"","codigo":"NP-4925"},{"imagen_url":"https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Accesorios/CORTACUT%C3%8DCULA%203.png","nombre":"CORTACUTÍCULA NP-4918","precio_unitario":"$4.800","precio_6":"6UND X 19.500","precio_12":"12UND X 36.000","badge":"POPULAR ","codigo":"NP-4918"},{"imagen_url":"https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Accesorios/KIT%20MANICURE.png","nombre":"KIT MANICURE NP-4962","precio_unitario":"$6.912","precio_6":"6UND X 28.080","precio_12":"12UND X 51.840","badge":"","codigo":"NP-4962"},{"imagen_url":"https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Accesorios/KIT%20MANICURE%202.png","nombre":"KIT PEDICURE NP-504","precio_unitario":"$9.216","precio_6":"6UND X 37.440","precio_12":"12UND X 69.120","badge":"","codigo":"NP-504"},{"imagen_url":"https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Accesorios/CORTAU%C3%91A.png","nombre":"CORTAUÑA X 12 608","precio_unitario":"$1.440","precio_6":"6UND X 5.850","precio_12":"12UND X 10.800","badge":"","codigo":608},{"imagen_url":"https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Accesorios/CORTAU%C3%91A%20(2).png","nombre":"CORTAUÑA X 12 818","precio_unitario":"$1.632","precio_6":"6UND X 6.630","precio_12":"12UND X 12.240","badge":"","codigo":818},{"imagen_url":"https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Accesorios/CORTAU%C3%91A%20(3).png","nombre":"CORTAUÑA 211","precio_unitario":"$1.824","precio_6":"6UND X 7.410","precio_12":"12UND X 13.680","badge":"","codigo":211},{"imagen_url":"https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Accesorios/CORTAU%C3%91A%20(4).png","nombre":"CORTAUÑA X 12 NP-817","precio_unitario":"$1.536","precio_6":"6UND X 6.240","precio_12":"12UND X 11.520","badge":"","codigo":"NP-817"}]
+[
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Accesorios/BILLETERA%20NP-3990.png",
+    "nombre": "BILLETERA NP-3990",
+    "precio_unitario": "$12.480",
+    "precio_6": "$50700",
+    "precio_12": "$93600",
+    "badge": "NUEVO",
+    "codigo": "NP-3990"
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Accesorios/BILLETERA%20NP-3997.png",
+    "nombre": "BILLETERA NP-3997",
+    "precio_unitario": "$12.480",
+    "precio_6": "$50700",
+    "precio_12": "$93600",
+    "badge": "NUEVO",
+    "codigo": "NP-3997"
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Accesorios/BILLETERA%20NP-3986.png",
+    "nombre": "BILLETERA NP-3986",
+    "precio_unitario": "$12.480",
+    "precio_6": "$50700",
+    "precio_12": "$93600",
+    "badge": "NUEVO ",
+    "codigo": "NP-3986"
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Accesorios/DEPILADOR%202.png",
+    "nombre": "DEPILADOR X 12 NP-4903",
+    "precio_unitario": "$11.520",
+    "precio_6": "6UND X 46.800",
+    "precio_12": "12UND X 86.400",
+    "badge": "",
+    "codigo": "NP-4903"
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Accesorios/DEPILADOR.png",
+    "nombre": "DEPILADOR X 12 NP-5003",
+    "precio_unitario": "$9.600",
+    "precio_6": "6UND X 39.000",
+    "precio_12": "12UND X 72.000",
+    "badge": "NUEVO ",
+    "codigo": "NP-5003"
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Accesorios/ENCRESPADOR%20DE%20PESTA%C3%91A.png",
+    "nombre": "ENCRESPADOR DE PESTA?A NP-4909",
+    "precio_unitario": "$4.416",
+    "precio_6": "6UND X 17.940",
+    "precio_12": "12UND X 33.120",
+    "badge": "",
+    "codigo": "NP-4909"
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Accesorios/ENCRESPADOR%20DE%20PESTA%C3%91A%202.png",
+    "nombre": "ENCRESPADOR DE PESTA?A NP-4910",
+    "precio_unitario": "$5.760",
+    "precio_6": "6UND X 23.400",
+    "precio_12": "12UND X 43.200",
+    "badge": "",
+    "codigo": "NP-4910"
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Accesorios/CORTACUT%C3%8DCULA.png",
+    "nombre": "CORTACUT?CULA NP-4924",
+    "precio_unitario": "$1.920",
+    "precio_6": "6UND X 7.800",
+    "precio_12": "12UND X 14.400",
+    "badge": "POPULAR ",
+    "codigo": "NP-4924"
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Accesorios/CORTACUT%C3%8DCULA%202.png",
+    "nombre": "CORTACUT?CULA NP-4925",
+    "precio_unitario": "$2.880",
+    "precio_6": "6UND X 7.800",
+    "precio_12": "12UND X 21.600",
+    "badge": "",
+    "codigo": "NP-4925"
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Accesorios/CORTACUT%C3%8DCULA%203.png",
+    "nombre": "CORTACUT?CULA NP-4918",
+    "precio_unitario": "$4.800",
+    "precio_6": "6UND X 19.500",
+    "precio_12": "12UND X 36.000",
+    "badge": "POPULAR ",
+    "codigo": "NP-4918"
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Accesorios/KIT%20MANICURE.png",
+    "nombre": "KIT MANICURE NP-4962",
+    "precio_unitario": "$6.912",
+    "precio_6": "6UND X 28.080",
+    "precio_12": "12UND X 51.840",
+    "badge": "",
+    "codigo": "NP-4962"
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Accesorios/KIT%20MANICURE%202.png",
+    "nombre": "KIT PEDICURE NP-504",
+    "precio_unitario": "$9.216",
+    "precio_6": "6UND X 37.440",
+    "precio_12": "12UND X 69.120",
+    "badge": "",
+    "codigo": "NP-504"
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Accesorios/CORTAU%C3%91A.png",
+    "nombre": "CORTAU?A X 12 608",
+    "precio_unitario": "$1.440",
+    "precio_6": "6UND X 5.850",
+    "precio_12": "12UND X 10.800",
+    "badge": "",
+    "codigo": 608
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Accesorios/CORTAU%C3%91A%20(2).png",
+    "nombre": "CORTAU?A X 12 818",
+    "precio_unitario": "$1.632",
+    "precio_6": "6UND X 6.630",
+    "precio_12": "12UND X 12.240",
+    "badge": "",
+    "codigo": 818
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Accesorios/CORTAU%C3%91A%20(3).png",
+    "nombre": "CORTAU?A 211",
+    "precio_unitario": "$1.824",
+    "precio_6": "6UND X 7.410",
+    "precio_12": "12UND X 13.680",
+    "badge": "POPULAR ",
+    "codigo": 211
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Accesorios/CORTAU%C3%91A%20(4).png",
+    "nombre": "CORTAU?A X 12 NP-817",
+    "precio_unitario": "$1.536",
+    "precio_6": "6UND X 6.240",
+    "precio_12": "12UND X 11.520",
+    "badge": "",
+    "codigo": "NP-817"
+  }
+]
