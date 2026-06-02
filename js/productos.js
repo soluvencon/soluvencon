@@ -1,17 +1,18 @@
 /**
  * ============================================================================
- * SOLUVENCON - Sistema de Productos con Caché y Optimización LCP
+ * SOLUVENCON - Sistema de Productos con Caché (Ahora desde GitHub estático)
  * Adaptado para SPA (Single Page Application) con pestañas fijas
  * ============================================================================
  */
 
-const API_URL = 'https://script.google.com/macros/s/AKfycbwXSVAq67X1VYTq1AjUa6iJAN4xeq0iVEWFK7LHhDF7zU3h6GlvEKEGBLEMgxLNW4s3FA/exec';
+// CAMBIO PRINCIPAL: URL de GitHub Pages en vez de Apps Script
+const JSON_BASE_URL = 'https://soluvencon.github.io/soluvencon/data/';
 
 // ============================================================================
 // CONFIGURACIÓN DE CACHÉ
 // ============================================================================
 const CACHE_KEY = 'soluvencon_cache';
-const CACHE_DURATION = 10 * 60 * 1000;
+const CACHE_DURATION = 10 * 60 * 1000; // 10 minutos
 
 // ============================================================================
 // ESTADO GLOBAL
@@ -78,11 +79,8 @@ function inicializarProductos(categoria) {
     const grid = document.getElementById('productos-grid');
     if (!grid) return;
     
-    // CAMBIO CLAVE: Ahora verificamos si la categoría que ya está cargada es la misma que piden
-    // Si el señor toca "Herramientas" y ya está en herramientas, no hacemos nada
     if (grid.getAttribute('data-loaded') === categoria) return;
     
-    // Si toca otra categoría, reiniciamos el grid
     grid.setAttribute('data-loaded', 'false');
     mostrarSkeleton();
     
@@ -92,18 +90,22 @@ function inicializarProductos(categoria) {
         actualizarSilenciosamente(categoria);
         return;
     }
-    cargarDesdeAPI(categoria);
+    cargarDesdeGitHub(categoria);
 }
 
 // ============================================================================
-// CARGA DE DATOS
+// CARGA DE DATOS DESDE GITHUB (El cambio clave)
 // ============================================================================
-async function cargarDesdeAPI(categoria) {
+async function cargarDesdeGitHub(categoria) {
     try {
-        const response = await fetch(`${API_URL}?categoria=${encodeURIComponent(categoria)}`);
-        if (!response.ok) throw new Error('Error en respuesta API');
+        // Se concatena la URL base + la categoría + .json
+        // El parámetro ?t= evita que el navegador use caché vieja del archivo
+        const url = `${JSON_BASE_URL}${encodeURIComponent(categoria)}.json?t=${Date.now()}`;
+        
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Error cargando el archivo JSON desde GitHub');
+        
         const productos = await response.json();
-        if (productos.error) { mostrarError(productos.error); return; }
         guardarCache(categoria, productos);
         renderizarProductos(productos, categoria);
     } catch (error) {
@@ -114,18 +116,19 @@ async function cargarDesdeAPI(categoria) {
 
 async function actualizarSilenciosamente(categoria) {
     try {
-        const response = await fetch(`${API_URL}?categoria=${encodeURIComponent(categoria)}`);
+        const url = `${JSON_BASE_URL}${encodeURIComponent(categoria)}.json?t=${Date.now()}`;
+        const response = await fetch(url);
         const productosNuevos = await response.json();
         const cacheActual = obtenerCache(categoria);
         if (JSON.stringify(cacheActual) !== JSON.stringify(productosNuevos)) {
             guardarCache(categoria, productosNuevos);
             renderizarProductos(productosNuevos, categoria);
         }
-    } catch (error) { console.log('Actualización silenciosa falló (se usa caché)'); }
+    } catch (error) { console.log('Actualización silenciosa falló (se usa caché local)'); }
 }
 
 // ============================================================================
-// RENDERIZADO
+// RENDERIZADO (Sin cambios, queda exactamente igual)
 // ============================================================================
 function renderizarProductos(productos, categoria) {
     const grid = document.getElementById('productos-grid');
@@ -163,7 +166,6 @@ function renderizarProductos(productos, categoria) {
     });
     
     grid.innerHTML = html;
-    // CAMBIO CLAVE: Guardamos el NOMBRE de la categoría cargada, no un "true"
     grid.setAttribute('data-loaded', categoria);
     setTimeout(ajustarAlturaFinal, 100);
 }
@@ -193,7 +195,7 @@ function mostrarError(mensaje) {
 }
 
 // ============================================================================
-// FUNCIONES AUXILIARES
+// FUNCIONES AUXILIARES (Sin cambios)
 // ============================================================================
 function escapeString(str) { if (!str) return ''; return str.replace(/'/g, "\\'").replace(/"/g, '\\"'); }
 function extraerNumero(textoPrecio) {
@@ -217,7 +219,7 @@ function formatoColombiano(numero) {
 }
 
 // ============================================================================
-// CARRITO DE COMPRAS
+// CARRITO DE COMPRAS (Sin cambios)
 // ============================================================================
 function agregarAlCarrito(productoId, nombre, imagen, cantidadPack, precioNumero, precioUnitario, codigo) {
     const existente = carrito.find(item => item.nombre === nombre && item.cantidadPack === cantidadPack);
@@ -271,7 +273,7 @@ function enviarCotizacion() {
 }
 
 // ============================================================================
-// MODAL DE IMÁGENES
+// MODAL DE IMÁGENES (Sin cambios)
 // ============================================================================
 function abrirModal(urlImagen) { if (!urlImagen || urlImagen.includes('placeholder')) return; const modal = document.getElementById('modalImagen'); const img = document.getElementById('imgModal'); if (!modal || !img) return; img.src = urlImagen; modal.classList.add('activo'); document.body.style.overflow = 'hidden'; }
 function cerrarModal() { const modal = document.getElementById('modalImagen'); if (!modal) return; modal.classList.remove('activo'); document.body.style.overflow = 'auto'; setTimeout(() => { const img = document.getElementById('imgModal'); if (img) img.src = ''; }, 300); }
@@ -279,189 +281,116 @@ document.addEventListener('keydown', function(event) { if (event.key === 'Escape
 
 function ajustarAlturaFinal() { const grid = document.getElementById('productos-grid'); if (grid) { const espaciador = document.createElement('div'); espaciador.style.height = '120px'; espaciador.style.width = '100%'; espaciador.style.clear = 'both'; grid.appendChild(espaciador); } }
 
-
 // ============================================
-// BOTÓN VOLVER ARRIBA - Aparece después de 15 productos
+// BOTÓN VOLVER ARRIBA (Sin cambios)
 // ============================================
-
 (function() {
     const btnVolverArriba = document.getElementById('btnVolverArriba');
-    const PRODUCTOS_UMBRAL = 10; // ← Número de productos para mostrar el botón
+    const PRODUCTOS_UMBRAL = 10;
 
-    // Función para contar productos visibles en pantalla
     function contarProductosVisibles() {
         const cards = document.querySelectorAll('.product-card');
         let contador = 0;
-        
         cards.forEach(card => {
             const rect = card.getBoundingClientRect();
-            // Cuenta si el producto está visible o ya pasó por la pantalla
-            if (rect.top < window.innerHeight) {
-                contador++;
-            }
+            if (rect.top < window.innerHeight) { contador++; }
         });
-        
         return contador;
     }
 
     function controlarBoton() {
         const productosVistos = contarProductosVisibles();
-        
-        // Mostrar solo si hay más de 10 productos visibles/pasados
-        if (productosVistos >= PRODUCTOS_UMBRAL) {
-            btnVolverArriba.classList.add('visible');
-        } else {
-            btnVolverArriba.classList.remove('visible');
-        }
+        if (productosVistos >= PRODUCTOS_UMBRAL) { btnVolverArriba.classList.add('visible'); } 
+        else { btnVolverArriba.classList.remove('visible'); }
     }
 
-    // Función para volver arriba suavemente
-    window.volverArriba = function() {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    };
+    window.volverArriba = function() { window.scrollTo({ top: 0, behavior: 'smooth' }); };
 
-    // Escuchar scroll con throttle para mejor rendimiento
     let timeout;
     window.addEventListener('scroll', function() {
         if (timeout) return;
-        timeout = setTimeout(function() {
-            controlarBoton();
-            timeout = null;
-        }, 150);
+        timeout = setTimeout(function() { controlarBoton(); timeout = null; }, 150);
     });
 
-    // También verificar cuando cambian las pestañas (carga de productos)
-    const observer = new MutationObserver(function() {
-        controlarBoton();
-    });
-    
+    const observer = new MutationObserver(function() { controlarBoton(); });
     const grid = document.getElementById('productos-grid');
-    if (grid) {
-        observer.observe(grid, { childList: true, subtree: true });
-    }
-
-    // Verificar al cargar
+    if (grid) { observer.observe(grid, { childList: true, subtree: true }); }
     controlarBoton();
 })();
 
 // ============================================================================
-// BUSCADOR DE PRODUCTOS EN EL HEADER
+// BUSCADOR DE PRODUCTOS (Actualizado para leer de GitHub)
 // ============================================================================
-
 (function() {
     const input = document.getElementById('buscadorInput');
     const resultados = document.getElementById('buscadorResultados');
     const btnLimpiar = document.getElementById('buscadorLimpiar');
     
-    if (!input || !resultados) return; // Protección si no existe
+    if (!input || !resultados) return;
 
-    let todasLasCategorias = ['Accesorios','Juguetería', 'Herramientas', 'Utensilios', 'Morrales'];
-    let cacheBusqueda = {}; // Cache local para búsquedas
+    let todasLasCategorias = ['Accesorios','Jugueteria', 'Herramientas', 'Utensilios', 'Morrales'];
 
-    // Escuchar escritura con debounce
     let timeoutBusqueda;
     input.addEventListener('input', function() {
         const texto = this.value.trim();
-        
-        // Mostrar/ocultar botón limpiar
-        if (texto.length > 0) {
-            btnLimpiar.classList.add('visible');
-        } else {
-            btnLimpiar.classList.remove('visible');
-            cerrarResultados();
-            return;
-        }
-
+        if (texto.length > 0) { btnLimpiar.classList.add('visible'); } 
+        else { btnLimpiar.classList.remove('visible'); cerrarResultados(); return; }
         clearTimeout(timeoutBusqueda);
         timeoutBusqueda = setTimeout(() => buscarProductos(texto), 300);
     });
 
-    // Cerrar al hacer click fuera
     document.addEventListener('click', function(e) {
-        if (!input.contains(e.target) && !resultados.contains(e.target)) {
-            cerrarResultados();
-        }
+        if (!input.contains(e.target) && !resultados.contains(e.target)) { cerrarResultados(); }
     });
 
-    // Buscar con Enter
     input.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') {
-            const texto = this.value.trim();
-            if (texto) {
-                buscarYMostrarTodos(texto);
-            }
-        }
+        if (e.key === 'Enter') { const texto = this.value.trim(); if (texto) { buscarYMostrarTodos(texto); } }
     });
 
-    window.limpiarBusqueda = function() {
-        input.value = '';
-        btnLimpiar.classList.remove('visible');
-        cerrarResultados();
-        input.focus();
-    };
+    window.limpiarBusqueda = function() { input.value = ''; btnLimpiar.classList.remove('visible'); cerrarResultados(); input.focus(); };
 
-    function cerrarResultados() {
-        resultados.classList.remove('activo');
-    }
+    function cerrarResultados() { resultados.classList.remove('activo'); }
 
     async function buscarProductos(texto) {
-        if (texto.length < 2) return; // Mínimo 2 caracteres
-
+        if (texto.length < 2) return;
         const textoLower = texto.toLowerCase();
         let encontrados = [];
 
-        // Buscar en todas las categorías
         for (const categoria of todasLasCategorias) {
             let productos = obtenerCache(categoria);
             
-            // Si no hay caché, cargar silenciosamente
             if (!productos) {
                 try {
-                    const response = await fetch(`${API_URL}?categoria=${encodeURIComponent(categoria)}`);
+                    // CAMBIO AQUÍ: Lee desde GitHub
+                    const url = `${JSON_BASE_URL}${encodeURIComponent(categoria)}.json?t=${Date.now()}`;
+                    const response = await fetch(url);
                     productos = await response.json();
-                    if (!productos.error) {
-                        guardarCache(categoria, productos);
-                    }
-                } catch (e) {
-                    continue;
-                }
+                    if (!productos.error) { guardarCache(categoria, productos); }
+                } catch (e) { continue; }
             }
 
             if (productos && productos.length) {
                 const filtrados = productos.filter(p => 
                     p.nombre && p.nombre.toLowerCase().includes(textoLower)
                 ).map(p => ({ ...p, categoria }));
-
                 encontrados = encontrados.concat(filtrados);
             }
         }
-
         mostrarResultados(encontrados, texto);
     }
 
     function mostrarResultados(productos, textoBusqueda) {
         if (productos.length === 0) {
-            resultados.innerHTML = `
-                <div class="buscador-sin-resultados">
-                    <i class="fas fa-search"></i>
-                    No encontramos "${textoBusqueda}"
-                </div>
-            `;
+            resultados.innerHTML = `<div class="buscador-sin-resultados"><i class="fas fa-search"></i>No encontramos "${textoBusqueda}"</div>`;
             resultados.classList.add('activo');
             return;
         }
 
-        // Mostrar máximo 5 resultados en el dropdown
         const mostrar = productos.slice(0, 5);
         let html = '';
-
         mostrar.forEach(p => {
             const imagen = p.imagen_url || 'https://via.placeholder.com/50x50?text=Sin+Img';
             const precio = p.precio_unitario || 'Consultar';
-            
             html += `
                 <div class="buscador-item" onclick="irAProducto('${p.categoria}', '${escapeString(p.nombre)}')">
                     <img src="${imagen}" alt="${p.nombre}" onerror="this.src='https://via.placeholder.com/50x50?text=Sin+Img'">
@@ -474,15 +403,9 @@ function ajustarAlturaFinal() { const grid = document.getElementById('productos-
             `;
         });
 
-        // Si hay más resultados, mostrar "Ver todos"
         if (productos.length > 5) {
-            html += `
-                <button class="buscador-ver-todos" onclick="buscarYMostrarTodos('${escapeString(textoBusqueda)}')">
-                    Ver todos los ${productos.length} resultados
-                </button>
-            `;
+            html += `<button class="buscador-ver-todos" onclick="buscarYMostrarTodos('${escapeString(textoBusqueda)}')">Ver todos los ${productos.length} resultados</button>`;
         }
-
         resultados.innerHTML = html;
         resultados.classList.add('activo');
     }
@@ -492,19 +415,10 @@ function ajustarAlturaFinal() { const grid = document.getElementById('productos-
         return texto.replace(regex, '<mark style="background: var(--accent); color: var(--dark); padding: 0 2px; border-radius: 3px;">$1</mark>');
     }
 
-    // Navegar al producto
     window.irAProducto = function(categoria, nombreProducto) {
         cerrarResultados();
-        
-        // Cambiar a la pestaña de la categoría
         const botones = document.querySelectorAll('.tab-btn');
-        botones.forEach(btn => {
-            if (btn.textContent.trim().includes(categoria)) {
-                btn.click();
-            }
-        });
-
-        // Esperar a que carguen los productos y hacer scroll
+        botones.forEach(btn => { if (btn.textContent.trim().includes(categoria)) { btn.click(); } });
         setTimeout(() => {
             const cards = document.querySelectorAll('.product-card');
             cards.forEach(card => {
@@ -518,34 +432,17 @@ function ajustarAlturaFinal() { const grid = document.getElementById('productos-
         }, 600);
     };
 
-    // Mostrar todos los resultados en la página
     window.buscarYMostrarTodos = function(texto) {
         cerrarResultados();
         input.value = texto;
         btnLimpiar.classList.add('visible');
-        
-        // Ocultar secciones normales
         document.getElementById('seccion-ofertas').style.display = 'none';
         document.getElementById('seccion-productos').style.display = 'block';
-        
         const titulo = document.getElementById('titulo-categoria');
         if (titulo) titulo.textContent = `Resultados: "${texto}"`;
-
-        // Cargar y filtrar todos los productos
-        buscarProductos(texto).then(() => {
-            // Renderizar todos los encontrados en el grid
-            // (Aquí puedes implementar una vista completa de resultados)
-        });
     };
-
 })();
 
-// Animación pulse para destacar producto encontrado
 const stylePulse = document.createElement('style');
-stylePulse.textContent = `
-    @keyframes pulse {
-        0%, 100% { transform: scale(1); box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
-        50% { transform: scale(1.03); box-shadow: 0 10px 30px rgba(255,107,53,0.3); }
-    }
-`;
+stylePulse.textContent = `@keyframes pulse { 0%, 100% { transform: scale(1); box-shadow: 0 5px 20px rgba(0,0,0,0.08); } 50% { transform: scale(1.03); box-shadow: 0 10px 30px rgba(255,107,53,0.3); } }`;
 document.head.appendChild(stylePulse);
