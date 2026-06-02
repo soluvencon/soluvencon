@@ -1,5 +1,257 @@
 [
   {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Herramientas/LLAVE%20RACHE%20%238%20(2).png",
+    "nombre": "LLAVE RACHE #8 NP-3339",
+    "precio_unitario": "$8.640",
+    "precio_6": "6UND X 35.100",
+    "precio_12": "12UND X 64.800",
+    "badge": "",
+    "codigo": ""
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Herramientas/LLAVE%20RACHE%20%239.png",
+    "nombre": "LLAVE RACHE #9 NP-3340",
+    "precio_unitario": "$9.216",
+    "precio_6": "6UND X 37.440",
+    "precio_12": "12UND X 69.120",
+    "badge": "",
+    "codigo": ""
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Herramientas/LLAVE%20RACHE%20%2310.png",
+    "nombre": "LLAVE RACHE #10 NP-3341",
+    "precio_unitario": "$9.600",
+    "precio_6": "6UND X 39.000",
+    "precio_12": "12UND X 72.000",
+    "badge": "",
+    "codigo": ""
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Herramientas/LLAVE%20RACHE%20%2311.png",
+    "nombre": "LLAVE RACHE #11 NP-3342",
+    "precio_unitario": "$10.176",
+    "precio_6": "6UND X 41.340",
+    "precio_12": "12UND X 76.320",
+    "badge": "",
+    "codigo": ""
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Herramientas/LLAVE%20RACHE%20%2312%20(2).png",
+    "nombre": "LLAVE RACHE #12 NP-3343",
+    "precio_unitario": "$11.136",
+    "precio_6": "6UND X 45.240",
+    "precio_12": "12UND X 83.520",
+    "badge": "",
+    "codigo": ""
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Herramientas/LLAVE%20RACHE%20%2313.png",
+    "nombre": "LLAVE RACHE #13 NP-3344",
+    "precio_unitario": "$11.520",
+    "precio_6": "6UND X 46.800",
+    "precio_12": "12UND X 86400",
+    "badge": "",
+    "codigo": ""
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Herramientas/LLAVE%20RACHE%20%2314.png",
+    "nombre": "LLAVE RACHE #14 NP-3345",
+    "precio_unitario": "$12.480",
+    "precio_6": "6UND X 50.700",
+    "precio_12": "12UND X 93.600",
+    "badge": "",
+    "codigo": ""
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Herramientas/LLAVE%20RACHE%20%2315.png",
+    "nombre": "LLAVE RACHE #15 NP-3346",
+    "precio_unitario": "$12.864",
+    "precio_6": "6UND X 52.260",
+    "precio_12": "12UND X 96.480",
+    "badge": "",
+    "codigo": ""
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Herramientas/LLAVE%20RACHE%20%2316.png",
+    "nombre": "LLAVE RACHE #16 NP-3347",
+    "precio_unitario": "$13.824",
+    "precio_6": "6UND X 56.160",
+    "precio_12": "12UND X 103.680",
+    "badge": "",
+    "codigo": ""
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Herramientas/LLAVE%20RACHE%20%2317.png",
+    "nombre": "LLAVE RACHE #17 NP-3348",
+    "precio_unitario": "$14.976",
+    "precio_6": "6UND X 60.840",
+    "precio_12": "12UND X 112.320",
+    "badge": "",
+    "codigo": ""
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Herramientas/INFLADOR%20GRANDE.jpg",
+    "nombre": "INFLADOR GRANDE",
+    "precio_unitario": "$13.100",
+    "precio_6": "6UND X  50.000",
+    "precio_12": "12UND X  98.000",
+    "badge": "",
+    "codigo": ""
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Herramientas/LLAVES%20L.jpg",
+    "nombre": "LLAVE L ",
+    "precio_unitario": "$6.400",
+    "precio_6": "6UND X  28.000",
+    "precio_12": "12UND X  55.000",
+    "badge": "",
+    "codigo": ""
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Herramientas/MULTITOMA.jpg",
+    "nombre": "MULTITOMA ",
+    "precio_unitario": "$11.000",
+    "precio_6": "6UND X 48.000",
+    "precio_12": "12UND X 94.000",
+    "badge": "",
+    "codigo": ""
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Herramientas/ALMADANA%20GRANDE.jpg",
+    "nombre": "ALMADANA GRANDE ",
+    "precio_unitario": "$21.000",
+    "precio_6": "6UND X  98.000",
+    "precio_12": "12UND X 195.000",
+    "badge": "",
+    "codigo": ""
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Herramientas/ALMADANA%20MEDIANA.jpg",
+    "nombre": "ALMADANA MEDIANA ",
+    "precio_unitario": "$18.000",
+    "precio_6": "6UND X  91.000",
+    "precio_12": "12UND X 180.000",
+    "badge": "",
+    "codigo": ""
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Herramientas/ALMADANA%20PEQUE%C3%91A.jpg",
+    "nombre": "ALMADANA ",
+    "precio_unitario": "$14.000",
+    "precio_6": "6UND X  73.000",
+    "precio_12": "12UND X  144.000 ",
+    "badge": "",
+    "codigo": ""
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Herramientas/JUEGO%20LLAVES%20L.jpg",
+    "nombre": "JUEGO LLAVES L",
+    "precio_unitario": "$22.000",
+    "precio_6": "6UND X  93.000",
+    "precio_12": "12UND X  185.000",
+    "badge": "",
+    "codigo": ""
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Herramientas/LINTERNA%20PEQ.jpg",
+    "nombre": "LINTERNA PEQ",
+    "precio_unitario": "$10.000",
+    "precio_6": "6UND X  50.000",
+    "precio_12": "12UND X 100.000",
+    "badge": "",
+    "codigo": ""
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Herramientas/BOMBILLO%20RECARGABLE.jpg",
+    "nombre": "BOMBILLO RECARGABLE ",
+    "precio_unitario": "$15.000",
+    "precio_6": "6UND X  60.000",
+    "precio_12": "12UND X 120.000",
+    "badge": "",
+    "codigo": ""
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Herramientas/SET%20DE%20TRAZADO%20DE%20LINEAS.jpg",
+    "nombre": "SET DE TRAZADO DE LINEAS ",
+    "precio_unitario": "$10.000",
+    "precio_6": "6UND X  49.000",
+    "precio_12": "12UND X 96.000",
+    "badge": "",
+    "codigo": ""
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Herramientas/JUEGO%20DESTRONILLADOR.jpg",
+    "nombre": "JUEGO DESTRONILLADOR X6",
+    "precio_unitario": "$11.000",
+    "precio_6": "6UND X  41.000",
+    "precio_12": "12UND X   81.000",
+    "badge": "",
+    "codigo": ""
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Herramientas/JUEGO%20DESTORNILLADRES.jpg",
+    "nombre": "JUEGO DESTORNILLADRES PAQ",
+    "precio_unitario": "$20.000",
+    "precio_6": "6UND X  90.100",
+    "precio_12": "12UND X  182.000",
+    "badge": "",
+    "codigo": ""
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Herramientas/JUEGO%20DE%20LLAVE%20L.jpg",
+    "nombre": "JUEGO DE LLAVE L",
+    "precio_unitario": "$9.200",
+    "precio_6": "6UND X  36.500",
+    "precio_12": "12UND X  72.000",
+    "badge": "",
+    "codigo": ""
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Herramientas/ESPATULA%20MEDIANA.jpg",
+    "nombre": "ESPATULA MEDIANA",
+    "precio_unitario": "$2.000",
+    "precio_6": "6UND X  8.000",
+    "precio_12": "12UND X  14.500",
+    "badge": "",
+    "codigo": ""
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Herramientas/ESPATULA%20PEQ.jpg",
+    "nombre": "ESPATULA PEQ",
+    "precio_unitario": "$1.700",
+    "precio_6": "6UND X  6.600",
+    "precio_12": "12UND X  13.000",
+    "badge": "",
+    "codigo": ""
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Herramientas/MACHETE%20MANGO%20NEGRO.jpg",
+    "nombre": "MACHETE MANGO NEGRO ",
+    "precio_unitario": "$15.000",
+    "precio_6": "6UND X  45.000",
+    "precio_12": "12UND X  88.000",
+    "badge": "",
+    "codigo": ""
+  },
+  {
+    "imagen_url": "https://raw.githubusercontent.com/soluvencon/imagenes-soluvencon/refs/heads/main/Herramientas/MACHETE%20MANGO%20BLANCO.jpg",
+    "nombre": "MACHETE MANGO BLANCO",
+    "precio_unitario": "$15.000",
+    "precio_6": "6UND X  42.00",
+    "precio_12": "12UND X  82.000",
+    "badge": "",
+    "codigo": ""
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Herramientas/MACHETE%20MANGO.jpg",
+    "nombre": "MACHETE MANGO ",
+    "precio_unitario": "$15.000",
+    "precio_6": "6UND X  45.50",
+    "precio_12": "12UND X  90.000",
+    "badge": "",
+    "codigo": ""
+  },
+  {
     "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Herramientas/MARTILLO%20PEQUE%C3%91O%20NP-7290.png",
     "nombre": "MARTILLO PEQUE?O NP-7290",
     "precio_unitario": "$9.600",
