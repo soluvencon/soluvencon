@@ -88,5 +88,32 @@
     "precio_12": "$200.160",
     "badge": "NUEVO",
     "codigo": "IMJ-2021-03A+"
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Jugueteria/CARRO%20POLICIA%20IMJ-H765.png",
+    "nombre": "CARRO POLICIA IMJ-H765",
+    "precio_unitario": "$7.488",
+    "precio_6": "$30.420",
+    "precio_12": "$56.160",
+    "badge": "NUEVO",
+    "codigo": "IMJ-H765"
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Jugueteria/CUATRIMOTO%20IMJ-H763.png",
+    "nombre": "CUATRIMOTO IMJ-H763",
+    "precio_unitario": "$7.488",
+    "precio_6": "$30.420",
+    "precio_12": "$56.160",
+    "badge": "NUEVO",
+    "codigo": "IMJ-H763"
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Jugueteria/CARRO%20IMJ-H755.png",
+    "nombre": "CARRO IMJ-H755",
+    "precio_unitario": "$7.488",
+    "precio_6": "$30.420",
+    "precio_12": "$56.160",
+    "badge": "NUEVO",
+    "codigo": "IMJ-H755"
   }
 ]
