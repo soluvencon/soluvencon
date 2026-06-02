@@ -475,5 +475,77 @@
     "precio_12": "12UND X 95.040",
     "badge": "",
     "codigo": "NP-867"
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Herramientas/LLAVE%20RACHE%20ABATIBLE.jpg",
+    "nombre": "LLAVE RACHE ABATIBLE ",
+    "precio_unitario": "7UND X 81.600",
+    "precio_6": " llave #16 16.00\n #15 15.00\n #14 13.00\n #13 12.00\n #12 12.00\n #11 11.00\n #10 10.00",
+    "precio_12": "",
+    "badge": "",
+    "codigo": ""
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Herramientas/CEPILLO%20DE%20ALAMBRE%20TALADRO.jpg",
+    "nombre": "CEPILLO DE ALAMBRE TALADRO ",
+    "precio_unitario": "$9.200",
+    "precio_6": "6UND X  35.000",
+    "precio_12": "12UND X  70.000",
+    "badge": "",
+    "codigo": ""
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Herramientas/CEPILLO%20DE%20ALAMBRE.jpg",
+    "nombre": "CEPILLO DE ALAMBRE",
+    "precio_unitario": "$3.000",
+    "precio_6": "6UND X  15.500",
+    "precio_12": "12UND X 30.000",
+    "badge": "",
+    "codigo": ""
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Herramientas/PALANCA%20RACHE%20GRANDE.jpg",
+    "nombre": "PALANCA RACHE GRANDE",
+    "precio_unitario": "$12.000",
+    "precio_6": "6UND X  37.000",
+    "precio_12": "12UND X  75.000",
+    "badge": "",
+    "codigo": ""
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Herramientas/PALANCA%20RACHE%20MEDIANA.jpg",
+    "nombre": "PALANCA RACHE MEDIANA",
+    "precio_unitario": "$9.000",
+    "precio_6": "6UND X  34.000",
+    "precio_12": "12UND X  70.000",
+    "badge": "",
+    "codigo": ""
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Herramientas/PALANCA%20RACHE%20PEQUE%C3%91A.jpg",
+    "nombre": "PALANCA RACHE PEQUE?A ",
+    "precio_unitario": "$7.000",
+    "precio_6": "6UND X  33.000",
+    "precio_12": "12UND X  66.000",
+    "badge": "",
+    "codigo": ""
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Herramientas/CEPILLO%20DE%20ALAMBRE%20MED.jpg",
+    "nombre": "CEPILLO DE ALAMBRE MED",
+    "precio_unitario": "$5.500",
+    "precio_6": "6UND X  24.000",
+    "precio_12": "12UND X  47.000",
+    "badge": "",
+    "codigo": ""
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Herramientas/CRUCETA%2017%2C19%2C14.jpg",
+    "nombre": "CRUCETA 17,19,14",
+    "precio_unitario": "$8.800",
+    "precio_6": "6UND X  32.000",
+    "precio_12": "12UND X  62.000",
+    "badge": "",
+    "codigo": ""
   }
 ]
