@@ -1,0 +1,42 @@
+name: Sincronizar Catálogo Google Sheets
+
+on:
+  # Se ejecuta automáticamente cada 15 minutos
+  schedule:
+    - cron: '*/15 * * * *'
+  # También te permite ejecutarlo manualmente con un botón
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v3
+
+      - name: Crear carpeta data si no existe
+        run: mkdir -p data
+
+      - name: Descargar Herramientas
+        run: curl -s "https://script.google.com/macros/s/AKfycbwXSVAq67X1VYTq1AjUa6iJAN4xeq0iVEWFK7LHhDF7zU3h6GlvEKEGBLEMgxLNW4s3FA/exec?categoria=Herramientas" -o data/Herramientas.json
+
+      - name: Descargar Accesorios
+        run: curl -s "https://script.google.com/macros/s/AKfycbwXSVAq67X1VYTq1AjUa6iJAN4xeq0iVEWFK7LHhDF7zU3h6GlvEKEGBLEMgxLNW4s3FA/exec?categoria=Accesorios" -o data/Accesorios.json
+
+      - name: Descargar Utensilios
+        run: curl -s "https://script.google.com/macros/s/AKfycbwXSVAq67X1VYTq1AjUa6iJAN4xeq0iVEWFK7LHhDF7zU3h6GlvEKEGBLEMgxLNW4s3FA/exec" -o data/Utensilios.json
+
+      - name: Descargar Morrales
+        run: curl -s "https://script.google.com/macros/s/AKfycbwXSVAq67X1VYTq1AjUa6iJAN4xeq0iVEWFK7LHhDF7zU3h6GlvEKEGBLEMgxLNW4s3FA/exec?categoria=Morrales" -o data/Morrales.json
+
+      - name: Descargar Juguetería
+        run: curl -s "TU_URL_DE_APPS_SCRIPT_AQUI?categoria=Juguetería" -o data/Juguetería.json
+
+      - name: Subir cambios a GitHub
+        run: |
+          git config --global user.name "Robot-Catalogo"
+          git config --global user.email "robot@github.com"
+          git add data/
+          git diff-index --quiet HEAD || git commit -m "📦 Catálogo actualizado automáticamente"
+          git push
