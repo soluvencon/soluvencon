@@ -1,1 +1,92 @@
-[{"imagen_url":"https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Jugueteria/CARRO%20POLICIA%20IMJ-H765.png","nombre":"CARRO POLICIA IMJ-H765","precio_unitario":"$7.488","precio_6":"$30.420","precio_12":"$56.160","badge":"NUEVO","codigo":"IMJ-H765"},{"imagen_url":"https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Jugueteria/CUATRIMOTO%20IMJ-H763.png","nombre":"CUATRIMOTO IMJ-H763","precio_unitario":"$7.488","precio_6":"$30.420","precio_12":"$56.160","badge":"NUEVO","codigo":"IMJ-H763"},{"imagen_url":"https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Jugueteria/CARRO%20IMJ-H755.png","nombre":"CARRO IMJ-H755","precio_unitario":"$7.488","precio_6":"$30.420","precio_12":"$56.160","badge":"NUEVO","codigo":"IMJ-H755"},{"imagen_url":"https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Jugueteria/MOTO%20IMJ-9865-60.png","nombre":"MOTO IMJ-9865-60","precio_unitario":"$9.216","precio_6":"$37.440","precio_12":"$69.120","badge":"NUEVO","codigo":"IMJ-9865-60"},{"imagen_url":"https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@main/Jugueteria/CARROS%20ARA%C3%91A%20IMJ-JKL-012.png","nombre":"CARROS ARAÑA IMJ-JKL-012","precio_unitario":"$11.520","precio_6":"$46.800","precio_12":"$86.400","badge":"NUEVO","codigo":"IMJ-JKL-012"},{"imagen_url":"https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Jugueteria/CARROS%20TIBUR%C3%93N%20IMJ-JKL-005.png","nombre":"CARROS TIBURÓN IMJ-JKL-005","precio_unitario":"$12.480","precio_6":"$50.700","precio_12":"$93.600","badge":"NUEVO","codigo":"IMJ-JKL-005"},{"imagen_url":"https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Jugueteria/CARROS%20ARA%C3%91A%20IMJ-JKL-019.png","nombre":"CARROS ARAÑA IMJ-JKL-019","precio_unitario":"$12.480","precio_6":"$50.700","precio_12":"$93.600","badge":"NUEVO","codigo":"IMJ-JKL-019"},{"imagen_url":"https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Jugueteria/CARRO%20CONSTRUCCI%C3%93N%20IMJ-26-12A.png","nombre":"CARRO CONSTRUCCIÓN IMJ-26-12A","precio_unitario":"$13.056","precio_6":"$53.040","precio_12":"$97.920","badge":"NUEVO","codigo":"IMJ-26-12A"},{"imagen_url":"https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Jugueteria/CARRO%20CONSTRUCCI%C3%93N%20IMJ-26-12C.png","nombre":"CARRO CONSTRUCCIÓN IMJ-26-12C","precio_unitario":"$13.056","precio_6":"$53.040","precio_12":"$97.920","badge":"NUEVO","codigo":"IMJ-26-12C"},{"imagen_url":"https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Jugueteria/CARRO%20TANQUE%20IMJ-5021.png","nombre":"CARRO TANQUE IMJ-5021","precio_unitario":"$13.056","precio_6":"$53.040","precio_12":"$97.920","badge":"NUEVO","codigo":"IMJ-5021"},{"imagen_url":"https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Jugueteria/CARRO%20IMJ-T990-25.png","nombre":"CARRO IMJ-T990-25","precio_unitario":"$13.056","precio_6":"$53.040","precio_12":"$97.920","badge":"NUEVO","codigo":"IMJ-T990-25"},{"imagen_url":"https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Jugueteria/CARRO%20IMJ-9821-60.png","nombre":"CARRO IMJ-9821-60","precio_unitario":"$13.440","precio_6":"$54.600","precio_12":"$100.800","badge":"NUEVO","codigo":"IMJ-9821-60"},{"imagen_url":"https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Jugueteria/CARROS%20MUSIC%20LED%20%20IMJ-2021-03A.png","nombre":"CARROS MUSIC LED  IMJ-2021-03A","precio_unitario":"$26.688","precio_6":"$108.420","precio_12":"$200.160","badge":"NUEVO","codigo":"IMJ-2021-03A+"}]
+[
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Jugueteria/MOTO%20IMJ-9865-60.png",
+    "nombre": "MOTO IMJ-9865-60",
+    "precio_unitario": "$9.216",
+    "precio_6": "$37.440",
+    "precio_12": "$69.120",
+    "badge": "NUEVO",
+    "codigo": "IMJ-9865-60"
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@main/Jugueteria/CARROS%20ARA%C3%91A%20IMJ-JKL-012.png",
+    "nombre": "CARROS ARA?A IMJ-JKL-012",
+    "precio_unitario": "$11.520",
+    "precio_6": "$46.800",
+    "precio_12": "$86.400",
+    "badge": "NUEVO",
+    "codigo": "IMJ-JKL-012"
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Jugueteria/CARROS%20TIBUR%C3%93N%20IMJ-JKL-005.png",
+    "nombre": "CARROS TIBUR?N IMJ-JKL-005",
+    "precio_unitario": "$12.480",
+    "precio_6": "$50.700",
+    "precio_12": "$93.600",
+    "badge": "NUEVO",
+    "codigo": "IMJ-JKL-005"
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Jugueteria/CARROS%20ARA%C3%91A%20IMJ-JKL-019.png",
+    "nombre": "CARROS ARA?A IMJ-JKL-019",
+    "precio_unitario": "$12.480",
+    "precio_6": "$50.700",
+    "precio_12": "$93.600",
+    "badge": "NUEVO",
+    "codigo": "IMJ-JKL-019"
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Jugueteria/CARRO%20CONSTRUCCI%C3%93N%20IMJ-26-12A.png",
+    "nombre": "CARRO CONSTRUCCI?N IMJ-26-12A",
+    "precio_unitario": "$13.056",
+    "precio_6": "$53.040",
+    "precio_12": "$97.920",
+    "badge": "NUEVO",
+    "codigo": "IMJ-26-12A"
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Jugueteria/CARRO%20CONSTRUCCI%C3%93N%20IMJ-26-12C.png",
+    "nombre": "CARRO CONSTRUCCI?N IMJ-26-12C",
+    "precio_unitario": "$13.056",
+    "precio_6": "$53.040",
+    "precio_12": "$97.920",
+    "badge": "NUEVO",
+    "codigo": "IMJ-26-12C"
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Jugueteria/CARRO%20TANQUE%20IMJ-5021.png",
+    "nombre": "CARRO TANQUE IMJ-5021",
+    "precio_unitario": "$13.056",
+    "precio_6": "$53.040",
+    "precio_12": "$97.920",
+    "badge": "NUEVO",
+    "codigo": "IMJ-5021"
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Jugueteria/CARRO%20IMJ-T990-25.png",
+    "nombre": "CARRO IMJ-T990-25",
+    "precio_unitario": "$13.056",
+    "precio_6": "$53.040",
+    "precio_12": "$97.920",
+    "badge": "NUEVO",
+    "codigo": "IMJ-T990-25"
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Jugueteria/CARRO%20IMJ-9821-60.png",
+    "nombre": "CARRO IMJ-9821-60",
+    "precio_unitario": "$13.440",
+    "precio_6": "$54.600",
+    "precio_12": "$100.800",
+    "badge": "NUEVO",
+    "codigo": "IMJ-9821-60"
+  },
+  {
+    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Jugueteria/CARROS%20MUSIC%20LED%20%20IMJ-2021-03A.png",
+    "nombre": "CARROS MUSIC LED  IMJ-2021-03A",
+    "precio_unitario": "$26.688",
+    "precio_6": "$108.420",
+    "precio_12": "$200.160",
+    "badge": "NUEVO",
+    "codigo": "IMJ-2021-03A+"
+  }
+]
