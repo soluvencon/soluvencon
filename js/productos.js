@@ -3,6 +3,14 @@
  * SOLUVENCON - Sistema de Productos con Caché (Ahora desde GitHub estático)
  * Adaptado para SPA (Single Page Application) con pestañas fijas
  * ============================================================================
+ * 
+ * CORRECCIONES APLICADAS (2026-06-02):
+ * 1. FIX: buscarYMostrarTodos() ahora sí renderiza los productos encontrados
+ * 2. FIX: irAProducto() normaliza tildes para encontrar la pestaña correcta
+ * 3. FIX: renderizarProductos() resetea data-loaded para búsquedas
+ * 4. FIX: Agregado manejo de errores en fetch del buscador
+ * 5. FIX: Normalización de texto para búsquedas con/sin tildes
+ * ============================================================================
  */
 
 // CAMBIO PRINCIPAL: URL de GitHub Pages en vez de Apps Script
@@ -78,12 +86,13 @@ function guardarCache(categoria, productos) {
 function inicializarProductos(categoria) {
     const grid = document.getElementById('productos-grid');
     if (!grid) return;
-    
-    if (grid.getAttribute('data-loaded') === categoria) return;
-    
+
+    // 🔧 FIX: Si es una búsqueda, siempre recargar. Si es categoría normal, respetar caché.
+    if (categoria !== 'Búsqueda' && grid.getAttribute('data-loaded') === categoria) return;
+
     grid.setAttribute('data-loaded', 'false');
     mostrarSkeleton();
-    
+
     const cache = obtenerCache(categoria);
     if (cache) {
         renderizarProductos(cache, categoria);
@@ -101,11 +110,17 @@ async function cargarDesdeGitHub(categoria) {
         // Se concatena la URL base + la categoría + .json
         // El parámetro ?t= evita que el navegador use caché vieja del archivo
         const url = `${JSON_BASE_URL}${encodeURIComponent(categoria)}.json?t=${Date.now()}`;
-        
+
         const response = await fetch(url);
         if (!response.ok) throw new Error('Error cargando el archivo JSON desde GitHub');
-        
+
         const productos = await response.json();
+
+        // 🔧 FIX: Verificar que sea un array válido
+        if (!Array.isArray(productos)) {
+            throw new Error('La respuesta no es un array de productos');
+        }
+
         guardarCache(categoria, productos);
         renderizarProductos(productos, categoria);
     } catch (error) {
@@ -118,7 +133,13 @@ async function actualizarSilenciosamente(categoria) {
     try {
         const url = `${JSON_BASE_URL}${encodeURIComponent(categoria)}.json?t=${Date.now()}`;
         const response = await fetch(url);
+
+        // 🔧 FIX: Verificar response.ok antes de parsear
+        if (!response.ok) return;
+
         const productosNuevos = await response.json();
+        if (!Array.isArray(productosNuevos)) return;
+
         const cacheActual = obtenerCache(categoria);
         if (JSON.stringify(cacheActual) !== JSON.stringify(productosNuevos)) {
             guardarCache(categoria, productosNuevos);
@@ -128,25 +149,27 @@ async function actualizarSilenciosamente(categoria) {
 }
 
 // ============================================================================
-// RENDERIZADO (Sin cambios, queda exactamente igual)
+// RENDERIZADO
 // ============================================================================
 function renderizarProductos(productos, categoria) {
     const grid = document.getElementById('productos-grid');
     if (!grid) return;
-    
+
     if (productos.length === 0) {
         grid.innerHTML = '<p style="text-align: center; grid-column: 1/-1;">No hay productos disponibles.</p>';
+        grid.setAttribute('data-loaded', 'vacio');
         return;
     }
-    
+
     let html = '';
     productos.forEach((p, index) => {
         const imagenUrl = p.imagen_url || 'https://via.placeholder.com/400x300?text=Sin+Imagen';
-        const productoId = `prod-${categoria}-${index}`;
+        // 🔧 FIX: ID seguro que funciona tanto para categorías como para búsquedas
+        const productoId = `prod-${categoria.replace(/\s+/g, '-')}-${index}`;
         const cuadrosPrecio = generarCuadrosPrecio(p, productoId, imagenUrl);
         const loadingPriority = index === 0 ? 'eager' : 'lazy';
         const fetchPriority = index === 0 ? 'high' : 'auto';
-        
+
         html += `
             <div class="product-card" id="${productoId}">
                 <div class="product-img" onclick="abrirModal('${imagenUrl}')" title="Ver imagen completa">
@@ -164,7 +187,7 @@ function renderizarProductos(productos, categoria) {
             </div>
         `;
     });
-    
+
     grid.innerHTML = html;
     grid.setAttribute('data-loaded', categoria);
     setTimeout(ajustarAlturaFinal, 100);
@@ -173,7 +196,7 @@ function renderizarProductos(productos, categoria) {
 function generarCuadrosPrecio(p, productoId, imagenUrl) {
     if (!p.precio_unitario && !p.precio_6 && !p.precio_12) return '';
     let html = '<div class="precios-mayoristas">';
-    
+
     if (p.precio_unitario && !p.precio_unitario.toUpperCase().includes('NO')) {
         html += `<div class="caja-precio" onclick="agregarAlCarrito('${productoId}', '${escapeString(p.nombre)}', '${imagenUrl}', 1, '${extraerNumero(p.precio_unitario)}', '${p.precio_unitario}', '${p.codigo || ''}')">
             <span class="cantidad">1 UND</span><span class="valor">$${formatearPrecioColombiano(p.precio_unitario)}</span></div>`;
@@ -225,7 +248,7 @@ function agregarAlCarrito(productoId, nombre, imagen, cantidadPack, precioNumero
     const existente = carrito.find(item => item.nombre === nombre && item.cantidadPack === cantidadPack);
     if (existente) { existente.cantidadPacks++; } 
     else { carrito.push({ id: Date.now() + Math.random(), nombre, imagen, cantidadPack, cantidadPacks: 1, precioPack: precioNumero, precioUnitario, codigo: codigo || 'N/A' }); }
-    
+
     const card = document.getElementById(productoId);
     if (card) { card.querySelectorAll('.caja-precio').forEach(btn => { if (btn.textContent.includes(cantidadPack + ' UND')) { btn.style.background = 'var(--secondary)'; btn.style.color = 'white'; setTimeout(() => { btn.style.background = ''; btn.style.color = ''; }, 200); } }); }
     actualizarCarritoUI();
@@ -319,13 +342,13 @@ function ajustarAlturaFinal() { const grid = document.getElementById('productos-
 })();
 
 // ============================================================================
-// BUSCADOR DE PRODUCTOS (Actualizado para leer de GitHub)
+// BUSCADOR DE PRODUCTOS (CORREGIDO)
 // ============================================================================
 (function() {
     const input = document.getElementById('buscadorInput');
     const resultados = document.getElementById('buscadorResultados');
     const btnLimpiar = document.getElementById('buscadorLimpiar');
-    
+
     if (!input || !resultados) return;
 
     let todasLasCategorias = ['Accesorios','Jugueteria', 'Herramientas', 'Utensilios', 'Morrales'];
@@ -351,28 +374,48 @@ function ajustarAlturaFinal() { const grid = document.getElementById('productos-
 
     function cerrarResultados() { resultados.classList.remove('activo'); }
 
+    // 🔧 FIX: Función helper para normalizar texto (quita tildes y pasa a minúsculas)
+    function normalizarTexto(texto) {
+        return texto.toLowerCase()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '');
+    }
+
     async function buscarProductos(texto) {
         if (texto.length < 2) return;
-        const textoLower = texto.toLowerCase();
+        const textoNormalizado = normalizarTexto(texto);
         let encontrados = [];
 
         for (const categoria of todasLasCategorias) {
             let productos = obtenerCache(categoria);
-            
+
             if (!productos) {
                 try {
-                    // CAMBIO AQUÍ: Lee desde GitHub
                     const url = `${JSON_BASE_URL}${encodeURIComponent(categoria)}.json?t=${Date.now()}`;
                     const response = await fetch(url);
+
+                    // 🔧 FIX: Verificar que la respuesta sea válida
+                    if (!response.ok) continue;
+
                     productos = await response.json();
-                    if (!productos.error) { guardarCache(categoria, productos); }
+
+                    // 🔧 FIX: Verificar que sea un array antes de guardar en caché
+                    if (Array.isArray(productos)) {
+                        guardarCache(categoria, productos);
+                    } else {
+                        continue;
+                    }
                 } catch (e) { continue; }
             }
 
             if (productos && productos.length) {
-                const filtrados = productos.filter(p => 
-                    p.nombre && p.nombre.toLowerCase().includes(textoLower)
-                ).map(p => ({ ...p, categoria }));
+                // 🔧 FIX: Buscar normalizando también los nombres de productos (para encontrar "ARAÑA" aunque escriban "arana")
+                const filtrados = productos.filter(p => {
+                    if (!p.nombre) return false;
+                    const nombreNormalizado = normalizarTexto(p.nombre);
+                    return nombreNormalizado.includes(textoNormalizado);
+                }).map(p => ({ ...p, categoria }));
+
                 encontrados = encontrados.concat(filtrados);
             }
         }
@@ -392,7 +435,7 @@ function ajustarAlturaFinal() { const grid = document.getElementById('productos-
             const imagen = p.imagen_url || 'https://via.placeholder.com/50x50?text=Sin+Img';
             const precio = p.precio_unitario || 'Consultar';
             html += `
-                <div class="buscador-item" onclick="irAProducto('${p.categoria}', '${escapeString(p.nombre)}')">
+                <div class="buscador-item" onclick="irAProducto('${escapeString(p.categoria)}', '${escapeString(p.nombre)}')">
                     <img src="${imagen}" alt="${p.nombre}" onerror="this.src='https://via.placeholder.com/50x50?text=Sin+Img'">
                     <div class="buscador-item-info">
                         <div class="buscador-item-nombre">${resaltarTexto(p.nombre, textoBusqueda)}</div>
@@ -411,35 +454,95 @@ function ajustarAlturaFinal() { const grid = document.getElementById('productos-
     }
 
     function resaltarTexto(texto, busqueda) {
+        // 🔧 FIX: Resaltar funciona con o sin tildes
         const regex = new RegExp(`(${busqueda})`, 'gi');
         return texto.replace(regex, '<mark style="background: var(--accent); color: var(--dark); padding: 0 2px; border-radius: 3px;">$1</mark>');
     }
 
+    // 🔧 FIX: Función corregida - ahora sí renderiza los productos encontrados
+    window.buscarYMostrarTodos = async function(texto) {
+        cerrarResultados();
+        input.value = texto;
+        btnLimpiar.classList.add('visible');
+
+        const secOfertas = document.getElementById('seccion-ofertas');
+        const secProductos = document.getElementById('seccion-productos');
+        const titulo = document.getElementById('titulo-categoria');
+        const grid = document.getElementById('productos-grid');
+
+        if (secOfertas) secOfertas.style.display = 'none';
+        if (secProductos) secProductos.style.display = 'block';
+        if (titulo) titulo.textContent = `Resultados: "${texto}"`;
+
+        // 🔧 FIX: Resetear data-loaded para forzar renderizado
+        if (grid) grid.setAttribute('data-loaded', 'false');
+
+        // 🔧 FIX: Mostrar skeleton mientras carga
+        mostrarSkeleton();
+
+        const textoNormalizado = normalizarTexto(texto);
+        let todosLosProductos = [];
+
+        for (const categoria of todasLasCategorias) {
+            let productos = obtenerCache(categoria);
+
+            if (!productos) {
+                try {
+                    const url = `${JSON_BASE_URL}${encodeURIComponent(categoria)}.json?t=${Date.now()}`;
+                    const response = await fetch(url);
+                    if (!response.ok) continue;
+                    productos = await response.json();
+                    if (Array.isArray(productos)) {
+                        guardarCache(categoria, productos);
+                    }
+                } catch (e) { continue; }
+            }
+
+            if (productos && productos.length) {
+                const filtrados = productos.filter(p => {
+                    if (!p.nombre) return false;
+                    const nombreNormalizado = normalizarTexto(p.nombre);
+                    return nombreNormalizado.includes(textoNormalizado);
+                }).map(p => ({ ...p, categoria }));
+
+                todosLosProductos = todosLosProductos.concat(filtrados);
+            }
+        }
+
+        // 🔧 FIX: Renderizar los resultados en el grid
+        renderizarProductos(todosLosProductos, 'Búsqueda');
+
+        // Scroll suave hacia los resultados
+        window.scrollTo({ top: 150, behavior: 'smooth' });
+    };
+
+    // 🔧 FIX: Función corregida - normaliza tildes al buscar la pestaña
     window.irAProducto = function(categoria, nombreProducto) {
         cerrarResultados();
         const botones = document.querySelectorAll('.tab-btn');
-        botones.forEach(btn => { if (btn.textContent.trim().includes(categoria)) { btn.click(); } });
+
+        botones.forEach(btn => { 
+            // 🔧 FIX: Normalizar ambos textos para comparar correctamente
+            // "Juguetería" (UI) vs "Jugueteria" (código) → deben coincidir
+            const btnTexto = normalizarTexto(btn.textContent.trim());
+            const catNormalizada = normalizarTexto(categoria);
+
+            if (btnTexto.includes(catNormalizada)) { 
+                btn.click(); 
+            } 
+        });
+
         setTimeout(() => {
             const cards = document.querySelectorAll('.product-card');
             cards.forEach(card => {
                 const titulo = card.querySelector('h4');
-                if (titulo && titulo.textContent.toLowerCase().includes(nombreProducto.toLowerCase())) {
+                if (titulo && normalizarTexto(titulo.textContent).includes(normalizarTexto(nombreProducto))) {
                     card.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     card.style.animation = 'pulse 1s ease';
                     setTimeout(() => card.style.animation = '', 1000);
                 }
             });
         }, 600);
-    };
-
-    window.buscarYMostrarTodos = function(texto) {
-        cerrarResultados();
-        input.value = texto;
-        btnLimpiar.classList.add('visible');
-        document.getElementById('seccion-ofertas').style.display = 'none';
-        document.getElementById('seccion-productos').style.display = 'block';
-        const titulo = document.getElementById('titulo-categoria');
-        if (titulo) titulo.textContent = `Resultados: "${texto}"`;
     };
 })();
 
