@@ -1,14 +1,5 @@
 [
   {
-    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Utensilios/POSILLO%20TINTERO%20CORAZON.jpg",
-    "nombre": "POCILLO TINTERO CORAZON",
-    "precio_unitario": "$5.000",
-    "precio_6": "6UND X 29400",
-    "precio_12": "12UND X 58200",
-    "badge": "AGOTADO",
-    "codigo": ""
-  },
-  {
     "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Utensilios/JUEGO%20TENEDORES.jpg",
     "nombre": "JUEGO TENEDORES X5UND",
     "precio_unitario": "$7.000",
