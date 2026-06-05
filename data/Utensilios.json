@@ -63,69 +63,6 @@
     "codigo": ""
   },
   {
-    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Utensilios/JUEGO%20TENEDORES.jpg",
-    "nombre": "JUEGO TENEDORES X5UND",
-    "precio_unitario": "$7.000",
-    "precio_6": "6UND X 41160",
-    "precio_12": "12UND X 81480",
-    "badge": "",
-    "codigo": ""
-  },
-  {
-    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Utensilios/JUEGO%20CUCHARAS.jpg",
-    "nombre": "JUEGO CUCHARAS X5UND",
-    "precio_unitario": "$7.000",
-    "precio_6": "6UND X 41160",
-    "precio_12": "12UND X 81480",
-    "badge": "",
-    "codigo": ""
-  },
-  {
-    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Utensilios/POCILLOS%20TINTEROS.jpg",
-    "nombre": "POCILLOS TINTEROS ",
-    "precio_unitario": "$19.000",
-    "precio_6": "6UND X 111720",
-    "precio_12": "12UND X 221160",
-    "badge": "AGOTADO",
-    "codigo": ""
-  },
-  {
-    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Utensilios/POCILLOS%20TINTEROS%20X4.jpg",
-    "nombre": "POCILLOS TINTEROS X4",
-    "precio_unitario": "$19.000",
-    "precio_6": "6UND X 111720",
-    "precio_12": "12UND X 221160",
-    "badge": "AGOTADO",
-    "codigo": ""
-  },
-  {
-    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Utensilios/POCILLO%20AZUL.jpg",
-    "nombre": "POCILLO AZUL",
-    "precio_unitario": "$5.000",
-    "precio_6": "6UND X 29400",
-    "precio_12": "12UND X 58200",
-    "badge": "AGOTADO",
-    "codigo": ""
-  },
-  {
-    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Utensilios/POCILLO%20TINTO.jpg",
-    "nombre": "POCILLO TINTO",
-    "precio_unitario": "$5.000",
-    "precio_6": "6UND X 29400",
-    "precio_12": "12UND X 58200",
-    "badge": "AGOTADO",
-    "codigo": ""
-  },
-  {
-    "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Utensilios/POSILLO%20TINTERO%20CORAZON.jpg",
-    "nombre": "POCILLO TINTERO CORAZON",
-    "precio_unitario": "$5.000",
-    "precio_6": "6UND X 29400",
-    "precio_12": "12UND X 58200",
-    "badge": "AGOTADO",
-    "codigo": ""
-  },
-  {
     "imagen_url": "https://cdn.jsdelivr.net/gh/soluvencon/imagenes-soluvencon@refs/heads/main/Utensilios/POCILLO%20CER%C3%81MICA%200.png",
     "nombre": "POCILLO CERAMICA NP-3640",
     "precio_unitario": "$4.992",
