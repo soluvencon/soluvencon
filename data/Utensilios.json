@@ -167,7 +167,7 @@
     "precio_unitario": "$34.560",
     "precio_6": "6UND X 140.400",
     "precio_12": "12UND X 259.200",
-    "badge": "",
+    "badge": "AGOTADO",
     "codigo": "NP-3718"
   },
   {
@@ -176,7 +176,7 @@
     "precio_unitario": "$34.560",
     "precio_6": "6UND X 140.400",
     "precio_12": "12UND X 259.200",
-    "badge": "",
+    "badge": "AGOTADO",
     "codigo": "NP-5616"
   },
   {
@@ -185,7 +185,7 @@
     "precio_unitario": "$34.560",
     "precio_6": "6UND X 140.400",
     "precio_12": "12UND X 259.200",
-    "badge": "",
+    "badge": "AGOTADO",
     "codigo": "NP-5617"
   },
   {
@@ -194,7 +194,7 @@
     "precio_unitario": "$34.560",
     "precio_6": "6UND X 140.400",
     "precio_12": "12UND X 259.200",
-    "badge": "",
+    "badge": "AGOTADO",
     "codigo": "NP-5618"
   },
   {
@@ -203,7 +203,7 @@
     "precio_unitario": "$34.560",
     "precio_6": "6UND X 140.400",
     "precio_12": "12UND X 259.200",
-    "badge": "",
+    "badge": "AGOTADO",
     "codigo": "NP-5619"
   },
   {
@@ -212,7 +212,7 @@
     "precio_unitario": "$34.560",
     "precio_6": "6UND X 140.400",
     "precio_12": "12UND X 259.200",
-    "badge": "",
+    "badge": "AGOTADO",
     "codigo": "NP-5620"
   },
   {
@@ -221,7 +221,7 @@
     "precio_unitario": "$5.000",
     "precio_6": "6UND X 29400",
     "precio_12": "12UND X 58200",
-    "badge": "",
+    "badge": "AGOTADO",
     "codigo": ""
   },
   {
@@ -230,7 +230,7 @@
     "precio_unitario": "$7.000",
     "precio_6": "6UND X 41160",
     "precio_12": "12UND X 81480",
-    "badge": "",
+    "badge": "AGOTADO",
     "codigo": ""
   },
   {
@@ -239,7 +239,7 @@
     "precio_unitario": "$7.000",
     "precio_6": "6UND X 41160",
     "precio_12": "12UND X 81480",
-    "badge": "",
+    "badge": "AGOTADO",
     "codigo": ""
   },
   {
@@ -248,7 +248,7 @@
     "precio_unitario": "$19.000",
     "precio_6": "6UND X 111720",
     "precio_12": "12UND X 221160",
-    "badge": "",
+    "badge": "AGOTADO",
     "codigo": ""
   },
   {
@@ -257,7 +257,7 @@
     "precio_unitario": "$19.000",
     "precio_6": "6UND X 111720",
     "precio_12": "12UND X 221160",
-    "badge": "",
+    "badge": "AGOTADO",
     "codigo": ""
   },
   {
@@ -266,7 +266,7 @@
     "precio_unitario": "$5.000",
     "precio_6": "6UND X 29400",
     "precio_12": "12UND X 58200",
-    "badge": "",
+    "badge": "AGOTADO",
     "codigo": ""
   },
   {
@@ -275,7 +275,7 @@
     "precio_unitario": "$5.000",
     "precio_6": "6UND X 29400",
     "precio_12": "12UND X 58200",
-    "badge": "",
+    "badge": "AGOTADO",
     "codigo": ""
   }
 ]
